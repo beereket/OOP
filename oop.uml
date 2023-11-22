@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>/Users/yergalibereket/IdeaProjects/Project/src</OriginalElement>
+  <nodes>
+    <node x="437.3712977141862" y="-69.60051766785236">users.User</node>
+    <node x="637.5857465274744" y="230.76884465191563">academic.Course</node>
+    <node x="804.9136498255085" y="172.0828774320499">academic.ResearchPaper</node>
+    <node x="-124.16259777813059" y="-34.67549937743951">users.Teacher</node>
+    <node x="205.29941219547527" y="122.74457077156283">users.InvalidSupervisorException</node>
+    <node x="1305.6843417260866" y="377.31913170274044">users.UrgencyLevel</node>
+    <node x="1032.2548818349578" y="241.81623991406434">users.UserType</node>
+    <node x="1038.832804397291" y="-21.08942628657394">users.Manager</node>
+    <node x="510.92013017980594" y="344.1474091412714">academic.Mark</node>
+    <node x="963.9732968045646" y="399.03241835885353">news.News</node>
+    <node x="516.2220873526514" y="95.14217369946817">users.Language</node>
+    <node x="-5.103316871387506" y="231.13176143558965">academic.Journal</node>
+    <node x="764.9662437266147" y="-139.8497254605021">users.Student</node>
+    <node x="221.6648656497514" y="353.9680028948609">academic.CourseType</node>
+    <node x="1305.9970024774798" y="136.03099175021953">support.TechSupportSpecialist</node>
+    <node x="196.22386295361406" y="-153.25808410241677">users.Employee</node>
+    <node x="278.5982426734904" y="233.59843078820984">academic.ResearchProject</node>
+    <node x="821.6590975414842" y="290.6084248007297">academic.Lesson</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="users.Student" target="users.Employee" relationship="GENERALIZATION">
+      <point x="-2.437266146557704E-4" y="81.4997254605021" />
+      <point x="855.466" y="40.650000000000006" />
+      <point x="149.0" y="40.650000000000006" />
+      <point x="149.0" y="-71.75800000000001" />
+      <point x="-90.49986295361407" y="8.410241676415353E-5" />
+    </edge>
+    <edge source="users.Teacher" target="users.Employee" relationship="GENERALIZATION">
+      <point x="112.49959777813058" y="4.993774395103401E-4" />
+      <point x="149.0" y="57.825" />
+      <point x="149.0" y="-71.75800000000001" />
+      <point x="-90.49986295361407" y="8.410241676415353E-5" />
+    </edge>
+    <edge source="users.Employee" target="users.User" relationship="GENERALIZATION">
+      <point x="90.5" y="28.657566434564416" />
+      <point x="-82.5" y="0.0" />
+    </edge>
+    <edge source="users.Manager" target="users.Employee" relationship="GENERALIZATION">
+      <point x="-90.49980439729092" y="4.262865739406152E-4" />
+      <point x="149.0" y="60.411" />
+      <point x="149.0" y="-71.75800000000001" />
+      <point x="-90.49986295361407" y="8.410241676415353E-5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.5964497041420118" showDependencies="false" x="720.0" y="170.50000000000006" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
