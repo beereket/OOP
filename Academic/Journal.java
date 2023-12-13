@@ -1,9 +1,9 @@
-package academic;
+package Academic;
 
 import java.util.*;
 
-import users.*;
-import academic.Enums.*;
+import Users.*;
+import Academic.Enums.*;
 
 public class Journal {
 	private Vector<Lesson> lessons;

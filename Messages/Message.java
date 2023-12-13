@@ -1,5 +1,6 @@
-package unite-4;
+package Messages;
 
+import Users.*;
 
 public class Message{
     
@@ -7,37 +8,33 @@ public class Message{
     private User receiver;
     private String content;
 
-    
-    
-    
-    private User getSender() {
-        return this.sender;
-    }
-    
-    
-    private User setSender(User sender) {
+    public Message(User sender, User receiver, String content) {
         this.sender = sender;
-    }
-    
-    
-    private User getReceiver() {
-        return this.receiver;
-    }
-    
-    
-    private User setReceiver(User receiver) {
         this.receiver = receiver;
-    }
-    
-    
-    private String getContent() {
-        return this.content;
-    }
-    
-    
-    private String setContent(String content) {
         this.content = content;
     }
 
-    
+    public User getSender() {
+        return sender;
+    }
+
+    public void setSender(User sender) {
+        this.sender = sender;
+    }
+
+    public User getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(User receiver) {
+        this.receiver = receiver;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 }

@@ -1,132 +1,70 @@
-package unite-4;
+package Users;
 
+import Academic.Course;
+import Messages.Request;
+import News.*;
+import Utils.classes.Data;
+
+import java.util.HashMap;
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 public class Manager extends Employee {
-    
-    private invalid attribute;
     
     private Integer id;
     
     private ManagerType managerType;
-    
-    private invalid attribute2;
-    
-    private HashMap<Course, List<Student>> enrollments;
-    
-    private invalid commands;
-    
-    private List<News> news;
-    
-    
-    private News news2;
-    
-    
-    
-    public invalid getAttribute() {
-        return this.attribute;
-    }
-    
-    
-    public invalid setAttribute(invalid attribute) {
-        this.attribute = attribute;
-    }
-    
-    
-    private Integer getId() {
-        return this.id;
-    }
-    
-    
-    private Integer setId(Integer id) {
-        this.id = id;
-    }
-    
-    
-    private ManagerType getManagerType() {
-        return this.managerType;
-    }
-    
-    
-    private ManagerType setManagerType(ManagerType managerType) {
-        this.managerType = managerType;
-    }
-    
-    
-    private invalid getAttribute2() {
-        return this.attribute2;
-    }
-    
-    
-    private invalid setAttribute2(invalid attribute2) {
-        this.attribute2 = attribute2;
-    }
-    
-    
-    private HashMap<Course, List<Student>> getEnrollments() {
-        return this.enrollments;
-    }
-    
-    
-    private HashMap<Course, List<Student>> setEnrollments(HashMap<Course, List<Student>> enrollments) {
-        this.enrollments = enrollments;
-    }
-    
-    
-    private invalid getCommands() {
-        return this.commands;
-    }
-    
-    
-    private invalid setCommands(invalid commands) {
-        this.commands = commands;
-    }
-    
+
+    private static List<News> news;
     
     private List<News> getNews() {
         return this.news;
     }
-    
+
+    {
+        Data data = Data.getInstance();
+        data.addUser(this);
+    }
     
     private List<News> setNews(List<News> news) {
         this.news = news;
     }
-    
 
-    //                          Operations                                  
     
-    
-    public void addCoursesForRegistration() {
-        //TODO
+    public void addCoursesForRegistration(Course c) {
+        Data data = Data.getInstance();
+        data.addCourse(c);
     }
-    
-    /**
-    * @generated
-    */
+
     public List<Request> viewRequests() {
-        //TODO
-        return null;
+        Rector r = Rector.getINSTANCE();
+        return r.getSignedRequests();
     }
-    
-    /**
-    * @generated
-    */
-    public String viewInfo() {
-        //TODO
-        return "";
+
+    public void viewInfo(User u) {
+        System.out.println(u);
     }
-    
-    /**
-    * @generated
-    */
+
     public List<Student> createStatisticalReport() {
-        //TODO
-        return null;
+        Data data = Data.getInstance();
+        return data.getUsers().stream().filter(obj -> obj instanceof Student).map(obj -> (Student)obj).collect(toList());
     }
-    
-    
+
     public void enrollStudent() {
-        //TODO
+
     }
-    
-    
+
+    public void addNews(News n){
+        news.add(n);
+    }
+    public void deleteNews(News n){
+        news.remove(n);
+    }
+
+
+    @Override
+    public void update() {
+
+    }
 }

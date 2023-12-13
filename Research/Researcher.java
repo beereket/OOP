@@ -1,4 +1,4 @@
-package research;
+package Research;
 
 public interface Researcher {
     void printPapers();

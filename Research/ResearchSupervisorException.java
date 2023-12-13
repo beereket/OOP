@@ -1,4 +1,4 @@
-package research;
+package Research;
 
 public class ResearchSupervisorException extends Exception {
     /**

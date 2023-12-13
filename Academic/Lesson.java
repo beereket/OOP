@@ -1,10 +1,10 @@
-package academic;
+package Academic;
 
 import java.time.LocalDate;
 import java.util.*;
 
-import academic.Enums.*;
-import users.*;
+import Academic.Enums.*;
+import Users.*;
 
 public class Lesson {
 	private LessonType type; // lab, practice, lesson

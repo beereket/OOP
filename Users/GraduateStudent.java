@@ -1,50 +1,31 @@
-package unite-4;
+package Users;
+
+import Research.*;
+import Utils.classes.Data;
+
+import java.util.List;
 
 
 public class GraduateStudent extends Student {
-    
-    private invalid R;
+
     
     private Researcher researchSupervisor;
-    
-    
-    
-    
-    private invalid getR() {
-        return this.R;
-    }
-    
-    
-    private invalid setR(invalid R) {
-        this.R = R;
-    }
-    
-    
-    private Researcher getResearchSupervisor() {
-        return this.researchSupervisor;
-    }
-    
-    
-    private Researcher setResearchSupervisor(Researcher researchSupervisor) {
-        this.researchSupervisor = researchSupervisor;
-    }
-    
 
-    //                          Operations                                  
-    
-    /**
-    * @generated
-    */
+    public GraduateStudent(String username, String password) {
+        super(username, password);
+    }
+
+
     public boolean registerForCourse() {
-        //TODO
         return false;
     }
-    
-    /**
-    * @generated
-    */
+
+    {
+        Data data = Data.getInstance();
+        data.addUser(this);
+    }
+
     public List<ResearchPaper> viewPublishedPapers() {
-        //TODO
         return null;
     }
     

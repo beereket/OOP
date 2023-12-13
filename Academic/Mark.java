@@ -1,9 +1,10 @@
-package academic;
+package Academic;
 
 import java.util.*;
 
-import users.*;
-import academic.Enums.*;
+import Academic.Enums.typeOfAttestation;
+import Users.*;
+import Academic.Enums.*;
 
 
 public class Mark {

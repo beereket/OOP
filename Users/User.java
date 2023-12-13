@@ -1,36 +1,47 @@
-package unite-4;
+package Users;
 
+import Messages.Order;
+import Utils.*;
+import Utils.classes.Data;
 
 public abstract class User implements Observer {
     
     private String username;
     private String password;
 
-    private String getUsername() {
-        return this.username;
-    }
-    
-    
-    private String setUsername(String username) {
+    public User(String username, String password) {
         this.username = username;
-    }
-    private String getPassword() {
-        return this.password;
-    }
-    
-    
-    private String setPassword(String password) {
         this.password = password;
     }
-    
 
-    public boolean authenticate() {
-        return false;
+    public User() {
     }
-    
-    
-    public void reportIssue() {
 
+    {
+        Data data = Data.getInstance();
+        data.addUser(this);
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
+    public void reportIssue(String description) {
+        TechSupportSpecialist tech = new TechSupportSpecialist();
+        tech.addOrder(new Order(description));
     }
     
     

@@ -1,28 +1,34 @@
-package unite-4;
+package Users;
+
+
+import Utils.classes.*;
+import Utils.enums.*;
 
 
 public class Admin extends User {
     
     private String logFiles;
-    
-    private String getLogFiles() {
-        return this.logFiles;
-    }
-    
-    
-    private String setLogFiles(String logFiles) {
+
+    public Admin(String username, String password, String logFiles) {
+        super(username, password);
         this.logFiles = logFiles;
     }
-    
 
     public String viewLogFiles() {
-        return "";
+        return logFiles;
     }
 
-    public User createUser() {
-        return null;
+    public void createUser(UserType ut, String username, String password) {
+        Userfactory.createUser(ut, username, password);
+    }
+    {
+        Data data = Data.getInstance();
+        data.addUser(this);
     }
 
-    
-    
+
+    @Override
+    public void update() {
+
+    }
 }

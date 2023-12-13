@@ -1,113 +1,83 @@
-package unite-4;
+package Users;
+
+import Academic.Course;
+import Academic.Lesson;
+import Messages.Message;
+import Utils.classes.Data;
+
+import java.util.List;
 
 
-public class Teacher extends Employee implements Researcher {
+public class Teacher extends Employee {
     
     private List<Course> coursesTaught;
-    
-    private invalid ;
     
     private Title title;
     
     private Boolean isResearcher;
-    
-    private invalid journals;
-    
     private List<Message> messages;
-    
-    private Double rating;
-    
-    
+    private Double rating = 10.0;
+    private int rated = 0; // to calculate;
     private Message message;
-    
-    
-    
-    private List<Course> getCoursesTaught() {
-        return this.coursesTaught;
-    }
-    
-    
-    private List<Course> setCoursesTaught(List<Course> coursesTaught) {
-        this.coursesTaught = coursesTaught;
-    }
-    
-    
-    public invalid get() {
-        return this.;
-    }
-    
-    
-    public invalid set(invalid ) {
-        this. = ;
-    }
-    
-    
-    private Title getTitle() {
-        return this.title;
-    }
-    
-    
-    private Title setTitle(Title title) {
-        this.title = title;
-    }
-    
-    
-    private Boolean getIsResearcher() {
-        return this.isResearcher;
-    }
-    
-    
-    private Boolean setIsResearcher(Boolean isResearcher) {
-        this.isResearcher = isResearcher;
-    }
-    
-    
-    private invalid getJournals() {
-        return this.journals;
-    }
-    
-    
-    private invalid setJournals(invalid journals) {
-        this.journals = journals;
-    }
-    
-    
-    private List<Message> getMessages() {
-        return this.messages;
-    }
-    
-    
-    private List<Message> setMessages(List<Message> messages) {
-        this.messages = messages;
-    }
-    
-    
-    private Double getRating() {
-        return this.rating;
-    }
-    
-    
-    private Double setRating(Double rating) {
-        this.rating = rating;
-    }
-    
 
-    //                          Operations                                  
-    
-    
-    public void viewCources() {
-        //TODO
+    public Teacher(String username, String password, List<Course> coursesTaught, Title title, Boolean isResearcher, List<Message> messages, Double rating, Message message) {
+        super(username, password);
+        this.coursesTaught = coursesTaught;
+        this.title = title;
+        this.isResearcher = isResearcher;
+        this.messages = messages;
+        this.rating = rating;
+        this.message = message;
     }
-    
-    
-    public void viewStudents() {
-        //TODO
+
+    public Teacher(String username, String password, Integer id, String position, List<Course> coursesTaught, Title title, Boolean isResearcher, List<Message> messages, Double rating, Message message) {
+        super(username, password, id, position);
+        this.coursesTaught = coursesTaught;
+        this.title = title;
+        this.isResearcher = isResearcher;
+        this.messages = messages;
+        this.rating = rating;
+        this.message = message;
     }
-    
-    
-    private void putMarks() {
-        //TODO
+
+    public Teacher(List<Course> coursesTaught, Title title, Boolean isResearcher, List<Message> messages, Double rating, Message message) {
+        this.coursesTaught = coursesTaught;
+        this.title = title;
+        this.isResearcher = isResearcher;
+        this.messages = messages;
+        this.rating = rating;
+        this.message = message;
     }
-    
-    
+
+    public Teacher(String username, String password) {
+        super(username, password);
+    }
+
+
+    public Teacher(String username, String password, Integer id, String position) {
+        super(username, password, id, position);
+    }
+
+    public Teacher() {
+    }
+
+    {
+        Data data = Data.getInstance();
+        data.addUser(this);
+    }
+
+    public void putMarks(Lesson l){
+
+    }
+
+    public void getRated(int rate){
+        rating = (rating*rated + rate)/(rated + 1);
+        rated += 1;
+    }
+
+
+    @Override
+    public void update() {
+
+    }
 }

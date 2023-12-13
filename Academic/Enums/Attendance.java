@@ -1,4 +1,4 @@
-package academic.Enums;
+package Academic.Enums;
 
 public enum Attendance {
 	Attended, // 1
