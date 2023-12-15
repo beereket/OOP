@@ -1,8 +1,9 @@
 package Users;
 
 
-import Utils.classes.*;
-import Utils.enums.*;
+import Utils.classes.UserFactory;
+import Utils.enums.UserType;
+import Utils.classes.Data;
 
 
 public class Admin extends User {
@@ -19,7 +20,7 @@ public class Admin extends User {
     }
 
     public void createUser(UserType ut, String username, String password) {
-        Userfactory.createUser(ut, username, password);
+        UserFactory.createUser(ut, username, password);
     }
     {
         Data data = Data.getInstance();

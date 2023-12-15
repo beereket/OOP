@@ -1,10 +1,11 @@
 package Users;
 
 import Messages.Order;
-import Utils.*;
 import Utils.classes.Data;
+import Utils.Observer;
+import java.io.Serializable;
 
-public abstract class User implements Observer {
+public abstract class User implements Observer, Serializable {
     
     private String username;
     private String password;

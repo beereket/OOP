@@ -3,9 +3,9 @@ package Users;
 import Academic.Course;
 import Messages.Request;
 import News.*;
+import Users.Enums.ManagerType;
 import Utils.classes.Data;
 
-import java.util.HashMap;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;

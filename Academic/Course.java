@@ -4,7 +4,7 @@ import java.util.*;
 
 import Users.*;
 import Academic.Enums.*;
-import Users.Faculty;
+import Users.Enums.Faculty;
 
 public class Course {
 	private String code;

@@ -1,4 +1,4 @@
-package Users;
+package Users.Enums;
 
 public enum ManagerType {
 }

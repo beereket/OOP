@@ -2,10 +2,11 @@ package Users;
 
 
 import Academic.Course;
+import Users.Enums.Degree;
+import Users.Enums.Faculty;
 import Utils.*;
 import Utils.classes.Data;
 
-import java.util.Calendar;
 import java.util.List;
 
 public class Student extends User implements Observer {

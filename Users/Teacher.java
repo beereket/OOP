@@ -3,6 +3,7 @@ package Users;
 import Academic.Course;
 import Academic.Lesson;
 import Messages.Message;
+import Users.Enums.Title;
 import Utils.classes.Data;
 
 import java.util.List;
