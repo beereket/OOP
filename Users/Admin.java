@@ -1,10 +1,9 @@
 package Users;
 
 
-import Utils.classes.UserFactory;
-import Utils.enums.UserType;
-import Utils.classes.Data;
-
+import Util.Classes.Data;
+import Util.Classes.UserFactory;
+import Util.Enums.UserType;
 
 public class Admin extends User {
     

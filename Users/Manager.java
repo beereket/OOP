@@ -2,9 +2,9 @@ package Users;
 
 import Academic.Course;
 import Messages.Request;
-import News.*;
+import News.News;
 import Users.Enums.ManagerType;
-import Utils.classes.Data;
+import Util.Classes.Data;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class Manager extends Employee {
         data.addUser(this);
     }
     
-    private List<News> setNews(List<News> news) {
+    private void setNews(List<News> news) {
         this.news = news;
     }
 

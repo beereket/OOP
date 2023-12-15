@@ -1,8 +1,8 @@
 package Users;
 
 import Messages.Order;
-import Utils.classes.Data;
-import Utils.Observer;
+import Util.*;
+import Util.Classes.Data;
 import java.io.Serializable;
 
 public abstract class User implements Observer, Serializable {
@@ -44,6 +44,7 @@ public abstract class User implements Observer, Serializable {
         TechSupportSpecialist tech = new TechSupportSpecialist();
         tech.addOrder(new Order(description));
     }
-    
-    
+
+
+    public abstract void update();
 }

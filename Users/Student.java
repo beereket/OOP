@@ -4,8 +4,8 @@ package Users;
 import Academic.Course;
 import Users.Enums.Degree;
 import Users.Enums.Faculty;
-import Utils.*;
-import Utils.classes.Data;
+import Util.Classes.Data;
+import Util.Observer;
 
 import java.util.List;
 

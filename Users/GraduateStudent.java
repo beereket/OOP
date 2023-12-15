@@ -1,7 +1,8 @@
 package Users;
 
-import Research.*;
-import Utils.classes.Data;
+import Research.ResearchPaper;
+import Research.Researcher;
+import Util.Classes.Data;
 
 import java.util.List;
 

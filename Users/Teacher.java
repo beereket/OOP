@@ -4,8 +4,7 @@ import Academic.Course;
 import Academic.Lesson;
 import Messages.Message;
 import Users.Enums.Title;
-import Utils.classes.Data;
-
+import Util.Classes.Data;
 import java.util.List;
 
 

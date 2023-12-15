@@ -1,9 +1,10 @@
 package Users;
 
 
+import News.News;
+import Util.Classes.Data;
+
 import java.util.List;
-import News.*;
-import Utils.classes.Data;
 
 
 public class StudentOrganization {

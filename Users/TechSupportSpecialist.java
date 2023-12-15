@@ -1,7 +1,7 @@
 package Users;
 
-import Messages.*;
-import Utils.classes.Data;
+import Messages.Order;
+import Util.Classes.Data;
 
 import java.util.List;
 
