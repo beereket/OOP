@@ -4,7 +4,6 @@ package Users;
 import Academic.Course;
 import Users.Enums.Degree;
 import Users.Enums.Faculty;
-import Util.Classes.Data;
 import Util.Observer;
 
 import java.util.List;
@@ -25,10 +24,6 @@ public class Student extends User implements Observer {
     private StudentOrganization studentOrganization;
     private Integer credits;
 
-    {
-        Data data = Data.getInstance();
-        data.addUser(this);
-    }
 
     public Student(String username, String password) {
         super(username, password);

@@ -4,7 +4,7 @@ import Academic.Course;
 import Academic.Lesson;
 import Messages.Message;
 import Users.Enums.Title;
-import Util.Classes.Data;
+
 import java.util.List;
 
 
@@ -16,7 +16,7 @@ public class Teacher extends Employee {
     
     private Boolean isResearcher;
     private List<Message> messages;
-    private Double rating = 10.0;
+    private Double rating = null;
     private int rated = 0; // to calculate;
     private Message message;
 
@@ -59,11 +59,6 @@ public class Teacher extends Employee {
     }
 
     public Teacher() {
-    }
-
-    {
-        Data data = Data.getInstance();
-        data.addUser(this);
     }
 
     public void putMarks(Lesson l){

@@ -2,7 +2,6 @@ package Users;
 
 
 import News.News;
-import Util.Classes.Data;
 
 import java.util.List;
 
@@ -26,10 +25,7 @@ public class StudentOrganization {
         this.name = name;
         this.president = president;
     }
-    {
-        Data data = Data.getInstance();
-        data.addSO(this);
-    }
+
 
     public List<Student> getSubscribers() {
         return subscribers;

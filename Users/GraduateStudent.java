@@ -21,10 +21,6 @@ public class GraduateStudent extends Student {
         return false;
     }
 
-    {
-        Data data = Data.getInstance();
-        data.addUser(this);
-    }
 
     public List<ResearchPaper> viewPublishedPapers() {
         return null;

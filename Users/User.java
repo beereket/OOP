@@ -1,8 +1,8 @@
 package Users;
 
 import Messages.Order;
-import Util.*;
-import Util.Classes.Data;
+import Util.Observer;
+
 import java.io.Serializable;
 
 public abstract class User implements Observer, Serializable {
@@ -16,11 +16,6 @@ public abstract class User implements Observer, Serializable {
     }
 
     public User() {
-    }
-
-    {
-        Data data = Data.getInstance();
-        data.addUser(this);
     }
 
     public String getUsername() {
@@ -38,7 +33,6 @@ public abstract class User implements Observer, Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
 
     public void reportIssue(String description) {
         TechSupportSpecialist tech = new TechSupportSpecialist();

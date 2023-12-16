@@ -7,8 +7,7 @@ import Users.Enums.ManagerType;
 import Util.Classes.Data;
 
 import java.util.List;
-
-import static java.util.stream.Collectors.toList;
+import java.util.Vector;
 
 public class Manager extends Employee {
     
@@ -16,25 +15,8 @@ public class Manager extends Employee {
     
     private ManagerType managerType;
 
-    private static List<News> news;
-    
-    private List<News> getNews() {
-        return this.news;
-    }
-
-    {
-        Data data = Data.getInstance();
-        data.addUser(this);
-    }
-    
-    private void setNews(List<News> news) {
-        this.news = news;
-    }
-
-    
     public void addCoursesForRegistration(Course c) {
-        Data data = Data.getInstance();
-        data.addCourse(c);
+        Data.courses.add(c);
     }
 
     public List<Request> viewRequests() {
@@ -46,9 +28,8 @@ public class Manager extends Employee {
         System.out.println(u);
     }
 
-    public List<Student> createStatisticalReport() {
-        Data data = Data.getInstance();
-        return data.getUsers().stream().filter(obj -> obj instanceof Student).map(obj -> (Student)obj).collect(toList());
+    public Vector<Student> createStatisticalReport() {
+        return Data.INSTANCE.getStudents();
     }
 
     public void enrollStudent() {
@@ -56,10 +37,10 @@ public class Manager extends Employee {
     }
 
     public void addNews(News n){
-        news.add(n);
+        Data.INSTANCE.news.add(n);
     }
     public void deleteNews(News n){
-        news.remove(n);
+        Data.INSTANCE.news.remove(n);
     }
 
 

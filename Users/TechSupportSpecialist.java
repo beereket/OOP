@@ -1,7 +1,6 @@
 package Users;
 
 import Messages.Order;
-import Util.Classes.Data;
 
 import java.util.List;
 
@@ -31,10 +30,6 @@ public class TechSupportSpecialist extends Employee {
     }
 
     public TechSupportSpecialist() {
-    }
-    {
-        Data data = Data.getInstance();
-        data.addUser(this);
     }
 
     public void acceptOrder(Order o){

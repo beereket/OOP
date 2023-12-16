@@ -1,12 +1,17 @@
 package Academic;
 
-import java.util.*;
-
-import Users.*;
-import Academic.Enums.*;
+import Academic.Enums.SemesterType;
+import Academic.Enums.typeOfAttestation;
 import Users.Enums.Faculty;
+import Users.Student;
+import Users.Teacher;
 
-public class Course {
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Vector;
+
+public class Course implements Serializable {
 	private String code;
 	private String title;
 	private String description;

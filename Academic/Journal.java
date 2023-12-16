@@ -1,11 +1,8 @@
 package Academic;
 
-import java.util.*;
+import java.util.Vector;
 
-import Users.*;
-import Academic.Enums.*;
-
-public class Journal {
+public class Journal  {
 	private Vector<Lesson> lessons;
 
 	// Getters-Set
