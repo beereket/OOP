@@ -1,8 +1,10 @@
 package Research;
 
+import java.util.List;
+
 public class ResearchPaper {
     private String title;
-    private String authors;
+    private List<Researcher> authors;
     private String citations;
     private String doi;
     private Integer pages;
@@ -10,7 +12,7 @@ public class ResearchPaper {
     private String publisher;
     private Integer accessionNumber;
 
-    public ResearchPaper(String title, String authors, String citations, String doi,
+    public ResearchPaper(String title, List<Researcher> authors, String citations, String doi,
                          Integer pages, Integer publicationYear, String publisher, Integer accessionNumber) {
         this.title = title;
         this.authors = authors;
@@ -23,15 +25,12 @@ public class ResearchPaper {
     }
 
 
-    public String getCitation(Format format) throws FormatNotSupportedException {
-        switch (format) {
-            case PLAIN_TEXT:
-                return generatePlainTextCitation();
-            case BIBTEX:
-                return generateBibtexCitation();
-            default:
-                throw new FormatNotSupportedException("Unsupported citation format: " + format);
-        }
+    public String getCitation(Research.Format format) throws Research.FormatNotSupportedException {
+        return switch (format) {
+            case PLAIN_TEXT -> generatePlainTextCitation();
+            case BIBTEX -> generateBibtexCitation();
+            default -> throw new Research.FormatNotSupportedException("Unsupported citation format: " + format);
+        };
     }
 
     private String generatePlainTextCitation() {
