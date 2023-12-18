@@ -101,4 +101,13 @@ public class Data implements Serializable {
     public void setStudents(Vector<Student> students) {
         this.students = students;
     }
+    public void removeNews(News n){
+        news.remove(n);
+    }
+    public void addNews(News n){
+        news.add(n);
+    }
+    public void addCourse(Course c){
+        courses.add(c);
+    }
 }

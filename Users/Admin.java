@@ -8,7 +8,7 @@ import Util.Classes.Data;
 public class Admin extends User {
 
 
-    public Admin(String username, String password, String logFiles) {
+    public Admin(String username, String password){
         super(username, password);
     }
 

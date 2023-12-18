@@ -10,13 +10,15 @@ import java.util.List;
 import java.util.Vector;
 
 public class Manager extends Employee {
-    
     private Integer id;
-    
     private ManagerType managerType;
 
+    public Manager(String userName, String password) {
+
+    }
+
     public void addCoursesForRegistration(Course c) {
-        Data.courses.add(c);
+        Data.getInstance().addCourse(c);
     }
 
     public List<Request> viewRequests() {
@@ -29,7 +31,7 @@ public class Manager extends Employee {
     }
 
     public Vector<Student> createStatisticalReport() {
-        return Data.INSTANCE.getStudents();
+        return Data.getInstance().getStudents();
     }
 
     public void enrollStudent() {
@@ -37,12 +39,11 @@ public class Manager extends Employee {
     }
 
     public void addNews(News n){
-        Data.INSTANCE.news.add(n);
+        Data.getInstance().addNews(n);
     }
     public void deleteNews(News n){
-        Data.INSTANCE.news.remove(n);
+        Data.getInstance().removeNews(n);
     }
-
 
     @Override
     public void update() {
