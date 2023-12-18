@@ -12,14 +12,14 @@ import java.util.Vector;
 
 public class Data implements Serializable {
 
-    public static Data INSTANCE;
-    public String logFiles = "";
-    public static HashMap<Course, List<Student>> enrollments = new HashMap<Course, List<Student>>();
-    public static Vector<User> users = new Vector<User>();
-    public static Vector<StudentOrganization> organizations = new Vector<StudentOrganization>();
-    public static Vector<Course> courses = new Vector<Course>();;
-    public static Vector<Student> students  = new Vector<Student>();;
-    public static Vector<News> news = new Vector<News>();
+    private static Data INSTANCE;
+    private static String logFiles = "";
+    private static HashMap<Course, List<Student>> enrollments = new HashMap<Course, List<Student>>();
+    private static Vector<User> users = new Vector<User>();
+    private static Vector<StudentOrganization> organizations = new Vector<StudentOrganization>();
+    private static Vector<Course> courses = new Vector<Course>();;
+    private static Vector<Student> students  = new Vector<Student>();;
+    private static Vector<News> news = new Vector<News>();
 
     private Data() {
         // TODO: Initialize your fields or perform any other necessary setup
@@ -47,15 +47,18 @@ public class Data implements Serializable {
         oos.close();
     }
 
-    public static void setINSTANCE(Data INSTANCE) {
-        Data.INSTANCE = INSTANCE;
+    public static Data getInstance(){
+        if(Data.INSTANCE == null){
+            INSTANCE = new Data();
+        }
+        return INSTANCE;
     }
 
     public String getLogFiles() {
         return logFiles;
     }
 
-    public void setLogFiles(String logFiles) {
+    private void setLogFiles(String logFiles) {
         this.logFiles = logFiles;
     }
 

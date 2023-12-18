@@ -1,6 +1,5 @@
 package Users;
 
-import Messages.Order;
 import Util.Observer;
 
 import java.io.Serializable;
@@ -26,7 +25,7 @@ public abstract class User implements Observer, Serializable {
         this.username = username;
     }
 
-    public String getPassword() {
+    private String getPassword() {
         return password;
     }
 
@@ -35,8 +34,6 @@ public abstract class User implements Observer, Serializable {
     }
 
     public void reportIssue(String description) {
-        TechSupportSpecialist tech = new TechSupportSpecialist();
-        tech.addOrder(new Order(description));
     }
 
 

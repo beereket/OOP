@@ -13,11 +13,15 @@ public class Admin extends User {
     }
 
     public String viewLogFiles() {
-        return Data.INSTANCE.getLogFiles();
+        return Data.getInstance().getLogFiles();
     }
 
     public void createUser(UserType ut, String username, String password) {
         UserFactory.createUser(ut, username, password);
+    }
+
+    public void deleteUser(User u){
+
     }
 
     @Override
