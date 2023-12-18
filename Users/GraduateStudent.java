@@ -2,12 +2,12 @@ package Users;
 
 import Research.ResearchPaper;
 import Research.Researcher;
-import Util.Classes.Data;
+import Util.Observer;
 
 import java.util.List;
 
 
-public class GraduateStudent extends Student {
+public class GraduateStudent extends Student implements Observer, Researcher {
 
     
     private Researcher researchSupervisor;

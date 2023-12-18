@@ -2,6 +2,8 @@ package Users;
 
 import Messages.Order;
 import Util.Classes.Data;
+import Util.Enums.UserType;
+import Util.Exception.UserNotFound;
 import Util.Observer;
 
 import java.io.Serializable;
@@ -11,10 +13,12 @@ public abstract class User implements Observer, Serializable {
     
     private String username;
     private String password;
+    private UserType userType;
 
-    public User(String username, String password) {
+    public User(String username, String password, UserType userType) {
         this.username = username;
         this.password = password;
+        this.userType = userType;
     }
 
     public User() {
@@ -35,19 +39,19 @@ public abstract class User implements Observer, Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-    public static User authenticate(String username, String password){
+    public static User authenticate(String username, String password) throws UserNotFound {
         Vector<User> users = Data.getInstance().getUsers();
         for (User user: users){
             if(user.getUsername().equals(username) && user.getPassword().equals(password)){
                 return user;
             }
         }
-        return null;
+        throw new UserNotFound();
     }
 
+
     public void reportIssue(String description) {
-        TechSupportSpecialist tech = new TechSupportSpecialist();
-        tech.addOrder(new Order(description));
+        TechSupportSpecialist.addOrder(new Order(description));
     }
 
 

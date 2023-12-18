@@ -1,30 +1,20 @@
 package Users;
 import Messages.*;
 
+import java.io.Serializable;
 
-public class Employee extends User {
+
+public class Employee extends User implements Serializable {
     
     private Integer id;
-    private String position;
-
-    public Employee(String username, String password) {
-        super(username, password);
-    }
-
-    public Employee(String username, String password, Integer id, String position) {
-        super(username, password);
-        this.id = id;
-        this.position = position;
-    }
 
     public Employee() {
     }
 
-    public void sendRequest(){
-
+    public void sendRequest(String content){
+        Rector.getINSTANCE().addRequest(new Request(this, content));
     }
     public void sendMessage(Message m, Employee e){
-
     }
 
     @Override

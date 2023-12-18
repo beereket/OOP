@@ -6,10 +6,11 @@ import News.News;
 import Users.Enums.ManagerType;
 import Util.Classes.Data;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Vector;
 
-public class Manager extends Employee {
+public class Manager extends Employee implements Serializable {
     private Integer id;
     private ManagerType managerType;
 

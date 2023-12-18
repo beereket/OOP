@@ -1,6 +1,7 @@
 package Util.Classes;
 import News.News;
 import Academic.Course;
+import Users.Manager;
 import Users.Student;
 import Users.StudentOrganization;
 import Users.User;
@@ -18,6 +19,7 @@ public class Data implements Serializable {
     private static Vector<User> users = new Vector<User>();
     private static Vector<StudentOrganization> organizations = new Vector<StudentOrganization>();
     private static Vector<Course> courses = new Vector<Course>();;
+    private static Vector<Manager> managers = new Vector<Manager>();
     private static Vector<Student> students  = new Vector<Student>();;
     private static Vector<News> news = new Vector<News>();
 

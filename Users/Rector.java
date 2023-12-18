@@ -25,21 +25,12 @@ public class Rector extends Employee {
         signedRequests.add(r);
     }
 
-    public Rector(String username, String password) {
-        super(username, password);
-    }
-
-    public Rector(String username, String password, Integer id, String position) {
-        super(username, password, id, position);
-    }
-
-
 
     public List<Request> getRequests() {
         return requests;
     }
 
-    public void setRequests(List<Request> requests) {
+    private  void setRequests(List<Request> requests) {
         this.requests = requests;
     }
 
@@ -47,8 +38,11 @@ public class Rector extends Employee {
         return signedRequests;
     }
 
-    public void setSignedRequests(List<Request> signedRequests) {
+    private void setSignedRequests(List<Request> signedRequests) {
         this.signedRequests = signedRequests;
+    }
+    public void addRequest(Request r){
+        requests.add(r);
     }
 
     @Override

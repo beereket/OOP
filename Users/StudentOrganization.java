@@ -1,10 +1,7 @@
 package Users;
 
-
 import News.News;
-
 import java.util.List;
-
 
 public class StudentOrganization {
     
