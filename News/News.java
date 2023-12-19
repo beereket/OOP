@@ -1,10 +1,9 @@
-package News
+package News;
 
-import Utils.Observer;
+import Util.Observer;
 
 import java.util.Date;
-import java.util.List;-4;
-
+import java.util.List;
 
 public class News  {
     

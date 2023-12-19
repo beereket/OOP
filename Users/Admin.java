@@ -14,16 +14,16 @@ public class Admin extends User implements Serializable {
         super(username, password, UserType.ADMIN);
     }
 
-    public String viewLogFiles() {
+    private String viewLogFiles() {
         return Data.getInstance().getLogFiles();
     }
 
-    public void createUser(UserType ut, String username, String password) {
+    private void createUser(UserType ut, String username, String password) {
         UserFactory.createUser(ut, username, password);
     }
 
-    public void deleteUser(User u){
-
+    private void deleteUser(User u){
+        Data.getInstance().removeUser(u);
     }
 
     @Override

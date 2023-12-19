@@ -9,8 +9,8 @@ public class Rector extends Employee {
     
     private static Rector INSTANCE;
     
-    private static List<Request> requests;
-    private static List<Request> signedRequests;
+    protected static List<Request> requests;
+    protected static List<Request> signedRequests;
 
     private Rector(){
     }
@@ -41,7 +41,7 @@ public class Rector extends Employee {
     private void setSignedRequests(List<Request> signedRequests) {
         this.signedRequests = signedRequests;
     }
-    public void addRequest(Request r){
+    protected void addRequest(Request r){
         requests.add(r);
     }
 

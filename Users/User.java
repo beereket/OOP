@@ -2,6 +2,7 @@ package Users;
 
 import Messages.Order;
 import Util.Classes.Data;
+import Util.Enums.Language;
 import Util.Enums.UserType;
 import Util.Exception.UserNotFound;
 import Util.Observer;
@@ -9,11 +10,14 @@ import Util.Observer;
 import java.io.Serializable;
 import java.util.Vector;
 
+import static Util.Enums.Language.*;
+
 public abstract class User implements Observer, Serializable {
     
     private String username;
     private String password;
-    private UserType userType;
+    protected UserType userType;
+    protected Language language = ENG;
 
     public User(String username, String password, UserType userType) {
         this.username = username;
@@ -28,15 +32,15 @@ public abstract class User implements Observer, Serializable {
         return username;
     }
 
-    public void setUsername(String username) {
+    protected void setUsername(String username) {
         this.username = username;
     }
 
-    private String getPassword() {
+    protected String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    protected void setPassword(String password) {
         this.password = password;
     }
     public static User authenticate(String username, String password) throws UserNotFound {
@@ -54,6 +58,21 @@ public abstract class User implements Observer, Serializable {
         TechSupportSpecialist.addOrder(new Order(description));
     }
 
+    public UserType getUserType() {
+        return userType;
+    }
+
+    protected void setUserType(UserType userType) {
+        this.userType = userType;
+    }
+
+    protected Language getLanguage() {
+        return language;
+    }
+
+    protected void setLanguage(Language language) {
+        this.language = language;
+    }
 
     public abstract void update();
 }

@@ -12,22 +12,14 @@ public class Teacher extends Employee {
     private List<Course> coursesTaught;
     
     private Title title;
-    private Boolean isResearcher;
+    private Boolean isResearcher = false;
     private Double rating = null;
-    private int rated = 0; // to calculate;
 
     public Teacher() {
     }
 
-    public void putMarks(Lesson l){
-
+    protected void putMarks(Lesson l){
     }
-
-    public void getRated(int rate){
-        rating = (rating*rated + rate)/(rated + 1);
-        rated += 1;
-    }
-
 
     @Override
     public void update() {

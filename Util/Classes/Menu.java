@@ -1,6 +1,6 @@
 package Util.Classes;
 
-import Users.*;
+import Users.User;
 import Util.Exception.UserNotFound;
 
 import java.io.BufferedReader;
@@ -17,8 +17,9 @@ public class Menu {
         String password = bf.readLine();
 
         User user = User.authenticate(username, password);
-        while(true){
-
-        }
+        //менюшканы класстын озине жазамыз
+        //мынак пока тура турсын
     }
+
+
 }

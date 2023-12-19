@@ -5,13 +5,17 @@ import Messages.Request;
 import News.News;
 import Users.Enums.ManagerType;
 import Util.Classes.Data;
+import Util.Enums.Language;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Vector;
 
+import static Util.Enums.Language.*;
+
 public class Manager extends Employee implements Serializable {
-    private Integer id;
+
     private ManagerType managerType;
 
     public Manager(String userName, String password) {
@@ -45,6 +49,41 @@ public class Manager extends Employee implements Serializable {
     public void deleteNews(News n){
         Data.getInstance().removeNews(n);
     }
+
+    public void run() throws IOException {
+        try{
+            if(language == KZ) System.out.println("Қош келдіңіз!");
+            else if(language == RUS) System.out.println("Добро пожаловать!");
+            else System.out.println("Welcome!");
+
+            menu : while (true){
+
+            }
+        } catch (Exception e) {
+            if(language == KZ)System.out.println("Ойбай, қате...");
+            else if(language == RUS) System.out.println("Ошибка....");
+            else System.out.println("Error... ");
+            e.printStackTrace();
+            save();
+        }
+    }
+
+    private void save() throws IOException {
+        Data.write();
+    }
+    private void exit(Language language) {
+        if(language == ENG) System.out.println("Bye bye!");
+        else if(language == KZ) System.out.println("Сауболыңыз!");
+        else System.out.println("До свидания!");
+        try {
+            save();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 
     @Override
     public void update() {

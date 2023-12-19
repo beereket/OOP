@@ -1,6 +1,7 @@
 package Util.Classes;
-import News.News;
+
 import Academic.Course;
+import News.News;
 import Users.Manager;
 import Users.Student;
 import Users.StudentOrganization;
@@ -10,6 +11,8 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
+
+import static Util.Enums.UserType.STUDENT;
 
 public class Data implements Serializable {
 
@@ -111,5 +114,9 @@ public class Data implements Serializable {
     }
     public void addCourse(Course c){
         courses.add(c);
+    }
+    public void removeUser(User u){
+        users.remove(u);
+        if(u.getUserType() == STUDENT) students.remove((Student) u);
     }
 }

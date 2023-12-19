@@ -2,13 +2,15 @@ package Users;
 
 
 import Academic.Course;
+import Research.ResearchProject;
 import Research.ResearchProjectJoinException;
 import Research.ResearchSupervisorException;
 import Research.Researcher;
 import Users.Enums.Degree;
 import Users.Enums.Faculty;
+import Util.Enums.UserType;
 import Util.Observer;
-import Research.*;
+
 import java.util.List;
 
 public class Student extends User implements Observer, Researcher {
@@ -27,8 +29,9 @@ public class Student extends User implements Observer, Researcher {
     private StudentOrganization studentOrganization;
     private Integer credits;
 
-
-
+    public Student(String username, String password, UserType userType) {
+        super(username, password, userType);
+    }
 
     @Override
     public void update() {
@@ -39,11 +42,11 @@ public class Student extends User implements Observer, Researcher {
         return GPA;
     }
 
-    public List<Course> getCoursesRegistered(){
+    protected List<Course> getCoursesRegistered(){
         return coursesRegistered;
     }
-    public void rateTeacher(Teacher t, int rate){
-        t.getRated(rate);
+    protected void rateTeacher(Teacher t, int rate){
+
     }
     public void viewInfoAboutTeacher(Teacher t){
         System.out.println(t);
