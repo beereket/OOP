@@ -5,7 +5,6 @@ import Messages.Request;
 import News.News;
 import Users.Enums.ManagerType;
 import Util.Classes.Data;
-import Util.Enums.Language;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -15,6 +14,7 @@ import java.util.Vector;
 import static Util.Enums.Language.*;
 
 public class Manager extends Employee implements Serializable {
+
 
     private ManagerType managerType;
 
@@ -57,6 +57,8 @@ public class Manager extends Employee implements Serializable {
             else System.out.println("Welcome!");
 
             menu : while (true){
+                int choice = in.nextInt();
+                displayMenu();
 
             }
         } catch (Exception e) {
@@ -67,21 +69,49 @@ public class Manager extends Employee implements Serializable {
             save();
         }
     }
-
-    private void save() throws IOException {
-        Data.write();
+    private void displayMenu(){
+        if(language == ENG) displayEnglishMenu();
+        else if (language == KZ) displayKazakhMenu();
+        else displayRussianMenu();
     }
-    private void exit(Language language) {
-        if(language == ENG) System.out.println("Bye bye!");
-        else if(language == KZ) System.out.println("Сауболыңыз!");
-        else System.out.println("До свидания!");
-        try {
-            save();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void displayEnglishMenu() {
+        System.out.println("Manager Terminal Menu:");
+        System.out.println("1. Approve students registration");
+        System.out.println("2. Add courses for registration");
+        System.out.println("3. Assign courses to teachers");
+        System.out.println("4. View info about students and teachers");
+        System.out.println("5. Create statistical reports on academic performance");
+        System.out.println("6. Manage news");
+        System.out.println("7. View requests from employees");
+        System.out.println("8. Change language");
+        System.out.println("9. Exit");
     }
 
+    private void displayRussianMenu() {
+        System.out.println("Меню Менеджера:");
+        System.out.println("1. Подтвердить регистрацию студентов");
+        System.out.println("2. Добавить курсы для регистрации");
+        System.out.println("3. Назначить курсы преподавателям");
+        System.out.println("4. Просмотреть информацию о студентах и преподавателях");
+        System.out.println("5. Создать статистические отчеты об успеваемости");
+        System.out.println("6. Управлять новостями");
+        System.out.println("7. Просмотреть запросы от сотрудников");
+        System.out.println("8. Изменить язык");
+        System.out.println("9. Выйти");
+    }
+
+    private void displayKazakhMenu() {
+        System.out.println("Менеджер меню:");
+        System.out.println("1. Студенттердің тіркеуін растау");
+        System.out.println("2. Тіркелу үшін пәндерді қосу");
+        System.out.println("3. Пәндерді оқытушыларға арнаулау");
+        System.out.println("4. Студенттер мен оқытушылар туралы ақпарат көру");
+        System.out.println("5. Академиялық жетімділік туралы статистикалық есептер жасау");
+        System.out.println("6. Жаңалықтарды басқару");
+        System.out.println("7. Жұмысшылардан сұрауларды қарау");
+        System.out.println("8. Тіл өзгерту");
+        System.out.println("9. Шығу");
+    }
 
 
 

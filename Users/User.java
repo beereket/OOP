@@ -7,7 +7,9 @@ import Util.Enums.UserType;
 import Util.Exception.UserNotFound;
 import Util.Observer;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.Scanner;
 import java.util.Vector;
 
 import static Util.Enums.Language.*;
@@ -18,6 +20,7 @@ public abstract class User implements Observer, Serializable {
     private String password;
     protected UserType userType;
     protected Language language = ENG;
+    protected Scanner in = new Scanner(System.in);
 
     public User(String username, String password, UserType userType) {
         this.username = username;
@@ -53,6 +56,19 @@ public abstract class User implements Observer, Serializable {
         throw new UserNotFound();
     }
 
+    protected void save() throws IOException {
+        Data.write();
+    }
+    protected void exit(Language language) {
+        if(language == ENG) System.out.println("Bye bye!");
+        else if(language == KZ) System.out.println("Сауболыңыз!");
+        else System.out.println("До свидания!");
+        try {
+            save();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void reportIssue(String description) {
         TechSupportSpecialist.addOrder(new Order(description));
@@ -73,6 +89,27 @@ public abstract class User implements Observer, Serializable {
     protected void setLanguage(Language language) {
         this.language = language;
     }
+    protected void changeLanguage(){
+        System.out.println("1. Қазақша \n 2. Руский \n 3. English");
 
-    public abstract void update();
+        int choice;
+        do {
+            System.out.print("Enter your choice: ");
+            choice = in.nextInt();
+
+            if (choice < 1 || choice > 3) {
+                System.out.println("Invalid choice. Please enter a number between 1 and 3.");
+            }
+        } while (choice < 1 || choice > 3);
+
+        if (choice == 1) {
+            setLanguage(Language.KZ);
+        } else if (choice == 2) {
+            setLanguage(Language.RUS);
+        } else if (choice == 3) {
+            setLanguage(Language.ENG);
+        }
+    }
+
+//    public abstract void update();
 }
