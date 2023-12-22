@@ -30,7 +30,18 @@ public abstract class User implements Observer, Serializable {
 
     public User() {
     }
+    public void reportIssue(String description) {
+        TechSupportSpecialist.orders.add(new Order(description));
+    }
 
+    //getter and setter
+    public UserType getUserType() {
+        return userType;
+    }
+
+    protected void setUserType(UserType userType) {
+        this.userType = userType;
+    }
     public String getUsername() {
         return username;
     }
@@ -46,6 +57,30 @@ public abstract class User implements Observer, Serializable {
     protected void setPassword(String password) {
         this.password = password;
     }
+
+    protected Language getLanguage() {
+        return language;
+    }
+
+    protected void setLanguage(Language language) {
+        this.language = language;
+    }
+
+
+    //MENU METHODS
+    public abstract void run() throws IOException;
+    protected void displayMenu() {
+        if (language == ENG) displayEnglishMenu();
+        else if (language == KZ) displayKazakhMenu();
+        else if (language == RUS) displayRussianMenu();
+    }
+
+    protected abstract void displayRussianMenu();
+
+    protected abstract void displayKazakhMenu();
+
+    protected abstract void displayEnglishMenu();
+
     public static User authenticate(String username, String password) throws UserNotFound {
         Vector<User> users = Data.getInstance().getUsers();
         for (User user: users){
@@ -70,25 +105,14 @@ public abstract class User implements Observer, Serializable {
         }
     }
 
-    public void reportIssue(String description) {
-        TechSupportSpecialist.orders.add(new Order(description));
+    protected void handleError(Exception e) throws IOException {
+        if (language == KZ) System.out.println("Ойбай, қате...");
+        else if (language == RUS) System.out.println("Ошибка....");
+        else System.out.println("Error... ");
+        e.printStackTrace();
+        save();
     }
-
-    public UserType getUserType() {
-        return userType;
-    }
-
-    protected void setUserType(UserType userType) {
-        this.userType = userType;
-    }
-
-    protected Language getLanguage() {
-        return language;
-    }
-
-    protected void setLanguage(Language language) {
-        this.language = language;
-    }
+    //LANGUAGE
     protected void changeLanguage(){
         System.out.println("1. Қазақша \n 2. Руский \n 3. English");
 

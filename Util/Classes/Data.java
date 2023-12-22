@@ -2,10 +2,7 @@ package Util.Classes;
 
 import Academic.Course;
 import News.News;
-import Users.Manager;
-import Users.Student;
-import Users.StudentOrganization;
-import Users.User;
+import Users.*;
 
 import java.io.*;
 import java.util.HashMap;
@@ -20,10 +17,12 @@ public class Data implements Serializable {
     private static String logFiles = "";
     private static HashMap<Course, List<Student>> enrollments = new HashMap<Course, List<Student>>();
     private static Vector<User> users = new Vector<User>();
+    private static Vector<Employee> employees = new Vector<Employee>();
     private static Vector<StudentOrganization> organizations = new Vector<StudentOrganization>();
     private static Vector<Course> courses = new Vector<Course>();;
     private static Vector<Manager> managers = new Vector<Manager>();
     private static Vector<Student> students  = new Vector<Student>();;
+    private static Vector<Teacher> teachers = new Vector<Teacher>();
     private static Vector<News> news = new Vector<News>();
 
     private Data() {

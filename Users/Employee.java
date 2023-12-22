@@ -2,6 +2,7 @@ package Users;
 import Messages.*;
 import Util.Enums.UserType;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Vector;
 
@@ -24,6 +25,26 @@ public class Employee extends User implements Serializable {
     }
     public void sendMessage(Message m, Employee e){
         e.messages.add(m);
+    }
+
+    @Override
+    public void run() throws IOException {
+
+    }
+
+    @Override
+    protected void displayRussianMenu() {
+
+    }
+
+    @Override
+    protected void displayKazakhMenu() {
+
+    }
+
+    @Override
+    protected void displayEnglishMenu() {
+
     }
 
     @Override

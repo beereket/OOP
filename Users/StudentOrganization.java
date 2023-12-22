@@ -1,9 +1,11 @@
 package Users;
 
 import News.News;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class StudentOrganization {
+public class StudentOrganization implements Serializable {
     
     private List<Student> subscribers;
     

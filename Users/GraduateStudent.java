@@ -3,12 +3,12 @@ package Users;
 import Research.ResearchPaper;
 import Research.Researcher;
 import Util.Enums.UserType;
-import Util.Observer;
 
+import java.io.Serializable;
 import java.util.List;
 
 
-public class GraduateStudent extends Student implements Observer, Researcher {
+public class GraduateStudent extends Student implements Serializable {
 
     
     private Researcher researchSupervisor;

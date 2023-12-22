@@ -14,14 +14,15 @@ import java.util.Vector;
 import static Util.Enums.Language.*;
 
 public class Manager extends Employee implements Serializable {
-
-
+    //FIELDS
     private ManagerType managerType;
 
+    //CONSTUCTORS
     public Manager(String userName, String password) {
 
     }
 
+    //METHODS
     public void addCoursesForRegistration(Course c) {
         Data.getInstance().addCourse(c);
     }
@@ -42,7 +43,6 @@ public class Manager extends Employee implements Serializable {
     public void enrollStudent() {
 
     }
-
     public void addNews(News n){
         Data.getInstance().addNews(n);
     }
@@ -50,6 +50,8 @@ public class Manager extends Employee implements Serializable {
         Data.getInstance().removeNews(n);
     }
 
+
+    //MENU METHODS
     public void run() throws IOException {
         try{
             if(language == KZ) System.out.println("Қош келдіңіз!");
@@ -62,19 +64,12 @@ public class Manager extends Employee implements Serializable {
 
             }
         } catch (Exception e) {
-            if(language == KZ)System.out.println("Ойбай, қате...");
-            else if(language == RUS) System.out.println("Ошибка....");
-            else System.out.println("Error... ");
-            e.printStackTrace();
-            save();
+            handleError(e);
         }
     }
-    private void displayMenu(){
-        if(language == ENG) displayEnglishMenu();
-        else if (language == KZ) displayKazakhMenu();
-        else displayRussianMenu();
-    }
-    private void displayEnglishMenu() {
+
+    @Override
+    protected void displayEnglishMenu() {
         System.out.println("Manager Terminal Menu:");
         System.out.println("1. Approve students registration");
         System.out.println("2. Add courses for registration");
@@ -87,7 +82,8 @@ public class Manager extends Employee implements Serializable {
         System.out.println("9. Exit");
     }
 
-    private void displayRussianMenu() {
+    @Override
+    protected void displayRussianMenu() {
         System.out.println("Меню Менеджера:");
         System.out.println("1. Подтвердить регистрацию студентов");
         System.out.println("2. Добавить курсы для регистрации");
@@ -100,7 +96,8 @@ public class Manager extends Employee implements Serializable {
         System.out.println("9. Выйти");
     }
 
-    private void displayKazakhMenu() {
+    @Override
+    protected void displayKazakhMenu() {
         System.out.println("Менеджер меню:");
         System.out.println("1. Студенттердің тіркеуін растау");
         System.out.println("2. Тіркелу үшін пәндерді қосу");

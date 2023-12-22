@@ -2,10 +2,11 @@ package Users;
 
 import Messages.Request;
 
+import java.io.Serializable;
 import java.util.List;
 
 
-public class Rector extends Employee {
+public class Rector extends Employee implements Serializable {
     
     private static Rector INSTANCE;
     protected static List<Request> requests;
@@ -43,6 +44,23 @@ public class Rector extends Employee {
     protected void addRequest(Request r){
         requests.add(r);
     }
+
+    //MENU
+    @Override
+    protected void displayRussianMenu() {
+
+    }
+
+    @Override
+    protected void displayKazakhMenu() {
+
+    }
+
+    @Override
+    protected void displayEnglishMenu() {
+
+    }
+
 
     @Override
     public void update() {

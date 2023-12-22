@@ -5,6 +5,7 @@ import Util.Classes.UserFactory;
 import Util.Enums.UserType;
 import Util.Classes.Data;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 public class Admin extends User implements Serializable {
@@ -28,6 +29,26 @@ public class Admin extends User implements Serializable {
 
     @Override
     public void update() {
+
+    }
+    //MENU METHODS
+    @Override
+    public void run() throws IOException {
+
+    }
+
+    @Override
+    protected void displayRussianMenu() {
+
+    }
+
+    @Override
+    protected void displayKazakhMenu() {
+
+    }
+
+    @Override
+    protected void displayEnglishMenu() {
 
     }
 }
