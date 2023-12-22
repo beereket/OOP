@@ -13,9 +13,8 @@ public class StudentOrganization {
     
     private Student president;
 
-    public News manageNews() {
-        //TODO
-        return null;
+    public void manageNews() {
+
     }
 
     public StudentOrganization(String name,  Student president) {

@@ -8,7 +8,6 @@ import java.util.List;
 public class Rector extends Employee {
     
     private static Rector INSTANCE;
-    
     protected static List<Request> requests;
     protected static List<Request> signedRequests;
 

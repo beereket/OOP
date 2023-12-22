@@ -71,7 +71,7 @@ public abstract class User implements Observer, Serializable {
     }
 
     public void reportIssue(String description) {
-        TechSupportSpecialist.addOrder(new Order(description));
+        TechSupportSpecialist.orders.add(new Order(description));
     }
 
     public UserType getUserType() {
