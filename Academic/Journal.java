@@ -1,17 +1,17 @@
 package Academic;
 
-import java.util.Vector;
+import Academic.Enums.*;
+import Users.Student;
 
 public class Journal  {
-	private Vector<Lesson> lessons;
 
-	// Getters-Set
-	public Vector<Lesson> getLessons() {
-		return lessons;
+	public void putMarks(Student student, typeOfAttestation type, int mark, Course course){
+		course.putMark(student, type, mark);
 	}
-	public void setLessons(Vector<Lesson> lessons) {
-		this.lessons = lessons;
+	public void putAttendance(Student student, Lesson lesson, int att){
+		lesson.setAttendance(student, att);
 	}
-	
-	
+	public void putComment(Student student, String comment, Course course){
+
+	}
 }

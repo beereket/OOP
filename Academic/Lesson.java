@@ -14,12 +14,12 @@ public class Lesson {
 	private int room;
 	private int duration;  // in hours
 	private boolean isOffline;
-	private HashMap<Student, Integer> students; // Student: Attendance(Enum);
+	private HashMap<Student, StudentPerformance> students; // Student: Attendance(Enum) / Mark / Comment
 	
 	public Lesson() {
-		students = new HashMap<Student, Integer>();
+		students = new HashMap<Student, StudentPerformance>();
 	}
-	public Lesson(LessonType type, LocalDate time, int weekDay, Teacher instructor, int room, int duration, boolean isOffline, HashMap<Student, Integer> students) {
+	public Lesson(LessonType type, LocalDate time, int weekDay, Teacher instructor, int room, int duration, boolean isOffline, HashMap<Student, StudentPerformance> students) {
 		this();
 		
 		this.type = type;
@@ -74,10 +74,10 @@ public class Lesson {
 	public void setOffline(boolean isOffline) {
 		this.isOffline = isOffline;
 	}
-	public HashMap<Student, Integer> getStudents() {
+	public HashMap<Student,StudentPerformance> getStudents() {
 		return students;
 	}
-	public void setStudents(HashMap<Student, Integer> students) {
+	public void setStudents(HashMap<Student, StudentPerformance> students) {
 		this.students = students;
 	}
 	public Teacher getInstructor() {
@@ -86,6 +86,38 @@ public class Lesson {
 	public void setInstructor(Teacher instructor) {
 		this.instructor = instructor;
 	}
-	
-	
+
+
+					/* 				Operations 				*/
+
+	public void setAttendance(Student student, int att){
+		if(students.containsKey(student)){
+			StudentPerformance curSP = students.get(student);
+			curSP.setAttendace(att);
+			students.put(student, curSP);
+		}
+		else{
+			// Exception: No such student on lecture
+		}
+	}
+	public void setMark(Student student, int mark){
+		if(students.containsKey(student)){
+			StudentPerformance curSP = students.get(student);
+			curSP.setMark(mark);
+			students.put(student, curSP);
+		}
+		else{
+			// Exception: No such student on lecture
+		}
+	}
+	public void setComment(Student student,String comment){
+		if(students.containsKey(student)){
+			StudentPerformance curSP = students.get(student);
+			curSP.setComment(comment);
+			students.put(student, curSP);
+		}
+		else{
+			// Exception: No such student on lecture
+		}
+	}
 }
