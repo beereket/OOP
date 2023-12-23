@@ -11,8 +11,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Vector;
 
-import static Util.Enums.Language.*;
-
 public class Manager extends Employee implements Serializable {
     //FIELDS
     private ManagerType managerType;
@@ -54,10 +52,7 @@ public class Manager extends Employee implements Serializable {
     //MENU METHODS
     public void run() throws IOException {
         try{
-            if(language == KZ) System.out.println("Қош келдіңіз!");
-            else if(language == RUS) System.out.println("Добро пожаловать!");
-            else System.out.println("Welcome!");
-
+            getWelcomeMessage();
             menu : while (true){
                 int choice = in.nextInt();
                 displayMenu();

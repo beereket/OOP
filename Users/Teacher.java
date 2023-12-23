@@ -7,20 +7,16 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
-import static Util.Enums.Language.*;
-import static Util.Enums.Language.KZ;
-
 
 public class Teacher extends Employee implements Serializable {
-    
     private List<Course> coursesTaught;
-    
     private Title title;
     protected Double rating = null;
     protected int rated = 0;
-
     public Teacher() {
     }
+
+
 
 
     protected void putMarks(){
@@ -31,9 +27,6 @@ public class Teacher extends Employee implements Serializable {
         return coursesTaught;
     }
 
-    public void setCoursesTaught(List<Course> coursesTaught) {
-        this.coursesTaught = coursesTaught;
-    }
 
     public Title getTitle() {
         return title;
@@ -53,10 +46,7 @@ public class Teacher extends Employee implements Serializable {
 
     public void run() throws IOException {
         try {
-            if (language == KZ) System.out.println("Қош келдіңіз!");
-            else if (language == RUS) System.out.println("Добро пожаловать!");
-            else System.out.println("Welcome!");
-
+            getWelcomeMessage();
             while (true) {
                 displayMenu();
                 int choice = in.nextInt();

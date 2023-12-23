@@ -24,6 +24,7 @@ public class Data implements Serializable {
     private static Vector<Student> students  = new Vector<Student>();;
     private static Vector<Teacher> teachers = new Vector<Teacher>();
     private static Vector<News> news = new Vector<News>();
+    private static Rector rector = null;
 
     private Data() {
         // TODO: Initialize your fields or perform any other necessary setup
@@ -117,5 +118,9 @@ public class Data implements Serializable {
     public void removeUser(User u){
         users.remove(u);
         if(u.getUserType() == STUDENT) students.remove((Student) u);
+    }
+
+    public static Rector getRector() {
+        return rector;
     }
 }
