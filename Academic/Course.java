@@ -16,7 +16,7 @@ public class Course implements Serializable {
 	private String title;
 	private String description;
 	private int credits;
-	private int courseType; // ?
+	private String courseType; // ? : 2/0/1 => 2 lecture / 0 lab / 1 practice
 	private int semesterNum;
 	private SemesterType semesterType;
 	private Faculty faculty;
@@ -32,7 +32,7 @@ public class Course implements Serializable {
 		instructors = new HashSet<Teacher>();
 		prerequisites = new HashSet<Course>();
 	}
-	public Course(String code, String title, String description, int credits, int courseType, int semesterNum,
+	public Course(String code, String title, String description, int credits, String courseType, int semesterNum,
 			SemesterType semesterType, Faculty faculty, HashMap<Student, Mark> students, HashSet<Teacher> instructors,
 			HashSet<Course> prerequisites) {
 		this();
@@ -40,13 +40,14 @@ public class Course implements Serializable {
 		this.title = title;
 		this.description = description;
 		this.credits = credits;
-		this.courseType = courseType;
 		this.semesterNum = semesterNum;
 		this.semesterType = semesterType;
 		this.faculty = faculty;
 		this.students = students;
 		this.instructors = instructors;
 		this.prerequisites = prerequisites;
+
+		this.courseType = courseType;
 	}
 	
 	// Getters-Setters
@@ -74,10 +75,10 @@ public class Course implements Serializable {
 	public void setCredits(int credits) {
 		this.credits = credits;
 	}
-	public int getCourseType() {
+	public String getCourseType() {
 		return courseType;
 	}
-	public void setCourseType(int courseType) {
+	public void setCourseType(String courseType) {
 		this.courseType = courseType;
 	}
 	public int getSemesterNum() {
@@ -127,5 +128,28 @@ public class Course implements Serializable {
 	public void putMark(Student student, typeOfAttestation type, int mark) {
 		Mark curMark = students.get(student);
 		curMark.putMark(type, mark);
+	}
+
+	public int[] summarizeInfo(Student student){ // Info for Students_Journal
+		Mark curMark = students.get(student);
+
+		int sumMark = 0;
+
+		double sumAbsent = 0;
+		int sumPresent = 0;
+
+		for(Lesson lesson: lessons){
+			StudentPerformance curSP = lesson.studentInfo(student);
+
+			sumMark += curSP.getMark();
+
+			switch(curSP.getAttendace()){
+				case 1: sumPresent += 1;
+				case 0: sumAbsent += 0.5;
+				case -1: sumAbsent += 1;
+			}
+		}
+
+		return new int[] {sumPresent, (int) sumAbsent, sumMark};
 	}
 }

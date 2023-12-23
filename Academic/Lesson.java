@@ -89,6 +89,16 @@ public class Lesson {
 
 
 					/* 				Operations 				*/
+	public StudentPerformance studentInfo(Student student){
+		if(students.containsKey(student)){
+			StudentPerformance curSP = students.get(student);
+
+			return curSP;
+		}
+
+		return null;
+	}
+
 
 	public void setAttendance(Student student, int att){
 		if(students.containsKey(student)){
