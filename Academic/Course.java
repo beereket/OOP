@@ -5,18 +5,20 @@ import Academic.Enums.typeOfAttestation;
 import Users.Enums.Faculty;
 import Users.Student;
 import Users.Teacher;
+import Util.Classes.Data;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Vector;
 
+
 public class Course implements Serializable {
 	private String code;
 	private String title;
 	private String description;
 	private int credits;
-	private String courseType; // ? : 2/0/1 => 2 lecture / 0 lab / 1 practice
+	private int courseType; // ? : 2/0/1 => 2 lecture / 0 lab / 1 practice
 	private int semesterNum;
 	private SemesterType semesterType;
 	private Faculty faculty;
@@ -26,30 +28,39 @@ public class Course implements Serializable {
 	private HashSet<Course> prerequisites;
 
 	private Vector<Lesson> lessons;
-	
-	public Course() {
+
+
+	public Course(){
 		students = new HashMap<Student, Mark>();
 		instructors = new HashSet<Teacher>();
 		prerequisites = new HashSet<Course>();
 	}
-	public Course(String code, String title, String description, int credits, String courseType, int semesterNum,
-			SemesterType semesterType, Faculty faculty, HashMap<Student, Mark> students, HashSet<Teacher> instructors,
-			HashSet<Course> prerequisites) {
+	public Course(String code, String title, String description, int credits, int courseType, int semesterNum, SemesterType semesterType, Faculty faculty) {
 		this();
+
 		this.code = code;
 		this.title = title;
 		this.description = description;
 		this.credits = credits;
+		this.courseType = courseType;
 		this.semesterNum = semesterNum;
 		this.semesterType = semesterType;
 		this.faculty = faculty;
+
+	}
+	public Course(String code, String title, String description, int credits,int courseType, int semesterNum,
+				  SemesterType semesterType, Faculty faculty, HashMap<Student, Mark> students, HashSet<Teacher> instructors,
+				  HashSet<Course> prerequisites) {
+		this(code, title, description, credits, courseType, semesterNum, semesterType, faculty);
+
 		this.students = students;
 		this.instructors = instructors;
 		this.prerequisites = prerequisites;
 
-		this.courseType = courseType;
+		Data.getInstance().getCourses().add(this);
 	}
-	
+
+
 	// Getters-Setters
 	public String getCode() {
 		return code;
@@ -75,10 +86,10 @@ public class Course implements Serializable {
 	public void setCredits(int credits) {
 		this.credits = credits;
 	}
-	public String getCourseType() {
+	public int getCourseType() {
 		return courseType;
 	}
-	public void setCourseType(String courseType) {
+	public void setCourseType(int courseType) {
 		this.courseType = courseType;
 	}
 	public int getSemesterNum() {
