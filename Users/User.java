@@ -112,6 +112,13 @@ public abstract class User implements Observer, Serializable {
         e.printStackTrace();
         save();
     }
+
+    protected void getWelcomeMessage(){
+        if(language == KZ) System.out.println("Қош келдіңіз!");
+        else if(language == RUS) System.out.println("Добро пожаловать!");
+        else System.out.println("Welcome!");
+    }
+
     //LANGUAGE
     protected void changeLanguage(){
         System.out.println("1. Қазақша \n 2. Руский \n 3. English");
