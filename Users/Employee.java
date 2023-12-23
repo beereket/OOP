@@ -1,5 +1,8 @@
 package Users;
-import Messages.*;
+
+import Messages.Message;
+import Messages.Request;
+import Util.Classes.Data;
 import Util.Enums.UserType;
 
 import java.io.IOException;
@@ -15,9 +18,11 @@ public class Employee extends User implements Serializable {
     public Employee() {
     }
 
-    public Employee(String username, String password, UserType userType, Integer id) {
+    public Employee(String username, String password, UserType userType) {
         super(username, password, userType);
-        this.id = id;
+        id = Data.getInstance().getEmployees().size() + 1;
+
+        Data.getInstance().getEmployees().add(this);
     }
 
     public void sendRequest(String content){

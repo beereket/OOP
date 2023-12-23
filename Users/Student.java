@@ -15,7 +15,6 @@ import java.util.Vector;
 public class Student extends User implements Serializable {
     
     protected Integer id;
-    protected double GPA = 0;
     protected Faculty faculty;
     protected Integer yearOfStudy = 1;
     protected Vector<Course> coursesRegistered = new Vector<Course>();
@@ -27,14 +26,17 @@ public class Student extends User implements Serializable {
     }
 
 
-    public Student(String username, String password, UserType userType, Faculty faculty) {
+    public Student(String username, String password, UserType userType, Faculty faculty, Degree degree) {
         super(username, password, userType);
         this.id = Data.getInstance().getStudents().size() + 1;
         this.faculty = faculty;
+        this.degree = degree;
+
+        Data.getInstance().getStudents().add(this);
     }
 
     public double getGPA() {
-        return GPA;
+        return 0.0;
     }
 
     protected List<Course> getCoursesRegistered(){

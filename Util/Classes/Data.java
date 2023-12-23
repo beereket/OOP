@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
-import static Util.Enums.UserType.STUDENT;
-
 public class Data implements Serializable {
 
     private static Data INSTANCE;
@@ -21,9 +19,13 @@ public class Data implements Serializable {
     private static Vector<StudentOrganization> organizations = new Vector<StudentOrganization>();
     private static Vector<Course> courses = new Vector<Course>();;
     private static Vector<Manager> managers = new Vector<Manager>();
-    private static Vector<Student> students  = new Vector<Student>();;
+    private static Vector<Student> students  = new Vector<Student>();
+    private static Vector<GraduateStudent> GSs = new Vector<GraduateStudent>();
     private static Vector<Teacher> teachers = new Vector<Teacher>();
+    private static Vector<TechSupportSpecialist> TSSs = new Vector<TechSupportSpecialist>();
     private static Vector<News> news = new Vector<News>();
+
+    //RECTOR
     private static Rector rector = null;
 
     private Data() {
@@ -59,68 +61,112 @@ public class Data implements Serializable {
         return INSTANCE;
     }
 
-    public String getLogFiles() {
+    // GETTER AND SETTER
+    public static void setINSTANCE(Data INSTANCE) {
+        Data.INSTANCE = INSTANCE;
+    }
+
+    public static String getLogFiles() {
         return logFiles;
     }
 
-    private void setLogFiles(String logFiles) {
-        this.logFiles = logFiles;
+    public static void setLogFiles(String logFiles) {
+        Data.logFiles = logFiles;
     }
 
-    public HashMap<Course, List<Student>> getEnrollments() {
+    public static HashMap<Course, List<Student>> getEnrollments() {
         return enrollments;
     }
 
-    public void setEnrollments(HashMap<Course, List<Student>> enrollments) {
-        this.enrollments = enrollments;
+    public static void setEnrollments(HashMap<Course, List<Student>> enrollments) {
+        Data.enrollments = enrollments;
     }
 
-    public Vector<User> getUsers() {
+    public static Vector<User> getUsers() {
         return users;
     }
 
-    public void setUsers(Vector<User> users) {
-        this.users = users;
+    public static void setUsers(Vector<User> users) {
+        Data.users = users;
     }
 
-    public Vector<StudentOrganization> getOrganizations() {
+    public static Vector<Employee> getEmployees() {
+        return employees;
+    }
+
+    public static void setEmployees(Vector<Employee> employees) {
+        Data.employees = employees;
+    }
+
+    public static Vector<StudentOrganization> getOrganizations() {
         return organizations;
     }
 
-    public void setOrganizations(Vector<StudentOrganization> organizations) {
-        this.organizations = organizations;
+    public static void setOrganizations(Vector<StudentOrganization> organizations) {
+        Data.organizations = organizations;
     }
 
-    public Vector<Course> getCourses() {
+    public static Vector<Course> getCourses() {
         return courses;
     }
 
-    public void setCourses(Vector<Course> courses) {
-        this.courses = courses;
+    public static void setCourses(Vector<Course> courses) {
+        Data.courses = courses;
     }
 
-    public Vector<Student> getStudents() {
+    public static Vector<Manager> getManagers() {
+        return managers;
+    }
+
+    public static void setManagers(Vector<Manager> managers) {
+        Data.managers = managers;
+    }
+
+    public static Vector<Student> getStudents() {
         return students;
     }
 
-    public void setStudents(Vector<Student> students) {
-        this.students = students;
+    public static void setStudents(Vector<Student> students) {
+        Data.students = students;
     }
-    public void removeNews(News n){
-        news.remove(n);
+
+    public static Vector<GraduateStudent> getGSs() {
+        return GSs;
     }
-    public void addNews(News n){
-        news.add(n);
+
+    public static void setGSs(Vector<GraduateStudent> GSs) {
+        Data.GSs = GSs;
     }
-    public void addCourse(Course c){
-        courses.add(c);
+
+    public static Vector<Teacher> getTeachers() {
+        return teachers;
     }
-    public void removeUser(User u){
-        users.remove(u);
-        if(u.getUserType() == STUDENT) students.remove((Student) u);
+
+    public static void setTeachers(Vector<Teacher> teachers) {
+        Data.teachers = teachers;
+    }
+
+    public static Vector<TechSupportSpecialist> getTSSs() {
+        return TSSs;
+    }
+
+    public static void setTSSs(Vector<TechSupportSpecialist> TSSs) {
+        Data.TSSs = TSSs;
+    }
+
+    public static Vector<News> getNews() {
+        return news;
+    }
+
+    public static void setNews(Vector<News> news) {
+        Data.news = news;
     }
 
     public static Rector getRector() {
         return rector;
+    }
+
+    public static void setRector(Rector rector) {
+        Data.rector = rector;
     }
 }

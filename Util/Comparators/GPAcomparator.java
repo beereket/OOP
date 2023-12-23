@@ -1,5 +1,5 @@
 package Util.Comparators;
-import Users.Student;
+import Users.*;
 
 import java.util.Comparator;
 

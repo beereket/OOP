@@ -1,19 +1,21 @@
 package Users;
 
 import News.News;
+import Util.Classes.Data;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Vector;
 
 public class StudentOrganization implements Serializable {
     
-    private List<Student> subscribers;
-    
+
     private String name;
-    
-    private  List<News> news;
-    
+
     private Student president;
+    private  Vector<News> news;
+
+    private Vector<Student> students;
 
     public void manageNews() {
 
@@ -22,15 +24,10 @@ public class StudentOrganization implements Serializable {
     public StudentOrganization(String name,  Student president) {
         this.name = name;
         this.president = president;
-    }
+        news = new Vector<News>();
+        students = new Vector<Student>();
 
-
-    public List<Student> getSubscribers() {
-        return subscribers;
-    }
-
-    public void setSubscribers(List<Student> subscribers) {
-        this.subscribers = subscribers;
+        Data.getInstance().getOrganizations().add(this);
     }
 
     public String getName() {
@@ -45,7 +42,7 @@ public class StudentOrganization implements Serializable {
         return news;
     }
 
-    public void setNews(List<News> news) {
+    public void setNews(Vector<News> news) {
         this.news = news;
     }
 

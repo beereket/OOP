@@ -2,6 +2,8 @@ package Users;
 
 import Academic.Course;
 import Users.Enums.Title;
+import Util.Classes.Data;
+import Util.Enums.UserType;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -16,8 +18,12 @@ public class Teacher extends Employee implements Serializable {
     public Teacher() {
     }
 
+    public Teacher(String username, String password,  Title title) {
+        super(username, password, UserType.TEACHER);
+        this.title = title;
 
-
+        Data.getInstance().getTeachers().add(this);
+    }
 
     protected void putMarks(){
 
@@ -26,20 +32,15 @@ public class Teacher extends Employee implements Serializable {
     public List<Course> getCoursesTaught() {
         return coursesTaught;
     }
-
-
     public Title getTitle() {
         return title;
     }
-
     public void setTitle(Title title) {
         this.title = title;
     }
-
     public Double getRating() {
         return rating;
     }
-
     public void setRating(Double rating) {
         this.rating = rating;
     }
