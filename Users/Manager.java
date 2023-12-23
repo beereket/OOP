@@ -73,7 +73,7 @@ public class Manager extends Employee implements Serializable {
         int credits = in.nextInt();
 
         System.out.print("Course Type: "); // You can define valid course types here
-        int courseType = in.nextInt();
+        String courseType = in.nextLine();
 
         System.out.print("Semester Number: ");
         int semesterNum = in.nextInt();

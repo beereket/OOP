@@ -10,15 +10,13 @@ import Util.Classes.Data;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Vector;
-
 
 public class Course implements Serializable {
 	private String code;
 	private String title;
 	private String description;
 	private int credits;
-	private int courseType; // ? : 2/0/1 => 2 lecture / 0 lab / 1 practice
+	private String courseType; // ?
 	private int semesterNum;
 	private SemesterType semesterType;
 	private Faculty faculty;
@@ -26,18 +24,18 @@ public class Course implements Serializable {
 	private HashMap<Student, Mark> students;
 	private HashSet<Teacher> instructors;
 	private HashSet<Course> prerequisites;
-
-	private Vector<Lesson> lessons;
-
-
-	public Course(){
+	private HashSet<Lesson> lessons;
+	
+	public Course() {
 		students = new HashMap<Student, Mark>();
 		instructors = new HashSet<Teacher>();
 		prerequisites = new HashSet<Course>();
-	}
-	public Course(String code, String title, String description, int credits, int courseType, int semesterNum, SemesterType semesterType, Faculty faculty) {
-		this();
+		lessons = new HashSet<Lesson>();
 
+	}
+	public Course(String code, String title, String description, int credits, String courseType, int semesterNum,
+			SemesterType semesterType, Faculty faculty) {
+		this();
 		this.code = code;
 		this.title = title;
 		this.description = description;
@@ -47,20 +45,9 @@ public class Course implements Serializable {
 		this.semesterType = semesterType;
 		this.faculty = faculty;
 
-	}
-	public Course(String code, String title, String description, int credits,int courseType, int semesterNum,
-				  SemesterType semesterType, Faculty faculty, HashMap<Student, Mark> students, HashSet<Teacher> instructors,
-				  HashSet<Course> prerequisites) {
-		this(code, title, description, credits, courseType, semesterNum, semesterType, faculty);
-
-		this.students = students;
-		this.instructors = instructors;
-		this.prerequisites = prerequisites;
-
 		Data.getInstance().getCourses().add(this);
 	}
-
-
+	
 	// Getters-Setters
 	public String getCode() {
 		return code;
@@ -85,12 +72,6 @@ public class Course implements Serializable {
 	}
 	public void setCredits(int credits) {
 		this.credits = credits;
-	}
-	public int getCourseType() {
-		return courseType;
-	}
-	public void setCourseType(int courseType) {
-		this.courseType = courseType;
 	}
 	public int getSemesterNum() {
 		return semesterNum;
@@ -139,28 +120,5 @@ public class Course implements Serializable {
 	public void putMark(Student student, typeOfAttestation type, int mark) {
 		Mark curMark = students.get(student);
 		curMark.putMark(type, mark);
-	}
-
-	public int[] summarizeInfo(Student student){ // Info for Students_Journal
-		Mark curMark = students.get(student);
-
-		int sumMark = 0;
-
-		double sumAbsent = 0;
-		int sumPresent = 0;
-
-		for(Lesson lesson: lessons){
-			StudentPerformance curSP = lesson.studentInfo(student);
-
-			sumMark += curSP.getMark();
-
-			switch(curSP.getAttendace()){
-				case 1: sumPresent += 1;
-				case 0: sumAbsent += 0.5;
-				case -1: sumAbsent += 1;
-			}
-		}
-
-		return new int[] {sumPresent, (int) sumAbsent, sumMark};
 	}
 }
