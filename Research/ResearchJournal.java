@@ -1,28 +1,37 @@
 package Research;
 
+import Util.Observer;
+
 import java.util.*;
 
 public class ResearchJournal {
     protected String name;
-    private List<Researcher> subscribers = new ArrayList<>();
+    private List<Observer> subscribers = new ArrayList<>();
+    private List<ResearchPaper> papers = new ArrayList<>();
     
     public ResearchJournal(String name) {
         this.name = name;
     }
 
-    public void subscribe(Researcher researcher) {
-        if (!subscribers.contains(researcher)) {
-            subscribers.add(researcher);
+    public void subscribe(Observer observer) {
+        if (!subscribers.contains(observer)) {
+            subscribers.add(observer);
         }
     }
 
-    public void unsubscribe(Researcher researcher) {
-    	subscribers.remove(researcher);
+    public void unsubscribe(Observer observer) {
+    	subscribers.remove(observer);
     }
 
-    public void notifySubscribers() {
-        for (Researcher subscriber : subscribers) {
-            subscriber.notify("New research published in " + name);
+    public void publishNewPaper(ResearchPaper paper) {
+        papers.add(paper);
+        System.out.println("New paper published in " + name + ": " + paper.getTitle());
+        notifySubscribers(paper.getTitle());
+    }
+
+    private void notifySubscribers(String paperTitle) {
+        for (Observer subscriber : subscribers) {
+            subscriber.update(name, paperTitle);
         }
     }
     

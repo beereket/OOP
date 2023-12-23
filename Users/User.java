@@ -135,5 +135,7 @@ public abstract class User implements Observer, Serializable {
         }
     }
 
-//    public abstract void update();
+    public void update(String journalName, String paperTitle) {
+        System.out.println(username + "!\nA new scientific work entitled " + paperTitle + "  was published in the journal " + journalName);
+    };
 }

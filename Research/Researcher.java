@@ -5,6 +5,8 @@ public interface Researcher {
 
     int calculateHIndex();
 
+    String getName();
+
     void setSupervisor(Researcher supervisor) throws Research.ResearchSupervisorException;
 
     void joinResearchProject(ResearchProject project) throws Research.ResearchProjectJoinException;

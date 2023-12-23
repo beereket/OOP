@@ -24,8 +24,12 @@ public class ResearchPaper {
         this.accessionNumber = accessionNumber;
     }
 
+    public String getTitle() {
+        return title;
+    }
 
-    public String getCitation(Research.Format format) throws Research.FormatNotSupportedException {
+
+    public String getCitation(Research.Enums.Format format) throws Research.FormatNotSupportedException {
         return switch (format) {
             case PLAIN_TEXT -> generatePlainTextCitation();
             case BIBTEX -> generateBibtexCitation();
@@ -34,13 +38,50 @@ public class ResearchPaper {
     }
 
     private String generatePlainTextCitation() {
-        // Implement plain text citation generation logic
-        return "Plain text citation";
+        StringBuilder citationBuilder = new StringBuilder();
+        citationBuilder.append("Title: ").append(title).append("\n");
+        citationBuilder.append("Authors: ").append(formatAuthorsForPlainText()).append("\n");
+        citationBuilder.append("Year: ").append(publicationYear).append("\n");
+        // Add other relevant information to the plain text citation
+        return citationBuilder.toString();
     }
 
     private String generateBibtexCitation() {
-        // Implement BibTeX citation generation logic
-        return "@article{key, author = {...}, title = {...}, ...}";
+        StringBuilder citationBuilder = new StringBuilder();
+        citationBuilder.append("@article{key,\n");
+        citationBuilder.append("  author = {").append(formatAuthorsForBibtex()).append("},\n");
+        citationBuilder.append("  title = {").append(title).append("},\n");
+        citationBuilder.append("  year = {").append(publicationYear).append("},\n");
+        // Add other relevant information to the BibTeX citation
+        citationBuilder.append("}");
+
+        return citationBuilder.toString();
+    }
+
+    private String formatAuthorsForPlainText() {
+        // Format the list of authors as a comma-separated string
+        StringBuilder authorsBuilder = new StringBuilder();
+        for (Researcher author : authors) {
+            authorsBuilder.append(author.getName()).append(", ");
+        }
+        // Remove the trailing comma and space
+        if (authorsBuilder.length() > 0) {
+            authorsBuilder.setLength(authorsBuilder.length() - 2);
+        }
+        return authorsBuilder.toString();
+    }
+
+    private String formatAuthorsForBibtex() {
+        // Format the list of authors for BibTeX
+        StringBuilder authorsBuilder = new StringBuilder();
+        for (Researcher author : authors) {
+            authorsBuilder.append(author.getName()).append(" and ");
+        }
+        // Remove the trailing "and" and space
+        if (authorsBuilder.length() > 0) {
+            authorsBuilder.setLength(authorsBuilder.length() - 5);
+        }
+        return authorsBuilder.toString();
     }
 
     
