@@ -1,28 +1,39 @@
 package Users;
 
 import Academic.Course;
+import Academic.Enums.SemesterType;
 import Messages.Request;
 import News.News;
+import Users.Enums.Faculty;
 import Users.Enums.ManagerType;
 import Util.Classes.Data;
+import Util.Enums.UserType;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
+
+import static Util.Enums.UserType.MANAGER;
+
 
 public class Manager extends Employee implements Serializable {
     //FIELDS
     private ManagerType managerType;
 
     //CONSTUCTORS
-    public Manager(String userName, String password) {
+    public Manager(String username, String password, UserType userType, ManagerType managerType) {
+        super(username, password, MANAGER);
+        this.managerType = managerType;
 
+        Data.getInstance().getManagers().add(this);
+    }
+
+    public Manager() {
     }
 
     //METHODS
-    public void addCoursesForRegistration(Course c) {
-        Data.getInstance().addCourse(c);
+    public void approveRegistration() {
+
     }
 
     public List<Request> viewRequests() {
@@ -30,32 +41,95 @@ public class Manager extends Employee implements Serializable {
         return r.getSignedRequests();
     }
 
-    public void viewInfo(User u) {
-        System.out.println(u);
-    }
-
     public Vector<Student> createStatisticalReport() {
         return Data.getInstance().getStudents();
     }
 
-    public void enrollStudent() {
+    protected void assignCoursesToTeacher() {
+    }
 
+
+    //Manage NEWS
+    public void addNews(News n) {
+        Data.getInstance().getNews().add(n);
     }
-    public void addNews(News n){
-        Data.getInstance().addNews(n);
+
+    public void deleteNews(News n) {
+        Data.getInstance().getNews().remove(n);
     }
-    public void deleteNews(News n){
-        Data.getInstance().removeNews(n);
+
+    public void addCoursesForRegistration() {
+        System.out.println("Enter Course Details:");
+        System.out.print("Code: ");
+        String code = in.nextLine();
+
+        System.out.print("Title: ");
+        String title = in.nextLine();
+
+        System.out.print("Description: ");
+        String description = in.nextLine();
+
+        System.out.print("Credits: ");
+        int credits = in.nextInt();
+
+        System.out.print("Course Type: "); // You can define valid course types here
+        int courseType = in.nextInt();
+
+        System.out.print("Semester Number: ");
+        int semesterNum = in.nextInt();
+
+        System.out.print("Semester Type: ");
+        String semesterTypeInput = in.next();
+
+        SemesterType semesterType = getSemesterTypeFromInput(semesterTypeInput);
+        System.out.print("Faculty: ");
+        String facultyInput = in.next();
+        Faculty faculty = getFacultyFromInput(facultyInput);
+
+        Course newCourse = new Course(code, title, description, credits, courseType, semesterNum, semesterType, faculty);
     }
 
 
     //MENU METHODS
     public void run() throws IOException {
-        try{
+        try {
             getWelcomeMessage();
-            menu : while (true){
-                int choice = in.nextInt();
+            menu:
+            while (true) {
                 displayMenu();
+                int choice = in.nextInt();
+                in.nextLine();
+                switch (choice) {
+                    case 1:
+                        approveRegistration();
+                        break;
+                    case 2:
+                        addCoursesForRegistration();
+                        break;
+                    case 3:
+                        assignCoursesToTeacher();
+                        break;
+                    case 4:
+                        viewInfo();
+                        break;
+                    case 5:
+                        createStatisticalReport();
+                        break;
+                    case 6:
+                        addNews(new News("ber", "ber"));
+                        break;
+                    case 7:
+                        viewRequests();
+                        break;
+                    case 8:
+                        changeLanguage();
+                        break;
+                    case 0:
+                        exit();
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + choice);
+                }
 
             }
         } catch (Exception e) {
@@ -74,7 +148,7 @@ public class Manager extends Employee implements Serializable {
         System.out.println("6. Manage news");
         System.out.println("7. View requests from employees");
         System.out.println("8. Change language");
-        System.out.println("9. Exit");
+        System.out.println("0. Exit");
     }
 
     @Override
@@ -88,7 +162,7 @@ public class Manager extends Employee implements Serializable {
         System.out.println("6. Управлять новостями");
         System.out.println("7. Просмотреть запросы от сотрудников");
         System.out.println("8. Изменить язык");
-        System.out.println("9. Выйти");
+        System.out.println("0. Выйти");
     }
 
     @Override
@@ -102,13 +176,107 @@ public class Manager extends Employee implements Serializable {
         System.out.println("6. Жаңалықтарды басқару");
         System.out.println("7. Жұмысшылардан сұрауларды қарау");
         System.out.println("8. Тіл өзгерту");
-        System.out.println("9. Шығу");
+        System.out.println("0. Шығу");
+    }
+
+    //methods for input
+    // Utility method to convert a string input to Faculty enum
+    private static Faculty getFacultyFromInput(String input) {
+        try {
+            return Faculty.valueOf(input.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid faculty: " + input);
+        }
+    }
+
+    private static SemesterType getSemesterTypeFromInput(String input) {
+        switch (input.toUpperCase()) {
+            case "SPRING":
+                return SemesterType.SPRING;
+            case "SUMMER":
+                return SemesterType.SUMMER;
+            case "FALL":
+                return SemesterType.FALL;
+            default:
+                throw new IllegalArgumentException("Invalid semester type: " + input);
+        }
+    }
+
+    //-----------------------------------view info)))))))))))))
+    public void viewInfo() {
+        System.out.println("Choose who you want to view:");
+        System.out.println("1. Students");
+        System.out.println("2. Teachers");
+
+        int userChoice = in.nextInt();
+        in.nextLine(); // Consume newline
+
+        switch (userChoice) {
+            case 1:
+                viewUsersInfo(Data.getInstance().getStudents(), "students");
+                break;
+            case 2:
+                viewUsersInfo(Data.getInstance().getTeachers(), "teachers");
+                break;
+            default:
+                System.out.println("Invalid choice.");
+        }
+    }
+
+
+    private void viewUsersInfo(List<? extends User> users, String userType) {
+        if (users.isEmpty()) {
+            System.out.println("No " + userType + " found.");
+            return;
+        }
+
+        System.out.println("Choose sorting option for " + userType + ":");
+        System.out.println("1. Alphabetical");
+        System.out.println("2. By GPA (for students)");
+
+        int choice = in.nextInt();
+        in.nextLine(); // Consume newline
+
+        switch (choice) {
+            case 1:
+                viewUsersAlphabetically(users);
+                break;
+            case 2:
+                if (userType.equals("students")) {
+                    viewUsersByGpa(users);
+                } else {
+                    System.out.println("Invalid choice for " + userType + ".");
+                }
+                break;
+            default:
+                System.out.println("Invalid choice.");
+        }
+    }
+
+    // Method to view information about users alphabetically
+    private void viewUsersAlphabetically(List<? extends User> users) {
+        List<? extends User> sortedUsers = new ArrayList<>(users);
+        Collections.sort(sortedUsers, Comparator.comparing(User::getUsername));
+
+        System.out.println("List of Users (Alphabetically):");
+        for (User user : sortedUsers) {
+            System.out.println(user.getUsername());
+        }
+    }
+
+    // Method to view information about students by GPA
+    private void viewUsersByGpa(List<? extends User> users) {
+        List<Student> students = (List<Student>) users;
+        students.sort(Comparator.comparingDouble(Student::getGPA).reversed());
+
+        System.out.println("List of Students (Sorted by GPA):");
+        for (Student student : students) {
+            System.out.println("Name: " + student.getUsername());
+            System.out.println("GPA: " + student.getGPA());
+            System.out.println("------------------------------");
+        }
     }
 
 
 
-    @Override
-    public void update() {
-
-    }
 }

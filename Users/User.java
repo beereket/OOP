@@ -26,9 +26,13 @@ public abstract class User implements Observer, Serializable {
         this.username = username;
         this.password = password;
         this.userType = userType;
+        Data.getInstance().getUsers().add(this);
     }
 
     public User() {
+    }
+    {
+
     }
     public void reportIssue(String description) {
         TechSupportSpecialist.orders.add(new Order(description));
@@ -94,7 +98,7 @@ public abstract class User implements Observer, Serializable {
     protected void save() throws IOException {
         Data.write();
     }
-    protected void exit(Language language) {
+    protected void exit() {
         if(language == ENG) System.out.println("Bye bye!");
         else if(language == KZ) System.out.println("Сауболыңыз!");
         else System.out.println("До свидания!");

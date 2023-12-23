@@ -23,9 +23,9 @@ public class Admin extends User implements Serializable {
         UserFactory.createUser(ut, username, password);
     }
 
-    private void deleteUser(User u){
-        Data.getInstance().removeUser(u);
-    }
+//    //private void deleteUser(User u){
+//        Data.getInstance().removeUser(u);
+//    }
 
     @Override
     public void update() {

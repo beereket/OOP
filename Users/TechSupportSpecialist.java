@@ -1,20 +1,28 @@
 package Users;
 
 import Messages.Order;
+import Util.Classes.Data;
+import Util.Enums.UserType;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Vector;
 
 
 public class TechSupportSpecialist extends Employee implements Serializable {
-    protected static List<Order> orders;
-    protected static List<Order> accepted_orders;
+    protected static Vector<Order> orders = new Vector<Order>();
+    protected static Vector<Order> accepted_orders = new Vector<Order>();
 
 
     public void acceptOrder(Order o){
         orders.remove(o);
         accepted_orders.add(o);
+    }
+
+    //CONSTRUCTOR
+    public TechSupportSpecialist(String username, String password) {
+        super(username, password, UserType.TSS);
+        Data.getInstance().getTSSs().add(this);
     }
 
     //MENU
@@ -25,7 +33,14 @@ public class TechSupportSpecialist extends Employee implements Serializable {
             displayMenu();
 
             int choice = in.nextInt();
+            switch (choice){
+                case 1:
 
+                case 2:
+
+                default:
+                    throw new IllegalStateException("Unexpected value: " + choice);
+            }
 
         } catch (Exception e) {
             handleError(e);
@@ -64,8 +79,4 @@ public class TechSupportSpecialist extends Employee implements Serializable {
         System.out.println("6. Exit");
     }
 
-    @Override
-    public void update() {
-
-    }
 }

@@ -5,6 +5,7 @@ import Academic.Enums.typeOfAttestation;
 import Users.Enums.Faculty;
 import Users.Student;
 import Users.Teacher;
+import Util.Classes.Data;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -24,10 +25,9 @@ public class Course implements Serializable {
 	private HashMap<Student, Mark> students;
 	private HashSet<Teacher> instructors;
 	private HashSet<Course> prerequisites;
-
 	private Vector<Lesson> lessons;
 	
-	public Course() {
+	public Course(String code, String title, String description, int credits, int courseType, int semesterNum, SemesterType semesterType, Faculty faculty) {
 		students = new HashMap<Student, Mark>();
 		instructors = new HashSet<Teacher>();
 		prerequisites = new HashSet<Course>();
@@ -35,7 +35,7 @@ public class Course implements Serializable {
 	public Course(String code, String title, String description, int credits, int courseType, int semesterNum,
 			SemesterType semesterType, Faculty faculty, HashMap<Student, Mark> students, HashSet<Teacher> instructors,
 			HashSet<Course> prerequisites) {
-		this();
+		this(code, title, description, credits, courseType, semesterNum, semesterType, faculty);
 		this.code = code;
 		this.title = title;
 		this.description = description;
@@ -47,6 +47,7 @@ public class Course implements Serializable {
 		this.students = students;
 		this.instructors = instructors;
 		this.prerequisites = prerequisites;
+		Data.getInstance().getCourses().add(this);
 	}
 	
 	// Getters-Setters

@@ -2,7 +2,6 @@ package Users;
 
 import Messages.Complaint;
 import Messages.Request;
-import Util.Classes.Data;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,15 +18,12 @@ public class Rector extends Employee implements Serializable {
     private Rector(){
     }
     public static Rector getINSTANCE() {
-        if(Data.getRector() == null) INSTANCE = new Rector();
+        if(INSTANCE == null) return new Rector();
         return INSTANCE;
     }
 
-    public void signRequest(Request r){
-        requests.remove(r);
-        signedRequests.add(r);
-    }
 
+    //getter and setters
     public List<Request> getRequests() {
         return requests;
     }
@@ -43,8 +39,14 @@ public class Rector extends Employee implements Serializable {
     private void setSignedRequests(Vector<Request> signedRequests) {
         this.signedRequests = signedRequests;
     }
+
+    //methods
     protected void addRequest(Request r){
         requests.add(r);
+    }
+    public void signRequest(Request r){
+        requests.remove(r);
+        signedRequests.add(r);
     }
 
     //MENU
