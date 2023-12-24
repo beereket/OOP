@@ -102,7 +102,7 @@ public class Lesson implements Serializable {
 	}
 
 
-	public void setAttendance(Student student, int att){
+	public void putAttendance(Student student, int att){
 		if(students.containsKey(student)){
 			StudentPerformance curSP = students.get(student);
 			curSP.setAttendace(att);
@@ -112,7 +112,7 @@ public class Lesson implements Serializable {
 			// Exception: No such student on lecture
 		}
 	}
-	public void setMark(Student student, int mark){
+	public void putMark(Student student, int mark){
 		if(students.containsKey(student)){
 			StudentPerformance curSP = students.get(student);
 			curSP.setMark(mark);
@@ -122,7 +122,8 @@ public class Lesson implements Serializable {
 			// Exception: No such student on lecture
 		}
 	}
-	public void setComment(Student student,String comment){
+
+	public void putComment(Student student,String comment){
 		if(students.containsKey(student)){
 			StudentPerformance curSP = students.get(student);
 			curSP.setComment(comment);

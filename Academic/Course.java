@@ -16,7 +16,7 @@ public class Course implements Serializable {
 	private String title;
 	private String description;
 	private int credits;
-	private String courseType; // ?
+	private String courseType;
 	private int semesterNum;
 	private SemesterType semesterType;
 	private Faculty faculty;
@@ -120,6 +120,30 @@ public class Course implements Serializable {
 	public void putMark(Student student, typeOfAttestation type, int mark) {
 		Mark curMark = students.get(student);
 		curMark.putMark(type, mark);
+	}
+
+	/* Журнал обущающегося в wsp по кнопку Итог */
+	public double[] sumStudentLectureInfo(Student student){
+		double sumMarks = 0;
+
+		double sumAbsent = 0;
+		int sumPresent = 0;
+
+		for(Lesson lesson: lessons){
+			StudentPerformance curSP = lesson.studentInfo(student);
+
+			if(curSP != null){
+				sumMarks += curSP.getMark();
+
+				switch(curSP.getAttendace()){
+					case 1: sumPresent += 1;
+					case 0: sumAbsent += 0.5;
+					case -1: sumAbsent += 1;
+				}
+			}
+		}
+
+		return new double[]{sumMarks, sumPresent, sumAbsent};
 	}
 
 	@Override
