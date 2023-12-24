@@ -26,7 +26,7 @@ public abstract class User implements Observer, Serializable, Researcher {
     private String password;
     protected UserType userType;
     protected Language language = ENG;
-    protected Scanner in = new Scanner(System.in);
+    protected static Scanner in = new Scanner(System.in);
 
     private List<ResearchPaper> publications;
 
@@ -93,7 +93,12 @@ public abstract class User implements Observer, Serializable, Researcher {
 
     protected abstract void displayEnglishMenu();
 
-    public static User authenticate(String username, String password) throws UserNotFound {
+    public static User authenticate() throws UserNotFound {
+        System.out.println("Enter username: ");
+        String username = in.nextLine();
+
+        System.out.println("Enter password: ");
+        String password = in.nextLine();
         Vector<User> users = Data.getInstance().getUsers();
         for (User user: users){
             if(user.getUsername().equals(username) && user.getPassword().equals(password)){

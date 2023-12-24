@@ -18,10 +18,11 @@ public class TesterMainUtil {
         Student student4 = new Student("peter_parker", "spider123", Faculty.SITE, Degree.BACHELOR);
         Student student5 = new Student("clark_kent", "superman123", Faculty.SEPI, Degree.BACHELOR);
         Student student6 = new Student("barry_allen", "flashPwd", Faculty.KMA, Degree.BACHELOR);
+
         Manager m = new Manager("manager", "manager", ManagerType.OR);
 
 
-        User.authenticate("manager", "manager").run();
+        User.authenticate().run();
 
     }
 }

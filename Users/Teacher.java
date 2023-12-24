@@ -25,10 +25,8 @@ public class Teacher extends Employee implements Serializable {
         Data.getInstance().getTeachers().add(this);
     }
 
-    protected void putMarks(){
 
-    }
-
+    //getter and setter
     public List<Course> getCoursesTaught() {
         return coursesTaught;
     }
@@ -45,18 +43,56 @@ public class Teacher extends Employee implements Serializable {
         this.rating = rating;
     }
 
+    // MENY LOOP
     public void run() throws IOException {
         try {
             getWelcomeMessage();
-            while (true) {
+            menu: while (true) {
                 displayMenu();
                 int choice = in.nextInt();
+                in.nextLine();
+                switch (choice){
+                    case 1:
+                        for(Course c : coursesTaught){
+                            System.out.println(c);
+                        }
+                        break;
+                    case 2:
+                        manageCourse();
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
+                    case 7:
+                        changeLanguage();
+                        break;
+                    case 8:
+                        break;
+                    case 0:
+                        exit();
+                        break menu;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + choice);
+                }
             }
         } catch (Exception e) {
             handleError(e);
         }
     }
+    //manage course
+    private void manageCourse() {
+    }
+    //
+    protected void putMarks(){
 
+    }
+
+    //MENU DISPLAY
     @Override
     protected void displayRussianMenu() {
         System.out.println("Меню:");
@@ -66,6 +102,7 @@ public class Teacher extends Employee implements Serializable {
         System.out.println("4. Ввод оценок");
         System.out.println("5. Отправить сообщения");
         System.out.println("6. Отправить жалобы");
+        System.out.println("7. Изменит язык");
         System.out.println("0. Выход");
     }
 
@@ -78,6 +115,7 @@ public class Teacher extends Employee implements Serializable {
         System.out.println("4. Бағаларды енгізу");
         System.out.println("5. Хабарламаларды жіберу");
         System.out.println("6. Шағымдарды жіберу");
+        System.out.println("7. Тіл өзгерту");
         System.out.println("0. Шығу");
     }
 
@@ -90,6 +128,7 @@ public class Teacher extends Employee implements Serializable {
         System.out.println("4. Put Marks");
         System.out.println("5. Send Messages");
         System.out.println("6. Send Complaints");
+        System.out.println("7. Change language");
         System.out.println("0. Exit");
     }
 
