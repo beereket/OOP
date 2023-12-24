@@ -73,7 +73,7 @@ public class UserFactory implements Serializable {
                 break;
         }
     };
-    public User getUserByUsername(String username) throws UserNotFound {
+    public static User getUserByUsername(String username) throws UserNotFound {
         Vector<User> users = Data.getInstance().getUsers();
         for(User user : users) {
             if(user.getUsername().equals(username)) {
