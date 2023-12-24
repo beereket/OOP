@@ -1,8 +1,9 @@
 package Research;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class ResearchProject {
+public class ResearchProject implements Serializable {
     private String topic;
     private ResearchPaper publishedPapers;
     private List<Researcher> projectParticipants = new ArrayList<>();

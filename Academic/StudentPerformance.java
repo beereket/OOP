@@ -1,6 +1,8 @@
 package Academic;
 
-public class StudentPerformance {
+import java.io.Serializable;
+
+public class StudentPerformance implements Serializable {
     private int attendace;
     private int mark;
     private String comment;

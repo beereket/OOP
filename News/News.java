@@ -1,9 +1,10 @@
 package News;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Vector;
 
-public class News implements Comparable<News> {
+public class News implements Comparable<News>, Serializable {
     
     private String title;
     private String content;
@@ -38,14 +39,22 @@ public class News implements Comparable<News> {
         comments.add(comment);
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public Vector<String> getComments() {
+        return comments;
+    }
+
     @Override
     public String toString() {
-        return "News{" +
-                "title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", date=" + date +
-                ", comments=" + comments +
-                '}';
+        return
+                "Title:'" + title + '\n' +
+                "Content:'" + content + '\n' +
+                "Date=" + date + '\n' +
+                "Comments=" + comments
+                ;
     }
 
     @Override

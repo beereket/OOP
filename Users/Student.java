@@ -26,8 +26,8 @@ public class Student extends User implements Serializable {
     }
 
 
-    public Student(String username, String password, UserType userType, Faculty faculty, Degree degree) {
-        super(username, password, userType);
+    public Student(String username, String password, Faculty faculty, Degree degree) {
+        super(username, password, UserType.STUDENT);
         this.id = Data.getInstance().getStudents().size() + 1;
         this.faculty = faculty;
         this.degree = degree;
@@ -71,5 +71,18 @@ public class Student extends User implements Serializable {
     @Override
     protected void displayEnglishMenu() {
 
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", faculty=" + faculty +
+                ", yearOfStudy=" + yearOfStudy +
+                ", coursesRegistered=" + coursesRegistered +
+                ", degree=" + degree +
+                ", studentOrganization=" + studentOrganization +
+                ", credits=" + credits +
+                '}';
     }
 }

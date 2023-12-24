@@ -2,9 +2,11 @@ package Research;
 
 import Util.Observer;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ResearchJournal {
+public class ResearchJournal implements Serializable {
     protected String name;
     private List<Observer> subscribers = new ArrayList<>();
     private List<ResearchPaper> papers = new ArrayList<>();

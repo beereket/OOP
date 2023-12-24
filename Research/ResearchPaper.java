@@ -1,20 +1,18 @@
 package Research;
 
-import java.io.*;
 import java.util.List;
 
-public class ResearchPaper implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class ResearchPaper {
     private String title;
     private List<Researcher> authors;
-    private List<ResearchPaper> citations;
+    private String citations;
     private String doi;
     private Integer pages;
     private Integer publicationYear;
     private String publisher;
     private Integer accessionNumber;
 
-    public ResearchPaper(String title, List<Researcher> authors, List<ResearchPaper> citations, String doi,
+    public ResearchPaper(String title, List<Researcher> authors, String citations, String doi,
                          Integer pages, Integer publicationYear, String publisher, Integer accessionNumber) {
         this.title = title;
         this.authors = authors;
@@ -24,27 +22,11 @@ public class ResearchPaper implements Serializable {
         this.publicationYear = publicationYear;
         this.publisher = publisher;
         this.accessionNumber = accessionNumber;
-
-        saveToFile();
-    }
-    private void saveToFile() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("research_papers.dat", true))) {
-            oos.writeObject(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public String getTitle() {
         return title;
     }
-
-    public List<Researcher> getAuthors() {
-        return authors;
-    }
-
-    public List<ResearchPaper> getAllCitations() {
-        return citations;    }
 
 
     public String getCitation(Research.Enums.Format format) throws Research.FormatNotSupportedException {

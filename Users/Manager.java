@@ -50,14 +50,64 @@ public class Manager extends Employee implements Serializable {
 
 
     //Manage NEWS
-    public void addNews(News n) {
-        Data.getInstance().getNews().add(n);
+    public void createNews() {
+        System.out.print("Enter the title of the news: ");
+        String title = in.nextLine();
+
+        System.out.print("Enter the content of the news: ");
+        String content = in.nextLine();
+
+        News news = new News(title, content);
+        Data.getInstance().addNews(news);
+        System.out.println("News created and added to the system.");
     }
 
-    public void deleteNews(News n) {
-        Data.getInstance().getNews().remove(n);
+    public void deleteNews() {
+        System.out.println("Select the news to delete by entering its index:");
+        viewAllNews();
+
+        int indexToDelete = in.nextInt();
+        in.nextLine(); // Consume newline
+
+        if (indexToDelete >= 0 && indexToDelete < Data.getInstance().getNews().size()) {
+            News deletedNews = Data.getInstance().getNews().remove(indexToDelete);
+            System.out.println("News deleted: " + deletedNews.getTitle());
+        } else {
+            System.out.println("Invalid index. News not deleted.");
+        }
     }
 
+    public void manageNews() {
+        while (true) {
+            System.out.println("News Management Menu:");
+            System.out.println("1. Create News");
+            System.out.println("2. View All News");
+            System.out.println("3. Delete News");
+            System.out.println("4. Exit News Management");
+
+            int choice = in.nextInt();
+            in.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    createNews();
+                    break;
+                case 2:
+                    viewAllNews();
+                    break;
+                case 3:
+                    deleteNews();
+                    break;
+                case 4:
+                    return; // Exit u
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
+
+    //----------------------
     public void addCoursesForRegistration() {
         System.out.println("Enter Course Details:");
         System.out.print("Code: ");
@@ -72,8 +122,9 @@ public class Manager extends Employee implements Serializable {
         System.out.print("Credits: ");
         int credits = in.nextInt();
 
-        System.out.print("Course Type: "); // You can define valid course types here
+        System.out.print("Course Type: "); // like 2/0/2
         String courseType = in.nextLine();
+        in.nextLine();
 
         System.out.print("Semester Number: ");
         int semesterNum = in.nextInt();
@@ -116,7 +167,7 @@ public class Manager extends Employee implements Serializable {
                         createStatisticalReport();
                         break;
                     case 6:
-                        addNews(new News("ber", "ber"));
+                        manageNews();
                         break;
                     case 7:
                         viewRequests();
@@ -126,7 +177,7 @@ public class Manager extends Employee implements Serializable {
                         break;
                     case 0:
                         exit();
-                        break;
+                        break menu;
                     default:
                         throw new IllegalStateException("Unexpected value: " + choice);
                 }

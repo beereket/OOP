@@ -3,7 +3,9 @@ package Util.Classes;
 import Users.*;
 import Util.Enums.UserType;
 
-public class UserFactory {
+import java.io.Serializable;
+
+public class UserFactory implements Serializable {
 	
 	public static User createUser(UserType u, String userName, String password) {
 		if(u == UserType.ADMIN){

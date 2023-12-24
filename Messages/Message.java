@@ -2,7 +2,9 @@ package Messages;
 
 import Users.*;
 
-public class Message{
+import java.io.Serializable;
+
+public class Message implements Serializable {
     
     private User sender;
     private User receiver;
@@ -36,5 +38,13 @@ public class Message{
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "Sender: " + sender + + '\n' +
+                "Content: " + content + '\'' +
+                '}';
     }
 }

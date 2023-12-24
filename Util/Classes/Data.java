@@ -11,7 +11,8 @@ import java.util.Vector;
 
 public class Data implements Serializable {
 
-    private static Data INSTANCE;
+    private static Data INSTANCE = null;
+    private static String filename = "DATA.bin";
     private static String logFiles = "";
     private static HashMap<Course, List<Student>> enrollments = new HashMap<Course, List<Student>>();
     private static Vector<User> users = new Vector<User>();
@@ -30,10 +31,11 @@ public class Data implements Serializable {
 
     private Data() {
         // TODO: Initialize your fields or perform any other necessary setup
+
     }
 
     static {
-        if(new File("data.bin").exists()) {
+        if(new File(filename).exists()) {
             try {
                 INSTANCE = read();
             } catch (Exception e) {
@@ -42,17 +44,24 @@ public class Data implements Serializable {
         }
         else INSTANCE = new Data();
     }
-    public static Data read() throws IOException, ClassNotFoundException{
-        FileInputStream fis = new FileInputStream("data.bin");
-        ObjectInputStream oin = new ObjectInputStream(fis);
-        return (Data) oin.readObject();
+
+    public void write() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
+            oos.writeObject(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-    public static void write()throws IOException{
-        FileOutputStream fos = new FileOutputStream("data.bin");
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(INSTANCE);
-        oos.close();
+
+    public static Data read() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
+            INSTANCE = (Data) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return INSTANCE;
     }
+
 
     public static Data getInstance(){
         if(Data.INSTANCE == null){
@@ -62,9 +71,7 @@ public class Data implements Serializable {
     }
 
     // GETTER AND SETTER
-    public static void setINSTANCE(Data INSTANCE) {
-        Data.INSTANCE = INSTANCE;
-    }
+
 
     public static String getLogFiles() {
         return logFiles;
@@ -168,5 +175,13 @@ public class Data implements Serializable {
 
     public static void setRector(Rector rector) {
         Data.rector = rector;
+    }
+
+    public static void addCourse(Course e){
+        courses.add(e);
+    }
+
+    public void addNews(News n) {
+        news.add(n);
     }
 }

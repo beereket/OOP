@@ -3,7 +3,10 @@ package Messages;
 import Messages.enums.UrgencyLevel;
 import Users.Student;
 import Users.Teacher;
-public class Complaint {
+
+import java.io.Serializable;
+
+public class Complaint implements Serializable {
     private Student student;
     private String description;
     private UrgencyLevel urgencyLevel;

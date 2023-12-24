@@ -1,9 +1,10 @@
 package Messages;
 
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Order {
+public class Order implements Serializable {
     private static int num;
     private int orderId;
     

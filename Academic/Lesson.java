@@ -1,12 +1,14 @@
 package Academic;
 
+import Academic.Enums.LessonType;
+import Users.Student;
+import Users.Teacher;
+
+import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.HashMap;
 
-import Academic.Enums.*;
-import Users.*;
-
-public class Lesson {
+public class Lesson implements Serializable {
 	private LessonType type; // lab, practice, lesson
 	private LocalDate time; // 14:00
 	private int weekDay; // 0: monday 1: tuesday ....

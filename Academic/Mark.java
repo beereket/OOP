@@ -1,13 +1,11 @@
 package Academic;
 
-import java.util.*;
-
 import Academic.Enums.typeOfAttestation;
-import Users.*;
-import Academic.Enums.*;
+
+import java.io.Serializable;
 
 
-public class Mark {
+public class Mark implements Serializable {
 	private double firstAttestation;
 	private double secondAttestation;
 	private double finalExam;

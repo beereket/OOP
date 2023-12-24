@@ -45,7 +45,7 @@ public class Course implements Serializable {
 		this.semesterType = semesterType;
 		this.faculty = faculty;
 
-		Data.getInstance().getCourses().add(this);
+		Data.getInstance().addCourse(this);
 	}
 	
 	// Getters-Setters
@@ -120,5 +120,19 @@ public class Course implements Serializable {
 	public void putMark(Student student, typeOfAttestation type, int mark) {
 		Mark curMark = students.get(student);
 		curMark.putMark(type, mark);
+	}
+
+	@Override
+	public String toString() {
+		return "Course{" +
+				"code='" + code + '\'' +
+				", title='" + title + '\'' +
+				", description='" + description + '\'' +
+				", credits=" + credits +
+				", courseType='" + courseType + '\'' +
+				", semesterNum=" + semesterNum +
+				", semesterType=" + semesterType +
+				", faculty=" + faculty +
+				'}';
 	}
 }

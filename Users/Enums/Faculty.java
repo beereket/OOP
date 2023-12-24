@@ -1,5 +1,5 @@
 package Users.Enums;
 
 public enum Faculty {
-    SITE, BS, KMA
+    SITE, BS, KMA, SEPI
 }

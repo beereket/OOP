@@ -1,9 +1,11 @@
 package Users;
 
 import Messages.Order;
-import Research.*;
-import Research.ResearchProjectJoinException;
+import News.News;
+import Research.ResearchPaper;
+import Research.ResearchProject;
 import Research.ResearchSupervisorException;
+import Research.Researcher;
 import Util.Classes.Data;
 import Util.Enums.Language;
 import Util.Enums.UserType;
@@ -12,11 +14,9 @@ import Util.Observer;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
-import java.util.stream.Collectors;
 
 import static Util.Enums.Language.*;
 
@@ -104,7 +104,7 @@ public abstract class User implements Observer, Serializable, Researcher {
     }
 
     protected void save() throws IOException {
-        Data.write();
+        Data.getInstance().write();
     }
     protected void exit() {
         if(language == ENG) System.out.println("Bye bye!");
@@ -131,6 +131,47 @@ public abstract class User implements Observer, Serializable, Researcher {
         else System.out.println("Welcome!");
     }
 
+    //NEWS
+    public void viewAllNews() {
+        Vector<News> newsList = Data.getInstance().getNews();
+
+        if (newsList.isEmpty()) {
+            System.out.println("No news articles available.");
+            return;
+        }
+
+        System.out.println("List of News Articles:");
+        for (int i = 0; i < newsList.size(); i++) {
+            News news = newsList.get(i);
+            System.out.println("Index " + i + ": " + news.getTitle());
+        }
+
+        System.out.print("Enter the index of the news article to view (or -1 to exit): ");
+        int selectedIndex = in.nextInt();
+
+        if (selectedIndex >= 0 && selectedIndex < newsList.size()) {
+            News selectedNews = newsList.get(selectedIndex);
+            System.out.println(selectedNews);
+
+            System.out.print("Would you like to add a comment (yes/no)? ");
+            in.nextLine();
+            String response = in.nextLine().toLowerCase();
+
+            if (response.equals("yes")) {
+                System.out.print("Enter your comment: ");
+                String comment = in.nextLine();
+                selectedNews.addComment(comment);
+                System.out.println("Comment added successfully.");
+            } else {
+                System.out.println("No comment added.");
+            }
+        } else if (selectedIndex == -1) {
+            System.out.println("Exiting.");
+        } else {
+            System.out.println("Invalid index. Please try again.");
+        }
+    }
+
     //LANGUAGE
     protected void changeLanguage(){
         System.out.println("1. Қазақша \n 2. Руский \n 3. English");
@@ -153,7 +194,7 @@ public abstract class User implements Observer, Serializable, Researcher {
             setLanguage(Language.ENG);
         }
     }
-
+    @Override
     public void update(String journalName, String paperTitle) {
         System.out.println(username + "!\nA new scientific work entitled " + paperTitle + "  was published in the journal " + journalName);
     };
@@ -165,26 +206,26 @@ public abstract class User implements Observer, Serializable, Researcher {
 
     @Override
     public int calculateHIndex() {
-        // Фильтруем публикации, оставляя только те, в которых пользователь является автором
-        List<ResearchPaper> userPublications = publications.stream()
-                .filter(paper -> paper.getAuthors().contains(this))
-                .collect(Collectors.toList());
-
-        // Сортируем отфильтрованные публикации по убыванию цитирований
-        userPublications.sort(Comparator.comparingInt(paper -> paper.getAllCitations().size()).reversed());
-
-
-
+//        // Фильтруем публикации, оставляя только те, в которых пользователь является автором
+//        List<ResearchPaper> userPublications = publications.stream()
+//                .filter(paper -> paper.getAuthors().contains(this))
+//                .collect(Collectors.toList());
+//
+//        // Сортируем отфильтрованные публикации по убыванию цитирований
+//        userPublications.sort(Comparator.comparingInt(paper -> paper.getAllCitations().size()).reversed());
+//
+//
+//
         int hIndex = 0;
-        for (int i = 0; i < userPublications.size(); i++) {
-            int citations = userPublications.get(i).getAllCitations().size();
-            if (citations >= i + 1) {
-                hIndex = i + 1;
-            } else {
-                break;
-            }
-        }
-
+//        for (int i = 0; i < userPublications.size(); i++) {
+//            int citations = userPublications.get(i).getAllCitations().size();
+//            if (citations >= i + 1) {
+//                hIndex = i + 1;
+//            } else {
+//                break;
+//            }
+//        }
+//
         return hIndex;
     }
 
@@ -199,7 +240,7 @@ public abstract class User implements Observer, Serializable, Researcher {
     }
 
     @Override
-    public void joinResearchProject(ResearchProject project) throws ResearchProjectJoinException {
+    public void joinResearchProject(ResearchProject project) throws Research.ResearchProjectJoinException {
 
     }
 
