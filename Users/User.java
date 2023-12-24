@@ -1,6 +1,9 @@
 package Users;
 
 import Messages.Order;
+import Research.*;
+import Research.ResearchProjectJoinException;
+import Research.ResearchSupervisorException;
 import Util.Classes.Data;
 import Util.Enums.Language;
 import Util.Enums.UserType;
@@ -9,18 +12,23 @@ import Util.Observer;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
+import java.util.stream.Collectors;
 
 import static Util.Enums.Language.*;
 
-public abstract class User implements Observer, Serializable {
+public abstract class User implements Observer, Serializable, Researcher {
     
     private String username;
     private String password;
     protected UserType userType;
     protected Language language = ENG;
     protected Scanner in = new Scanner(System.in);
+
+    private List<ResearchPaper> publications;
 
     public User(String username, String password, UserType userType) {
         this.username = username;
@@ -149,4 +157,55 @@ public abstract class User implements Observer, Serializable {
     public void update(String journalName, String paperTitle) {
         System.out.println(username + "!\nA new scientific work entitled " + paperTitle + "  was published in the journal " + journalName);
     };
+
+    @Override
+    public void printPapers() {
+
+    }
+
+    @Override
+    public int calculateHIndex() {
+        // Фильтруем публикации, оставляя только те, в которых пользователь является автором
+        List<ResearchPaper> userPublications = publications.stream()
+                .filter(paper -> paper.getAuthors().contains(this))
+                .collect(Collectors.toList());
+
+        // Сортируем отфильтрованные публикации по убыванию цитирований
+        userPublications.sort(Comparator.comparingInt(paper -> paper.getAllCitations().size()).reversed());
+
+
+
+        int hIndex = 0;
+        for (int i = 0; i < userPublications.size(); i++) {
+            int citations = userPublications.get(i).getAllCitations().size();
+            if (citations >= i + 1) {
+                hIndex = i + 1;
+            } else {
+                break;
+            }
+        }
+
+        return hIndex;
+    }
+
+    @Override
+    public String getResearcherName() {
+        return getUsername();
+    }
+
+    @Override
+    public void setSupervisor(Researcher supervisor) throws ResearchSupervisorException {
+
+    }
+
+    @Override
+    public void joinResearchProject(ResearchProject project) throws ResearchProjectJoinException {
+
+    }
+
+    @Override
+    public void notify(String message) {
+
+    }
+
 }

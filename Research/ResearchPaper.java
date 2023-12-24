@@ -1,18 +1,20 @@
 package Research;
 
+import java.io.*;
 import java.util.List;
 
-public class ResearchPaper {
+public class ResearchPaper implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String title;
     private List<Researcher> authors;
-    private String citations;
+    private List<ResearchPaper> citations;
     private String doi;
     private Integer pages;
     private Integer publicationYear;
     private String publisher;
     private Integer accessionNumber;
 
-    public ResearchPaper(String title, List<Researcher> authors, String citations, String doi,
+    public ResearchPaper(String title, List<Researcher> authors, List<ResearchPaper> citations, String doi,
                          Integer pages, Integer publicationYear, String publisher, Integer accessionNumber) {
         this.title = title;
         this.authors = authors;
@@ -22,11 +24,27 @@ public class ResearchPaper {
         this.publicationYear = publicationYear;
         this.publisher = publisher;
         this.accessionNumber = accessionNumber;
+
+        saveToFile();
+    }
+    private void saveToFile() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("research_papers.dat", true))) {
+            oos.writeObject(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getTitle() {
         return title;
     }
+
+    public List<Researcher> getAuthors() {
+        return authors;
+    }
+
+    public List<ResearchPaper> getAllCitations() {
+        return citations;    }
 
 
     public String getCitation(Research.Enums.Format format) throws Research.FormatNotSupportedException {
@@ -62,7 +80,7 @@ public class ResearchPaper {
         // Format the list of authors as a comma-separated string
         StringBuilder authorsBuilder = new StringBuilder();
         for (Researcher author : authors) {
-            authorsBuilder.append(author.getName()).append(", ");
+            authorsBuilder.append(author.getResearcherName()).append(", ");
         }
         // Remove the trailing comma and space
         if (authorsBuilder.length() > 0) {
@@ -75,7 +93,7 @@ public class ResearchPaper {
         // Format the list of authors for BibTeX
         StringBuilder authorsBuilder = new StringBuilder();
         for (Researcher author : authors) {
-            authorsBuilder.append(author.getName()).append(" and ");
+            authorsBuilder.append(author.getResearcherName()).append(" and ");
         }
         // Remove the trailing "and" and space
         if (authorsBuilder.length() > 0) {
