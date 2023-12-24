@@ -7,7 +7,6 @@ import News.News;
 import Users.Enums.Faculty;
 import Users.Enums.ManagerType;
 import Util.Classes.Data;
-import Util.Enums.UserType;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -21,7 +20,7 @@ public class Manager extends Employee implements Serializable {
     private ManagerType managerType;
 
     //CONSTUCTORS
-    public Manager(String username, String password, UserType userType, ManagerType managerType) {
+    public Manager(String username, String password, ManagerType managerType) {
         super(username, password, MANAGER);
         this.managerType = managerType;
 
