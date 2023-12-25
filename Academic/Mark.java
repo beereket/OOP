@@ -55,6 +55,8 @@ public class Mark implements Serializable {
 	public void updateTotal() {
 		total = firstAttestation + secondAttestation + finalExam;
 	}
+
+	/** Обновляет данные о буквенной и цифровой(гпа) оценки */
 	public void transformMarks() {
         if (total >= 94.5) {
             literalMark = "A";
@@ -105,20 +107,15 @@ public class Mark implements Serializable {
 		updateTotal();
 		transformMarks();
 	}
-	
-	public void setMark(typeOfAttestation type, int mark) {
-		switch(type) {
-			case FIRST -> this.setFirstAttestation(mark);
-			case SECOND -> this.setSecondAttestation(mark);
-			case FINAL -> this.setFinalExam(mark);
-		}
-	}
+	/** Выставить оценку за аттестацию
+	 * @param type Первая/Вторая аттестация или же Файнал
+	 * @param mark общая оценка за аттестацию */
 	public void putMark(typeOfAttestation type, int mark) {
 		switch(type) {
-			case FIRST -> mark += this.getFirstAttestation();
-			case SECOND -> mark += this.getSecondAttestation();
-			case FINAL -> mark += this.getFinalExam();
+			case FIRST : this.setFirstAttestation(mark);
+			case SECOND: this.setSecondAttestation(mark);
+			case FINAL : this.setFinalExam(mark);
 		}
-		this.setMark(type, mark);
 	}
+
 }

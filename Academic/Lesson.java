@@ -91,46 +91,38 @@ public class Lesson implements Serializable {
 
 
 					/* 				Operations 				*/
-	public StudentPerformance studentInfo(Student student){
-		if(students.containsKey(student)){
-			StudentPerformance curSP = students.get(student);
-
-			return curSP;
+	/** Получить информацию с лекции о Студенте
+	 * @param student указатель на студента
+	 * @throws IllegalArgumentException если студента нету на лекции */
+	public StudentPerformance getStudentPerformance(Student student) throws IllegalArgumentException {
+		if (!students.containsKey(student)) {
+			throw new IllegalArgumentException("Student not found in the lecture");
 		}
-
-		return null;
+		return students.get(student);
 	}
 
-
-	public void putAttendance(Student student, int att){
-		if(students.containsKey(student)){
-			StudentPerformance curSP = students.get(student);
-			curSP.setAttendace(att);
-			students.put(student, curSP);
-		}
-		else{
-			// Exception: No such student on lecture
-		}
-	}
-	public void putMark(Student student, int mark){
-		if(students.containsKey(student)){
-			StudentPerformance curSP = students.get(student);
-			curSP.setMark(mark);
-			students.put(student, curSP);
-		}
-		else{
-			// Exception: No such student on lecture
-		}
+	/** Отметить посещение студента на лекции
+	 * @param student указатель на студента
+	 * @param att 1: присутствовал, 0: опоздал -1: отсутствовал*/
+	public void putAttendance(Student student, int att) {
+		StudentPerformance curSP = getStudentPerformance(student);
+		curSP.setAttendace(att);
 	}
 
-	public void putComment(Student student,String comment){
-		if(students.containsKey(student)){
-			StudentPerformance curSP = students.get(student);
-			curSP.setComment(comment);
-			students.put(student, curSP);
-		}
-		else{
-			// Exception: No such student on lecture
-		}
+	/** Оставить оценку за лекцию
+	 * @param student указатель на студента
+	 * @param mark оценка за лекцию*/
+	public void putMark(Student student, int mark) {
+		StudentPerformance curSP = getStudentPerformance(student);
+		curSP.setMark(mark);
 	}
+
+	/** Оставить комментарий о студента за лекцию
+	 * @param student указатель на студента
+	 * @param comment комментарий учителя */
+	public void putComment(Student student, String comment) {
+		StudentPerformance curSP = getStudentPerformance(student);
+		curSP.setComment(comment);
+	}
+
 }

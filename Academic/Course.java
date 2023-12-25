@@ -109,38 +109,50 @@ public class Course implements Serializable {
 	public void setPrerequisites(HashSet<Course> prerequisites) {
 		this.prerequisites = prerequisites;
 	}
-
-	
-					/* 				Operatios				*/
-	public void setMark(Student student, typeOfAttestation type, int mark) {
-		Mark curMark = students.get(student);
-		curMark.setMark(type, mark);
+	public void setLessons(HashSet<Lesson> lessons){
+		this.lessons = lessons;
 	}
 	
+					/* 				Operatios				*/
+
+	/** Выставить оценки за аттестацию/Файнал
+	 * Меняет прикрепленный Mark студента на заданный параметром
+	 * @param student указатель на студента
+	 * @param type Первая/Вторая аттестация или же Файнал
+	 * @param mark общая оценка за аттестацию*/
 	public void putMark(Student student, typeOfAttestation type, int mark) {
 		Mark curMark = students.get(student);
 		curMark.putMark(type, mark);
 	}
 
-	/* Журнал обущающегося в wsp по кнопку Итог */
+	/**  Журнал обущающегося в WSP по кнопку 'Итог'.
+	 *   Пробегается по всем лекциям курса в которым присуствует студент
+	 *   и возвращает данные в качестве массива размером 3 [Оценки,Присуствие,Отсутствие]
+	 * @param student указатель на студента
+	 * */
 	public double[] sumStudentLectureInfo(Student student){
 		double sumMarks = 0;
 
 		double sumAbsent = 0;
 		int sumPresent = 0;
 
-		for(Lesson lesson: lessons){
-			StudentPerformance curSP = lesson.studentInfo(student);
+		try {
+			for (Lesson lesson : lessons) {
+				StudentPerformance curSP = lesson.getStudentPerformance(student);
 
-			if(curSP != null){
-				sumMarks += curSP.getMark();
+				if (curSP != null) {
+					sumMarks += curSP.getMark();
 
-				switch(curSP.getAttendace()){
-					case 1: sumPresent += 1;
-					case 0: sumAbsent += 0.5;
-					case -1: sumAbsent += 1;
+					switch (curSP.getAttendace()) {
+						case 1 : sumPresent += 1;
+						case 0 : sumAbsent += 0.5;
+						case -1: sumAbsent += 1;
+					}
 				}
 			}
+		}
+		catch(IllegalArgumentException e){
+			System.err.println(e.getMessage());
 		}
 
 		return new double[]{sumMarks, sumPresent, sumAbsent};
