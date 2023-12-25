@@ -5,14 +5,14 @@ import java.util.List;
 public class ResearchPaper {
     private String title;
     private List<Researcher> authors;
-    private String citations;
+    private List<ResearchPaper> citations;
     private String doi;
     private Integer pages;
     private Integer publicationYear;
     private String publisher;
     private Integer accessionNumber;
 
-    public ResearchPaper(String title, List<Researcher> authors, String citations, String doi,
+    public ResearchPaper(String title, List<Researcher> authors, List<ResearchPaper> citations, String doi,
                          Integer pages, Integer publicationYear, String publisher, Integer accessionNumber) {
         this.title = title;
         this.authors = authors;
@@ -26,6 +26,17 @@ public class ResearchPaper {
 
     public String getTitle() {
         return title;
+    }
+
+    public int getPublicationYear() {
+        return publicationYear;
+    }
+
+    public List<ResearchPaper> getCitations() {
+        return citations;
+    }
+    public int getPages() {
+        return pages;
     }
 
 

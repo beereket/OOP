@@ -2,6 +2,9 @@ package Users;
 
 
 import Academic.Course;
+import Research.*;
+import Research.ResearchProjectJoinException;
+import Research.ResearchSupervisorException;
 import Users.Enums.Degree;
 import Users.Enums.Faculty;
 import Util.Classes.Data;
@@ -9,10 +12,11 @@ import Util.Enums.UserType;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
 
-public class Student extends User implements Serializable {
+public class Student extends User implements Serializable, Researcher {
     
     protected Integer id;
     protected Faculty faculty;
@@ -85,4 +89,30 @@ public class Student extends User implements Serializable {
                 ", credits=" + credits +
                 '}';
     }
+
+    @Override
+    public void printPapers(Comparator<ResearchPaper> comparator) {
+
+    }
+
+    @Override
+    public int calculateHIndex() {
+        return 0;
+    }
+
+    @Override
+    public String getResearcherName() {
+        return getUsername();
+    }
+
+    @Override
+    public void setSupervisor(Researcher supervisor) throws ResearchSupervisorException {
+
+    }
+
+    @Override
+    public void joinResearchProject(ResearchProject project) throws ResearchProjectJoinException {
+
+    }
+
 }

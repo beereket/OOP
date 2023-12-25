@@ -2,18 +2,23 @@ package Users;
 
 import Messages.Message;
 import Messages.Request;
+import Research.*;
+import Research.ResearchProjectJoinException;
+import Research.ResearchSupervisorException;
 import Util.Classes.Data;
 import Util.Enums.UserType;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Vector;
 
 
-public class Employee extends User implements Serializable {
+public class Employee extends User implements Serializable, Researcher {
     
     protected Integer id;
     protected Vector<Message> messages = new Vector<Message>();
+    private Boolean isResearcher = false;
 
     public Employee() {
     }
@@ -49,6 +54,32 @@ public class Employee extends User implements Serializable {
 
     @Override
     protected void displayEnglishMenu() {
+
+    }
+
+    @Override
+    public void printPapers(Comparator<ResearchPaper> comparator) {
+
+
+    }
+
+    @Override
+    public int calculateHIndex() {
+        return 0;
+    }
+
+    @Override
+    public String getResearcherName() {
+        return getUsername();
+    }
+
+    @Override
+    public void setSupervisor(Researcher supervisor) throws ResearchSupervisorException {
+
+    }
+
+    @Override
+    public void joinResearchProject(ResearchProject project) throws ResearchProjectJoinException {
 
     }
 

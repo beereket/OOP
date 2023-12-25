@@ -1,7 +1,9 @@
 package Research;
 
+import java.util.Comparator;
+
 public interface Researcher {
-    void printPapers();
+    void printPapers(Comparator<ResearchPaper> comparator);
 
     int calculateHIndex();
 
@@ -10,7 +12,5 @@ public interface Researcher {
     void setSupervisor(Researcher supervisor) throws Research.ResearchSupervisorException;
 
     void joinResearchProject(ResearchProject project) throws Research.ResearchProjectJoinException;
-    
-    void notify(String message);
 
 }
