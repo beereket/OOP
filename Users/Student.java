@@ -19,7 +19,7 @@ public class Student extends User implements Serializable {
     protected Integer id;
     protected Faculty faculty;
     protected Integer yearOfStudy = 1;
-    protected Vector<Course> coursesRegistered = new Vector<Course>();
+    protected Vector<Course> coursesRegistered = new Vector<>();
     protected Degree degree;
     protected StudentOrganization studentOrganization = null;
     protected Integer credits = 0;
@@ -29,7 +29,8 @@ public class Student extends User implements Serializable {
 
     public Student(String username, String password, Faculty faculty, Degree degree) {
         super(username, password, UserType.STUDENT);
-        this.id = DB.getInstance().users.get(userType.STUDENT).size() +1;
+        DB.getInstance();
+        this.id = DB.users.get(UserType.STUDENT).size() +1;
         this.faculty = faculty;
         this.degree = degree;
 
@@ -77,7 +78,9 @@ public class Student extends User implements Serializable {
     }
 
     public void getTranscript(){
-
+        for (Course c : coursesRegistered){
+            System.out.println(c.getStudentMark(this));
+        }
     }
 
     protected void studentOrganizations(){
@@ -106,18 +109,27 @@ public class Student extends User implements Serializable {
         return true; // All prerequisites are in coursesRegistered
     }
 
+    protected boolean isNotRegistered(Course c){
+        for(Course element : this.coursesRegistered){
+            if (element==c){
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     protected void registerCourse(){
         //get set of available courses by name
         Vector<Course> coursesAvailable = new Vector<Course>();
 
         for (Course ele : DB.getInstance().getCourses()){
-            if (isIn(ele)){
+            if (isIn(ele) && isNotRegistered(ele)){
                 coursesAvailable.add(ele);
             }
         }
         //student enters indeces of course
-        if (coursesAvailable != null){
+        if (!coursesAvailable.isEmpty()){
             int i = 1;
             System.out.println(i + "Enter your choice by int or 0 to go back");
             for (Course avCourse : coursesAvailable){
@@ -147,12 +159,14 @@ public class Student extends User implements Serializable {
         //check if credit <21
     }
 
-    public void run(){
-        displayMenu();
-        System.out.print("Enter your choice: ");
-        int choice = in.nextInt();
-        in.nextLine();
-
+    public void run() throws IOException {
+        try {
+            getWelcomeMessage();
+            menu:
+            while (true) {
+                displayMenu();
+                int choice = in.nextInt();
+                in.nextLine();
         switch (choice) {
             case 1:
                 viewCourses();
@@ -183,17 +197,22 @@ public class Student extends User implements Serializable {
                 break;
             case 0:
                 exit();
+                break menu;
             default:
                 throw new IllegalStateException("Unexpected value: " + choice);
         }
-        run();
+
+            }
+        } catch (Exception e) {
+            handleError(e);
+        }
     }
 
     protected void changeLanguage(){
         System.out.println("Choose language:\n" +
-                "1. ENG\n" +
-                "2. RUS\n" +
-                "3. KAZ");
+                           "1. ENG\n" +
+                           "2. RUS\n" +
+                           "3. KAZ");
 
         System.out.print("Enter your choice: ");
         int choice = in.nextInt();
@@ -223,7 +242,7 @@ public class Student extends User implements Serializable {
                 "5. Rate teacher on scale 1-10 (first enter id)\n" +
                 "6. Get Transcript\n" +
                 "7. Student organizations\n" +
-                "8. Change laguage"+
+                "8. Change laguange"+
                 "9. Register for courses"+
                 "0. Back to Main Menu");
 
