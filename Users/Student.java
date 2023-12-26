@@ -96,7 +96,9 @@ public class Student extends User implements Serializable {
             result += courseInfo + "\n";
         }
 
-        result += "Overall gpa: %s".formatted(totalGPA / totalCredits));
+        result += "Overall gpa: %s".formatted(totalGPA / totalCredits);
+
+        return result;
     }
 
 
