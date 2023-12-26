@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class ResearchPaper implements Serializable {
-    private static final String FILE_PATH = "researchDB.dat";
+    private static final String FILE_PATH = "researchPaperDB.dat";
     private String title;
     private List<Researcher> authors;
     private List<ResearchPaper> citations;

@@ -11,8 +11,12 @@ import Util.Enums.UserType;
 import Util.Exception.UserNotFound;
 import Util.Observer;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Vector;
 
 import static Util.Enums.Language.*;
 
@@ -24,8 +28,8 @@ public abstract class User implements Observer, Serializable, Researcher {
     protected Language language = ENG;
     protected static Scanner in = new Scanner(System.in);
     private boolean isResearcher;
-    private List<ResearchPaper> researchPapers = new ArrayList<>();
-    private static final String FILE_PATH = "researchersDB.dat";
+    private List<ResearchPaper> allResearchPapers = ResearchPaper.loadAllResearchPapers();
+    private static final String RESEARCHER_FILE_PATH = "researchersDB.dat";
 
     public User(String username, String password, UserType userType) {
         this.username = username;
@@ -213,53 +217,19 @@ public abstract class User implements Observer, Serializable, Researcher {
     };
 
     public void setIsResearcher() {
-        if (this instanceof Student || this instanceof Employee || this instanceof Teacher || this instanceof GraduateStudent) {
+        if (this instanceof Student || this instanceof Employee || this instanceof Teacher) {
             this.isResearcher = true;
-
-            saveToFile();
         }
     }
 
-    private void saveToFile() {
-        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(FILE_PATH, true))) {
-            outputStream.writeObject(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    public static List<User> loadAllResearchers() {
-        List<User> allResearchers = new ArrayList<>();
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(FILE_PATH))) {
-            while (true) {
-                try {
-                    User researcher = (User) inputStream.readObject();
-                    allResearchers.add(researcher);
-                } catch (EOFException e) {
-                    // End of file reached
-                    break;
-                }
-            }
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return allResearchers;
-    }
     @Override
     public void printPapers(Comparator<ResearchPaper> comparator) {
-        researchPapers.sort(comparator);
+        allResearchPapers.sort(comparator);
 
         System.out.println("Research Papers for " + getResearcherName() + ":");
-        for (ResearchPaper paper : researchPapers) {
+        for (ResearchPaper paper : allResearchPapers) {
             System.out.println(paper);
-        }
-    }
-
-    public void addResearchPaper(ResearchPaper researchPaper) {
-        if (researchPaper.getAuthors().contains(this)) {
-            researchPapers.add(researchPaper);
-        } else {
-            System.out.println("User is not an author of the research paper.");
         }
     }
 
@@ -270,12 +240,11 @@ public abstract class User implements Observer, Serializable, Researcher {
             return 404;
         }
 
-        List<Integer> citationsList = new ArrayList<>();
-        for (ResearchPaper paper : researchPapers) {
-            citationsList.add(paper.getCitations().size());
-        }
-
-        citationsList.sort(Comparator.reverseOrder());
+        List<Integer> citationsList = allResearchPapers.stream()
+                .filter(paper -> paper.getAuthors().contains(this))
+                .map(paper -> paper.getCitations().size())
+                .sorted(Comparator.reverseOrder())
+                .toList();
 
         int hIndex = 0;
         for (int i = 0; i < citationsList.size(); i++) {
