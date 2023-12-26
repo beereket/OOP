@@ -1,6 +1,9 @@
 package Users;
 
 import Academic.Course;
+import Academic.Enums.typeOfAttestation;
+import Academic.Journal;
+import Academic.Lesson;
 import Users.Enums.Title;
 import Util.Classes.Data;
 import Util.Enums.UserType;
@@ -96,8 +99,14 @@ public class Teacher extends Employee implements Serializable {
     }
 
     //
-    protected void putMarks() {
+    protected void putMarks(Student student , Course course , int mark , typeOfAttestation type) {
+        Journal j = new Journal();
+        j.putMark(student , course , mark , type);
+    }
 
+    public void putMark(Student student , Lesson lesson , int mark){
+        Journal j = new Journal();
+        j.putMark(student, lesson, mark);
     }
 
     private void operations() {

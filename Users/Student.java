@@ -4,14 +4,15 @@ package Users;
 import Academic.Course;
 import Users.Enums.Degree;
 import Users.Enums.Faculty;
-import Util.Classes.Data;
+import Util.Data.DB;
 import Util.Enums.UserType;
 import Util.Exception.UserNotFound;
-
+import Users.Teacher;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Vector;
+
 
 public class Student extends User implements Serializable {
     
@@ -28,7 +29,7 @@ public class Student extends User implements Serializable {
 
     public Student(String username, String password, Faculty faculty, Degree degree) {
         super(username, password, UserType.STUDENT);
-        this.id = Data.getInstance().getStudents().size() + 1;
+        this.id = DB.getInstance().users.get(userType.STUDENT).size() +1;
         this.faculty = faculty;
         this.degree = degree;
 
@@ -41,8 +42,7 @@ public class Student extends User implements Serializable {
     protected List<Course> getCoursesRegistered(){
         return coursesRegistered;
     }
-    protected void rateTeacher(Teacher t, int rate){
-    }
+
     private void viewInfoAboutTeacher(Teacher t){
         System.out.println(t);
     }
@@ -63,11 +63,13 @@ public class Student extends User implements Serializable {
 
     public void viewMarks(){
         Course c = new Course();
-        System.out.print(c.getStudentMark(this);
+        System.out.print(c.getStudentMark(this));
     }
 
     public void viewCourses(){
-
+        for (Course element : this.coursesRegistered) {
+            System.out.println(element.toString());
+        }
     }
 
     public void rateTeacher(){
@@ -78,8 +80,71 @@ public class Student extends User implements Serializable {
 
     }
 
-    public void studentOrganizations(){
+    protected void studentOrganizations(){
 
+    }
+    protected boolean isIn(Course c) {
+        if (c.getPrerequisites() == null) {
+            return true; // No prerequisites, so it's always considered as "in"
+        }
+
+        for (Course prereq : c.getPrerequisites()) {
+            boolean prereqMet = false;
+
+            for (Course studC : this.coursesRegistered) {
+                if (prereq.equals(studC)) {
+                    prereqMet = true;
+                    break; // Found a match for this prerequisite, no need to continue searching
+                }
+            }
+
+            if (!prereqMet) {
+                return false; // At least one prerequisite is not in coursesRegistered
+            }
+        }
+
+        return true; // All prerequisites are in coursesRegistered
+    }
+
+
+    protected void registerCourse(){
+        //get set of available courses by name
+        Vector<Course> coursesAvailable = new Vector<Course>();
+
+        for (Course ele : DB.getInstance().getCourses()){
+            if (isIn(ele)){
+                coursesAvailable.add(ele);
+            }
+        }
+        //student enters indeces of course
+        if (coursesAvailable != null){
+            int i = 1;
+            System.out.println(i + "Enter your choice by int or 0 to go back");
+            for (Course avCourse : coursesAvailable){
+                System.out.println(i +" "+ avCourse.getTitle());
+            }
+
+            int sumcredits = 0;
+            while (true){
+                int choice = in.nextInt();
+                in.nextLine();
+                if (choice == 0){
+                    break;
+                }
+                if(coursesAvailable.elementAt(choice-1).getCredits() + sumcredits < 21 ){
+                    sumcredits = sumcredits + coursesAvailable.elementAt(choice-1).getCredits();
+                    coursesRegistered.add(coursesAvailable.elementAt(choice-1));
+                    System.out.println(coursesAvailable.elementAt(choice-1).getTitle()+" is added succesfully");
+                }
+                else {
+                    System.out.println("Sum of credits would be more than 21");
+                }
+            }
+        }
+        else{
+            System.out.println("No available courses");
+        }
+        //check if credit <21
     }
 
     protected void operations(){
@@ -111,6 +176,9 @@ public class Student extends User implements Serializable {
                 studentOrganizations();
             case 8:
                 changeLanguage();
+                break;
+            case 9:
+                registerCourse();
                 break;
             case 0:
                 exit();
@@ -155,10 +223,11 @@ public class Student extends User implements Serializable {
                 "2. View information about teacher of a specific course\n" +
                 "3. View marks\n" +
                 "4. View Transcript\n" +
-                "5. Rate teacher\n" +
+                "5. Rate teacher on scale 1-10 (first enter id)\n" +
                 "6. Get Transcript\n" +
                 "7. Student organizations\n" +
                 "8. Change laguage"+
+                "9. Register for courses"+
                 "0. Back to Main Menu");
 
         operations();
@@ -206,7 +275,5 @@ public class Student extends User implements Serializable {
                 ", credits=" + credits +
                 '}';
     }
-
-
 
 }
