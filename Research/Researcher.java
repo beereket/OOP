@@ -1,5 +1,7 @@
 package Research;
 
+import Research.Exceptions.ResearchSupervisorException;
+
 import java.util.Comparator;
 
 public interface Researcher {
@@ -9,6 +11,6 @@ public interface Researcher {
 
     String getResearcherName();
 
-    void setSupervisor(Researcher supervisor) throws Research.ResearchSupervisorException;
+    void setSupervisor(Researcher supervisor) throws ResearchSupervisorException;
 
 }

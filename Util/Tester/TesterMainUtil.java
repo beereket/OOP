@@ -1,5 +1,6 @@
 package Util.Tester;
 
+import Research.Exceptions.CannotBecomeResearcherException;
 import Users.Enums.Degree;
 import Users.Enums.Faculty;
 import Users.Enums.ManagerType;
@@ -12,7 +13,7 @@ import Util.Exception.UserNotFound;
 import java.io.IOException;
 
 public class TesterMainUtil {
-    public static void main(String[] args) throws IOException, UserNotFound {
+    public static void main(String[] args) throws IOException, UserNotFound, CannotBecomeResearcherException {
 //        Student student1 = new Student("john_doe", "password123", Faculty.SEPI, Degree.BACHELOR);
 //        Student student2 = new Student("jane_smith", "pass456", Faculty.KMA, Degree.BACHELOR);
 //        Student student3 = new Student("alice_johnson", "securePwd", Faculty.BS, Degree.BACHELOR);

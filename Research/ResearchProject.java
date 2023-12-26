@@ -13,11 +13,11 @@ public class ResearchProject implements Serializable {
         this.publishedPapers = publishedPapers;
     }
 
-    public void addParticipant(Researcher researcher) throws Research.ResearchProjectJoinException {
+    public void addParticipant(Researcher researcher) throws Research.Exceptions.ResearchProjectJoinException {
         if (!projectParticipants.contains(researcher)) {
             projectParticipants.add(researcher);
         } else {
-            throw new Research.ResearchProjectJoinException("Researcher is already a participant in the project");
+            throw new Research.Exceptions.ResearchProjectJoinException("Researcher is already a participant in the project");
         }
     }
 

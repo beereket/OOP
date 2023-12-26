@@ -2,9 +2,6 @@ package Users;
 
 
 import Academic.Course;
-import Research.*;
-import Research.ResearchProjectJoinException;
-import Research.ResearchSupervisorException;
 import Users.Enums.Degree;
 import Users.Enums.Faculty;
 import Util.Classes.Data;
@@ -12,7 +9,6 @@ import Util.Enums.UserType;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
 

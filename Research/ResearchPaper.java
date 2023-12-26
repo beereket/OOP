@@ -1,5 +1,7 @@
 package Research;
 
+import Research.Exceptions.FormatNotSupportedException;
+
 import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
@@ -73,11 +75,11 @@ public class ResearchPaper implements Serializable {
 
 
 
-    public String getCitation(Research.Enums.Format format) throws Research.FormatNotSupportedException {
+    public String getCitation(Research.Enums.Format format) throws FormatNotSupportedException {
         return switch (format) {
             case PLAIN_TEXT -> generatePlainTextCitation();
             case BIBTEX -> generateBibtexCitation();
-            default -> throw new Research.FormatNotSupportedException("Unsupported citation format: " + format);
+            default -> throw new Research.Exceptions.FormatNotSupportedException("Unsupported citation format: " + format);
         };
     }
 

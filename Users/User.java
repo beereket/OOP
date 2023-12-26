@@ -2,8 +2,9 @@ package Users;
 
 import Messages.Order;
 import News.News;
+import Research.Exceptions.CannotBecomeResearcherException;
 import Research.ResearchPaper;
-import Research.ResearchSupervisorException;
+import Research.Exceptions.ResearchSupervisorException;
 import Research.Researcher;
 import Util.Classes.Data;
 import Util.Enums.Language;
@@ -216,9 +217,11 @@ public abstract class User implements Observer, Serializable, Researcher {
         System.out.println(username + "!\nA new scientific work entitled " + paperTitle + "  was published in the journal " + journalName);
     };
 
-    public void setIsResearcher() {
+    public void setIsResearcher() throws CannotBecomeResearcherException {
         if (this instanceof Student || this instanceof Employee || this instanceof Teacher) {
             this.isResearcher = true;
+        } else {
+            throw new Research.Exceptions.CannotBecomeResearcherException("This User cannot be a Researcher!");
         }
     }
 
@@ -272,7 +275,7 @@ public abstract class User implements Observer, Serializable, Researcher {
         if (isResearcher && this instanceof GraduateStudent graduateStudent) {
 
             if (supervisor.calculateHIndex() < 3) {
-                throw new Research.ResearchSupervisorException("Supervisor must have an h-index of 3 or higher");
+                throw new Research.Exceptions.ResearchSupervisorException("Supervisor must have an h-index of 3 or higher");
             }
 
             graduateStudent.researchSupervisor = supervisor;
