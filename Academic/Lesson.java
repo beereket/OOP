@@ -106,6 +106,10 @@ public class Lesson implements Serializable {
 		return students.get(student);
 	}
 
+	public boolean isStudentOnLecture(Student student) {
+		return students.containsKey(student);
+	}
+
 	/** Отметить посещение студента на лекции
 	 * @param student указатель на студента
 	 * @param att 1: присутствовал, 0: опоздал -1: отсутствовал*/

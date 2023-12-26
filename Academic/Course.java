@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Vector;
 
 public class Course implements Serializable {
 	private String code;
@@ -170,6 +171,18 @@ public class Course implements Serializable {
 		return students.get(student);
 	}
 
+	public Vector<Teacher> getTeachers(Student student){
+		Vector<Teacher> teachers = new Vector<>();
+
+		for(Lesson lesson: lessons){
+			if(lesson.isStudentOnLecture(student)){
+				teachers.add(lesson.getInstructor());
+			}
+		}
+
+		return teachers;
+	}
+
 	@Override
 	public String toString() {
 		return "Course{" +
@@ -186,16 +199,16 @@ public class Course implements Serializable {
 	/** Разделить текст по 1 символ слэшами('/')
 	 * @return "201" ====> "2/0/1" */
 	private String delimitStringWithSlash(String input){
-		String result = "";
+		StringBuilder result = new StringBuilder();
 
 		for (int i = 0; i < input.length(); i++) {
-			result += input.charAt(i);
+			result.append(input.charAt(i));
 			if (i < input.length() - 1) {
-				result += "/";
+				result.append("/");
 			}
 		}
 
-		return result;
+		return result.toString();
 	}
 }
 
