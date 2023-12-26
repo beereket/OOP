@@ -97,7 +97,8 @@ public class Lesson implements Serializable {
 					/* 				Operations 				*/
 	/** Получить информацию с лекции о Студенте
 	 * @param student указатель на студента
-	 * @throws IllegalArgumentException если студента нету на лекции */
+	 * @throws IllegalArgumentException если студента нету на лекции
+	 * @return StudentPerformance [Attendance, Mark, Comment]*/
 	public StudentPerformance getStudentPerformance(Student student) throws IllegalArgumentException {
 		if (!students.containsKey(student)) {
 			throw new IllegalArgumentException("Student not found in the lecture");
