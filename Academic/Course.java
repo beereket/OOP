@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Vector;
 
 public class Course implements Serializable {
 	private String code;
@@ -168,6 +169,18 @@ public class Course implements Serializable {
 
 	public Mark getStudentMark(Student student){
 		return students.get(student);
+	}
+
+	public Vector<Teacher> getTeachers(Student student){
+		Vector<Teacher> teachers = new Vector<Teacher>();
+
+		for(Lesson lesson: lessons){
+			if(lesson.isStudentOnLecture(student)){
+				teachers.add(lesson.getInstructor());
+			}
+		}
+
+		return teachers;
 	}
 
 	@Override

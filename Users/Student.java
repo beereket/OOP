@@ -11,6 +11,7 @@ import Util.Exception.UserNotFound;
 import Users.Teacher;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import java.util.Vector;
 
@@ -38,7 +39,7 @@ public class Student extends User implements Serializable {
     }
 
     public double getGPA() {
-        return 0.0;
+        double totalGpa
     }//null
 
     protected List<Course> getCoursesRegistered(){
@@ -53,6 +54,16 @@ public class Student extends User implements Serializable {
     @Override
     public void update() {
 
+    }
+
+    public Vector<Teacher> getTeachers(){
+        Vector<Teacher> teachers = new Vector<Teacher>();
+
+        for(Course course: coursesRegistered){
+            teachers.addAll(course.getTeachers(this));
+        }
+
+        return teachers;
     }
 
     public void viewTranscript(){
@@ -89,13 +100,14 @@ public class Student extends User implements Serializable {
     }
 
     public void viewMarks(){
-        Course c = new Course();
-        System.out.print(c.getStudentMark(this));
+        for(Course course: coursesRegistered){
+            System.out.println(course.getStudentMark(this));
+        }
     }
 
     public void viewCourses(){
-        for (Course element : this.coursesRegistered) {
-            System.out.println(element.toString());
+        for (Course course : this.coursesRegistered) {
+            System.out.println(course);
         }
     }
 
