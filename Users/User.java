@@ -236,6 +236,10 @@ public abstract class User implements Observer, Serializable, Researcher {
         }
     }
 
+    public List<ResearchPaper> getAllResearchPapers() {
+        return allResearchPapers;
+    }
+
     @Override
     public int calculateHIndex() {
         if (!isResearcher) {
