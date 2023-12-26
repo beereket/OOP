@@ -12,17 +12,32 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
-
+/**
+ * The Teacher class represents a user with the role of a teacher in the educational system.
+ * It extends the Employee class and includes specific attributes and methods related to teachers.
+ */
 public class Teacher extends Employee implements Serializable {
+
+    // Attributes specific to the Teacher class
     private List<Course> coursesTaught;
     private Title title;
-    protected double rating = 0;
+    protected Double rating = null;
+
     protected int rates = 0;
     protected int sumOfRatings = 0;
-
+//    protected int rated = 0;
+    /**
+     * Default constructor for the Teacher class.
+     */
     public Teacher() {
     }
-
+    /**
+     * Constructor for creating a new Teacher with the specified username, password, and title.
+     *
+     * @param username The username of the teacher.
+     * @param password The password of the teacher.
+     * @param title    The title or position of the teacher.
+     */
     public Teacher(String username, String password, Title title) {
         super(username, password, UserType.TEACHER);
         this.title = title;
@@ -54,6 +69,13 @@ public class Teacher extends Employee implements Serializable {
         this.rating = (double) (this.sumOfRatings / this.rates);
     }
 
+    // Getter and setter methods...
+
+    /**
+     * Runs the main menu for the teacher user, allowing interaction with various features.
+     *
+     * @throws IOException If an I/O error occurs.
+     */
     // MENY LOOP
     public void run() throws IOException {
         try {
@@ -73,10 +95,8 @@ public class Teacher extends Employee implements Serializable {
                         manageCourse();
                         break;
                     case 3:
-
                         break;
                     case 4:
-
                         break;
                     case 5:
                         break;
@@ -149,7 +169,11 @@ public class Teacher extends Employee implements Serializable {
         }
 
     }
+    // Other methods...
 
+    /**
+     * Displays the menu in English for the teacher user.
+     */
     @Override
     protected void displayEnglishMenu() {
         System.out.println("Menu:\n" +
@@ -191,7 +215,14 @@ public class Teacher extends Employee implements Serializable {
 
     }
 
+    /**
+     * Displays information about the courses taught by the teacher.
+     */
+
     private void viewCourses() {
+        for (Course c: coursesTaught){
+            System.out.println(c.getTitle());
+        }
     }
 
     public void addCourse(Course courseToAssign) {

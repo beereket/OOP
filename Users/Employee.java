@@ -11,7 +11,6 @@ import java.util.Vector;
 
 
 public class Employee extends User implements Serializable {
-    
     protected Integer id;
     protected Vector<Message> messages = new Vector<Message>();
     private Boolean isResearcher = false;
@@ -34,7 +33,6 @@ public class Employee extends User implements Serializable {
 
     @Override
     public void run() throws IOException {
-
     }
 
     @Override
@@ -44,12 +42,10 @@ public class Employee extends User implements Serializable {
 
     @Override
     protected void displayKazakhMenu() {
-
     }
 
     @Override
     protected void displayEnglishMenu() {
-
     }
 
 
