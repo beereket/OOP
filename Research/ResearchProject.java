@@ -1,6 +1,8 @@
 package Research;
 
+import News.News;
 import Research.Exceptions.ResearchProjectLeaveException;
+import Util.Data.DB;
 
 import java.io.Serializable;
 import java.util.*;
@@ -50,15 +52,22 @@ public class ResearchProject implements Serializable {
             throw new ResearchProjectLeaveException("Researcher is not a participant in the project");
         }
     }
-
+    /**
+     * Outputs all published papers of the project
+     * @return List of research papers.
+     */
+    public List<ResearchPaper> getPublishedPapers() {
+        return publishedPapers;
+    }
     /**
      * Publishes a research paper associated with the project.
-     *
+     * Automatically creates news about it.
      * @param paper The research paper to be published.
      */
     public void publishPaper(ResearchPaper paper) {
         if (!publishedPapers.contains(paper)) {
             publishedPapers.add(paper);
+            // DB.getInstance().addNews(new News("New Research Paper has been published!", topic+" called paper was finally published today! Congratulations!"));
         }
     }
 
