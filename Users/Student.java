@@ -56,7 +56,11 @@ public class Student extends User implements Serializable {
     }
 
     public void viewTranscript(){
-        // code|name : credits , total , literalMark , gpa ... \n Total gpa
+        System.out.println(getTranscript());
+    }
+
+    public String getTranscript(){
+        String result = "code|name : credits, total, literalMark, gpa\n";
 
         double totalGPA = 0;
         double totalCredits = 0;
@@ -70,12 +74,15 @@ public class Student extends User implements Serializable {
             totalGPA += currGPA * currCredits;
             totalCredits += currCredits;
 
-            System.out.println("%s|%s: %s, %s, %s, %s".formatted(course.getCode(), course.getTitle()
-                    ,currCredits, currMark.getTotal(), currMark.getLiteralMark(), currGPA));
+            String courseInfo = "%s|%s: %s, %s, %s, %s".formatted(course.getCode(), course.getTitle()
+                    ,currCredits, currMark.getTotal(), currMark.getLiteralMark(), currGPA);
+
+            result += courseInfo + "\n";
         }
 
-        System.out.println("Overall gpa: %s".formatted(totalGPA / totalCredits));
+        result += "Overall gpa: %s".formatted(totalGPA / totalCredits));
     }
+
 
     public void viewInfoAbTeacher(){
 
@@ -94,12 +101,6 @@ public class Student extends User implements Serializable {
 
     public void rateTeacher(){
 
-    }
-
-    public void getTranscript(){
-        for (Course c : coursesRegistered){
-            System.out.println(c.getStudentMark(this));
-        }
     }
 
     protected void studentOrganizations(){
