@@ -6,7 +6,6 @@ import Research.Exceptions.CannotBecomeResearcherException;
 import Research.ResearchPaper;
 import Research.Exceptions.ResearchSupervisorException;
 import Research.Researcher;
-import Util.Classes.Data;
 import Util.Data.DB;
 import Util.Enums.Language;
 import Util.Enums.UserType;
@@ -51,7 +50,7 @@ public abstract class User implements Observer, Serializable, Researcher {
 
     }
     public void reportIssue(String description) {
-        TechSupportSpecialist.orders.add(new Order(description));
+        DB.getInstance().addOrder(new Order(description));
     }
 
     //getter and setter
@@ -107,7 +106,7 @@ public abstract class User implements Observer, Serializable, Researcher {
 
         System.out.println("Enter password: ");
         String password = in.nextLine();
-        Vector<User> users = Data.getInstance().getUsers();
+        List<User> users = DB.getInstance().getUsersByUserType(UserType.USER);
         for (User user: users){
             if(user.getUsername().equals(username) && user.getPassword().equals(password)){
                 return user;
@@ -146,7 +145,7 @@ public abstract class User implements Observer, Serializable, Researcher {
 
     //NEWS
     public void viewAllNews() {
-        Vector<News> newsList = Data.getInstance().getNews();
+        List<News> newsList = DB.getInstance().getNews();
 
         if (newsList.isEmpty()) {
             System.out.println("No news articles available.");

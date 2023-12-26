@@ -273,4 +273,7 @@ public class Student extends User implements Serializable {
                 '}';
     }
 
+    public Faculty getFaculty() {
+        return faculty;
+    }
 }

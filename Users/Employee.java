@@ -2,7 +2,6 @@ package Users;
 
 import Messages.Message;
 import Messages.Request;
-import Util.Classes.Data;
 import Util.Data.DB;
 import Util.Enums.UserType;
 

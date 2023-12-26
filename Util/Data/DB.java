@@ -1,6 +1,7 @@
 package Util.Data;
 
 import Academic.Course;
+import Messages.Order;
 import News.News;
 import Users.StudentOrganization;
 import Users.User;
@@ -10,6 +11,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * This class represents a database for managing users, courses, and news.
@@ -24,6 +26,9 @@ public class DB {
     static public List<Course> courses = new ArrayList<>();
     static public List<News> news = new ArrayList<>();
     static public List<StudentOrganization> organizations = new ArrayList<>();
+    protected static Vector<Order> orders = new Vector<Order>();
+    protected static Vector<Order> accepted_orders = new Vector<Order>();
+
 
     /**
      * Private constructor to prevent instantiation.
@@ -63,6 +68,7 @@ public class DB {
         serializeCourses();
         serializeNews();
         serializeOrganizations();
+        serialize();
     }
 
     public static void deserializeAll() {
@@ -70,6 +76,7 @@ public class DB {
         deserializeCourses();
         deserializeNews();
         deserializeOrganizations();
+        deserialize();
     }
 
     private static void serializeUsers() {
@@ -134,6 +141,26 @@ public class DB {
             e.printStackTrace();
         }
     }
+    public static void serialize() {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("orders.dat"))) {
+            out.writeObject(orders);
+            out.writeObject(accepted_orders);
+            // Serialize other fields...
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deserialize() {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("orders.dat"))) {
+            orders = (Vector<Order>) in.readObject();
+            accepted_orders = (Vector<Order>) in.readObject();
+            // Deserialize other fields...
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     public List<Course> getCourses() {
@@ -156,5 +183,24 @@ public class DB {
         users.get(ut).add(u);
     }
 
+    public static HashMap<UserType, List<User>> getUsers() {
+        return users;
+    }
+
+    public static List<StudentOrganization> getOrganizations() {
+        return organizations;
+    }
+
+    public static Vector<Order> getOrders() {
+        return orders;
+    }
+
+    public static Vector<Order> getAcceptedOrders() {
+        return accepted_orders;
+    }
+
+    public void addOrder(Order order) {
+        orders.add(order);
+    }
 
 }

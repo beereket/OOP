@@ -3,8 +3,8 @@ package Users;
 
 import Research.ResearchPaper;
 import Research.Comparators.*;
-import Util.Classes.Data;
 import Util.Classes.UserFactory;
+import Util.Data.DB;
 import Util.Enums.UserType;
 import Util.Exception.UserNotFound;
 
@@ -16,15 +16,18 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static Util.Enums.UserType.USER;
+
 public class Admin extends User implements Serializable {
     private static final String FILE_PATH = "researchPapers.dat";
-
     public Admin(String username, String password){
         super(username, password, UserType.ADMIN);
     }
 
-    private String viewLogFiles() {
-        return Data.getInstance().getLogFiles();
+    private void viewLogFiles() {
+        for(User u: DB.getUsersByUserType(USER)){
+            System.out.println(u.getUsername() + ' ' + u.getPassword());
+        }
     }
 
     private void createUser() throws UserNotFound {
@@ -32,18 +35,17 @@ public class Admin extends User implements Serializable {
     }
 
     public boolean deleteUser(String username) {
-        boolean isRemovedFromUsers = Data.getInstance().getUsers().removeIf(user -> user.getUsername().equals(username));
+        boolean isRemoved = false;
 
-        boolean isRemovedFromEmployees = Data.getInstance().getEmployees().removeIf(employee -> employee.getUsername().equals(username));
-        boolean isRemovedFromGraduateStudents = Data.getInstance().getGSs().removeIf(gs -> gs.getUsername().equals(username));
-        boolean isRemovedFromManagers = Data.getInstance().getManagers().removeIf(manager -> manager.getUsername().equals(username));
-        boolean isRemovedFromStudents = Data.getInstance().getStudents().removeIf(student -> student.getUsername().equals(username));
-        boolean isRemovedFromTeachers = Data.getInstance().getTeachers().removeIf(teacher -> teacher.getUsername().equals(username));
-        boolean isRemovedFromTechSupport = Data.getInstance().getTSSs().removeIf(tss -> tss.getUsername().equals(username));
+        for (UserType userType : UserType.values()) {
+            boolean removedFromCurrentType = DB.getInstance().getUsersByUserType(userType)
+                    .removeIf(user -> user.getUsername().equals(username));
+            if (removedFromCurrentType) {
+                isRemoved = true;
+            }
+        }
 
-        return isRemovedFromEmployees || isRemovedFromGraduateStudents ||
-                isRemovedFromManagers || isRemovedFromStudents || isRemovedFromTeachers ||
-                isRemovedFromTechSupport;
+        return isRemoved;
     }
 
     public void manageUser() throws UserNotFound {
@@ -85,10 +87,10 @@ public class Admin extends User implements Serializable {
                 in.nextLine(); // Consume the newline left-over
                 switch (choice) {
                     case 1:
-
+                        manageUser();
                         break;
                     case 2:
-                        System.out.println(viewLogFiles());
+                        viewLogFiles();
                         break;
                     case 3:
                         viewAllNews();
@@ -209,6 +211,6 @@ public class Admin extends User implements Serializable {
 
     @Override
     public void update() {
-        
+
     }
 }
