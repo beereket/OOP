@@ -28,10 +28,10 @@ public class Course implements Serializable {
 	private HashSet<Lesson> lessons;
 	
 	public Course() {
-		students = new HashMap<Student, Mark>();
-		instructors = new HashSet<Teacher>();
-		prerequisites = new HashSet<Course>();
-		lessons = new HashSet<Lesson>();
+		students = new HashMap<>();
+		instructors = new HashSet<>();
+		prerequisites = new HashSet<>();
+		lessons = new HashSet<>();
 
 	}
 	public Course(String code, String title, String description, int credits, String courseType,
@@ -99,6 +99,9 @@ public class Course implements Serializable {
 			this.students.put(student, new Mark());
 		}
 	}
+	public void addStudent(Student student){
+		students.put(student, new Mark());
+	}
 	public HashSet<Teacher> getInstructors() {
 		return instructors;
 	}
@@ -121,7 +124,7 @@ public class Course implements Serializable {
 					/* 				Operatios				*/
 
 	/** Выставить оценки за аттестацию/Файнал
-	 * Меняет прикрепленный Mark студента на заданный параметром
+	 * Меняет прикрепленный Mark студента на заданный параметр
 	 * @param student указатель на студента
 	 * @param type Первая/Вторая аттестация или же Файнал
 	 * @param mark общая оценка за аттестацию*/
@@ -132,8 +135,8 @@ public class Course implements Serializable {
 
 	/**  Журнал обущающегося в WSP по кнопку 'Итог'.
 	 *   Пробегается по всем лекциям курса в которым присуствует студент
-	 *   и возвращает данные в качестве массива размером 3 [Оценки,Присуствие,Отсутствие]
 	 * @param student указатель на студента
+	 * @return double[total Marks, Number of Presence, Number of Absence]
 	 * */
 	public double[] sumStudentLectureInfo(Student student){
 		double sumMarks = 0;
@@ -163,6 +166,10 @@ public class Course implements Serializable {
 		return new double[]{sumMarks, sumPresent, sumAbsent};
 	}
 
+	public Mark getStudentMark(Student student){
+		return students.get(student);
+	}
+
 	@Override
 	public String toString() {
 		return "Course{" +
@@ -176,17 +183,19 @@ public class Course implements Serializable {
 				'}';
 	}
 
+	/** Разделить текст по 1 символ слэшами('/')
+	 * @return "201" ====> "2/0/1" */
 	private String delimitStringWithSlash(String input){
-		String output = "";
+		String result = "";
 
 		for (int i = 0; i < input.length(); i++) {
-			output += input.charAt(i);
+			result += input.charAt(i);
 			if (i < input.length() - 1) {
-				output += "/";
+				result += "/";
 			}
 		}
 
-		return output;
+		return result;
 	}
 }
 

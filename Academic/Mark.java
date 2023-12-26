@@ -10,7 +10,6 @@ public class Mark implements Serializable {
 	private double secondAttestation;
 	private double finalExam;
 	
-	private double total;
 	private double gpa;
 	private String literalMark;
 	
@@ -34,10 +33,7 @@ public class Mark implements Serializable {
 		this.finalExam = finalExam;
 	}
 	public double getTotal() {
-		return total;
-	}
-	public void setTotal(double total) {
-		this.total = total;
+		return firstAttestation + secondAttestation + finalExam;
 	}
 	public double getGpa() {
 		return gpa;
@@ -51,13 +47,11 @@ public class Mark implements Serializable {
 	public void setLiteralMark(String literalMark) {
 		this.literalMark = literalMark;
 	}
-	
-	public void updateTotal() {
-		total = firstAttestation + secondAttestation + finalExam;
-	}
 
-	/** Обновляет данные о буквенной и цифровой(гпа) оценки */
-	public void transformMarks() {
+	/** Обновляет данные о буквенной и цифровой(гпа) оценке */
+	private void updateFields() {
+		double total = getTotal();
+
         if (total >= 94.5) {
             literalMark = "A";
             gpa = 4.0;
@@ -103,10 +97,7 @@ public class Mark implements Serializable {
             gpa = 0;
         }
     }
-	public void updateStatus() {
-		updateTotal();
-		transformMarks();
-	}
+
 	/** Выставить оценку за аттестацию
 	 * @param type Первая/Вторая аттестация или же Файнал
 	 * @param mark общая оценка за аттестацию */
@@ -116,6 +107,19 @@ public class Mark implements Serializable {
 			case SECOND: this.setSecondAttestation(mark);
 			case FINAL : this.setFinalExam(mark);
 		}
+
+		updateFields();
 	}
 
+	@Override
+	public String toString() {
+		return "Mark{" +
+				"firstAttestation=" + firstAttestation +
+				", secondAttestation=" + secondAttestation +
+				", finalExam=" + finalExam +
+				", Total=" + getTotal() +
+				", gpa=" + gpa +
+				", literalMark='" + literalMark + '\'' +
+				'}';
+	}
 }
