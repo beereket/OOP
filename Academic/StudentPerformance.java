@@ -31,6 +31,9 @@ public class StudentPerformance implements Serializable {
     public void setMark(int mark) {
         this.mark = mark;
     }
+    public void putMark(int mark){
+        this.mark += mark;
+    }
 
     public String getComment() {
         return comment;
@@ -38,5 +41,8 @@ public class StudentPerformance implements Serializable {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+    public void addComment(String comment){
+        this.comment += comment;
     }
 }

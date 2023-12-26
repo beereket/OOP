@@ -101,15 +101,14 @@ public class Mark implements Serializable {
 	/** Выставить оценку за аттестацию
 	 * @param type Первая/Вторая аттестация или же Файнал
 	 * @param mark общая оценка за аттестацию */
-	public void putMark(typeOfAttestation type, int mark) {
+	public void setMark(typeOfAttestation type, int mark) {
 		switch(type) {
 			case FIRST : this.setFirstAttestation(mark);
 			case SECOND: this.setSecondAttestation(mark);
 			case FINAL : this.setFinalExam(mark);
 		}
-
-		updateFields();
 	}
+
 
 	@Override
 	public String toString() {

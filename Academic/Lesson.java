@@ -123,7 +123,7 @@ public class Lesson implements Serializable {
 	 * @param mark оценка за лекцию*/
 	public void putMark(Student student, int mark) {
 		StudentPerformance curSP = getStudentPerformance(student);
-		curSP.setMark(mark);
+		curSP.putMark(mark);
 	}
 
 	/** Оставить комментарий о студента за лекцию
@@ -131,7 +131,7 @@ public class Lesson implements Serializable {
 	 * @param comment комментарий учителя */
 	public void putComment(Student student, String comment) {
 		StudentPerformance curSP = getStudentPerformance(student);
-		curSP.setComment(comment);
+		curSP.addComment(comment);
 	}
 
 }

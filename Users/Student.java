@@ -14,7 +14,6 @@ import java.util.Vector;
 
 
 public class Student extends User implements Serializable {
-    
     protected Integer id;
     protected Faculty faculty;
     protected Integer yearOfStudy = 1;

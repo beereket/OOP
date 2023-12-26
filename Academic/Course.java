@@ -133,7 +133,7 @@ public class Course implements Serializable {
 	 * @param mark общая оценка за аттестацию*/
 	public void putMark(Student student, typeOfAttestation type, int mark) {
 		Mark curMark = students.get(student);
-		curMark.putMark(type, mark);
+		curMark.setMark(type, mark);
 	}
 
 	/**  Журнал обущающегося в WSP по кнопку 'Итог'.
