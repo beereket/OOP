@@ -2,6 +2,7 @@ package Users;
 
 
 import Academic.Course;
+import Academic.Mark;
 import Users.Enums.Degree;
 import Users.Enums.Faculty;
 import Util.Data.DB;
@@ -55,7 +56,25 @@ public class Student extends User implements Serializable {
     }
 
     public void viewTranscript(){
+        // code|name : credits , total , literalMark , gpa ... \n Total gpa
 
+        double totalGPA = 0;
+        double totalCredits = 0;
+
+        for(Course course: coursesRegistered){
+            Mark currMark = course.getStudentMark(this);
+
+            double currGPA = currMark.getGpa();
+            double currCredits = course.getCredits();
+
+            totalGPA += currGPA * currCredits;
+            totalCredits += currCredits;
+
+            System.out.println("%s|%s: %s, %s, %s, %s".formatted(course.getCode(), course.getTitle()
+                    ,currCredits, currMark.getTotal(), currMark.getLiteralMark(), currGPA));
+        }
+
+        System.out.println("Overall gpa: %s".formatted(totalGPA / totalCredits));
     }
 
     public void viewInfoAbTeacher(){
