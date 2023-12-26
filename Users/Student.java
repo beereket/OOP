@@ -33,6 +33,7 @@ public class Student extends User implements Serializable {
         this.faculty = faculty;
         this.degree = degree;
 
+        DB.getInstance().addUser(this, UserType.STUDENT);
     }
 
     public double getGPA() {
@@ -73,7 +74,6 @@ public class Student extends User implements Serializable {
     }
 
     public void rateTeacher(){
-
     }
 
     public void getTranscript(){
@@ -147,46 +147,48 @@ public class Student extends User implements Serializable {
         //check if credit <21
     }
 
+    @Override
     public void run(){
-        displayMenu();
-        System.out.print("Enter your choice: ");
-        int choice = in.nextInt();
-        in.nextLine();
+        menu: while(true) {
+            displayMenu();
+            System.out.print("Enter your choice: ");
+            int choice = in.nextInt();
+            in.nextLine();
 
-        switch (choice) {
-            case 1:
-                viewCourses();
-                break;
-            case 2:
-                viewInfoAbTeacher();
-                break;
-            case 3:
-                viewAllNews();
-                break;
-
-            case 4:
-                viewMarks();
-                break;
-            case 5:
-                viewTranscript();
-                break;
-            case 6:
-                rateTeacher();
-                break;
-            case 7:
-                studentOrganizations();
-            case 8:
-                changeLanguage();
-                break;
-            case 9:
-                registerCourse();
-                break;
-            case 0:
-                exit();
-            default:
-                throw new IllegalStateException("Unexpected value: " + choice);
+            switch (choice) {
+                case 1:
+                    viewCourses();
+                    break;
+                case 2:
+                    viewInfoAbTeacher();
+                    break;
+                case 3:
+                    viewAllNews();
+                    break;
+                case 4:
+                    viewMarks();
+                    break;
+                case 5:
+                    viewTranscript();
+                    break;
+                case 6:
+                    rateTeacher();
+                    break;
+                case 7:
+                    studentOrganizations();
+                case 8:
+                    changeLanguage();
+                    break;
+                case 9:
+                    registerCourse();
+                    break;
+                case 0:
+                    exit();
+                    break menu;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + choice);
+            }
         }
-        run();
     }
 
     protected void changeLanguage(){

@@ -26,14 +26,13 @@ public class TesterMainUtil {
         Student student5 = new Student("clark_kent", "superman123", Faculty.SEPI, Degree.BACHELOR);
         Student student6 = new Student("barry_allen", "flashPwd", Faculty.KMA, Degree.BACHELOR);
 
-        List<Course> list = new ArrayList<>();
-        list.add(DB.getInstance().getCourses().get(1));
+        Manager m = new Manager("manager", "manager", ManagerType.OR);
 
-        DB.getInstance().getCourses().get(0).setPrerequisites(list);
-        new Manager().run();
-        student1.run();
-        DB.serializeAll();
-//
-//        User.authenticate().run();
+        student6.setIsResearcher();
+
+        System.out.println(student6.getResearcherName());
+
+
+        //User.authenticate().run();
     }
 }
