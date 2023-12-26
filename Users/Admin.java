@@ -138,26 +138,39 @@ public class Admin extends User implements Serializable {
         System.out.println("0. Exit");
     }
 
-    @Override
-    public void update() {
-
-    }
-
+    /**
+     * Prints all research papers sorted by date of publication.
+     * Uses the DatePublishedComparator for sorting.
+     */
     public void printAllResearchPapersByDatePublished() {
         List<ResearchPaper> allResearchPapers = loadAllResearchPapers();
         printAllResearchPapers(allResearchPapers, new DatePublishedComparator());
     }
 
+    /**
+     * Prints all research papers sorted by the number of citations.
+     * Uses the CitationsComparator for sorting.
+     */
     public void printAllResearchPapersByCitations() {
         List<ResearchPaper> allResearchPapers = loadAllResearchPapers();
         printAllResearchPapers(allResearchPapers, new CitationsComparator());
     }
 
+    /**
+     * Prints all research papers sorted by article length.
+     * Uses the ArticleLengthComparator for sorting.
+     */
     public void printAllResearchPapersByArticleLength() {
         List<ResearchPaper> allResearchPapers = loadAllResearchPapers();
         printAllResearchPapers(allResearchPapers, new ArticleLengthComparator());
     }
 
+    /**
+     * Prints a list of research papers sorted using the provided comparator.
+     *
+     * @param researchPapers The list of research papers to be printed.
+     * @param comparator     The comparator for sorting the research papers.
+     */
     private void printAllResearchPapers(List<ResearchPaper> researchPapers, Comparator<ResearchPaper> comparator) {
         List<ResearchPaper> sortedPapers = new ArrayList<>(researchPapers);
         Collections.sort(sortedPapers, comparator);
@@ -167,6 +180,11 @@ public class Admin extends User implements Serializable {
         }
     }
 
+    /**
+     * Loads all research papers from the file.
+     *
+     * @return The list of loaded research papers.
+     */
     private List<ResearchPaper> loadAllResearchPapers() {
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(FILE_PATH))) {
             return (List<ResearchPaper>) inputStream.readObject();
@@ -176,6 +194,11 @@ public class Admin extends User implements Serializable {
         }
     }
 
+    /**
+     * Saves a list of research papers to the file.
+     *
+     * @param researchPapers The list of research papers to be saved.
+     */
     public void saveAllResearchPapers(List<ResearchPaper> researchPapers) {
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(FILE_PATH))) {
             outputStream.writeObject(researchPapers);
@@ -184,9 +207,8 @@ public class Admin extends User implements Serializable {
         }
     }
 
-
-
-
-
-
+    @Override
+    public void update() {
+        
+    }
 }
