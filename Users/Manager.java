@@ -16,10 +16,20 @@ import java.util.stream.Collectors;
 
 import static Util.Enums.UserType.MANAGER;
 
-
+/**
+ * Represents a manager in the system. This class extends Employee and is responsible for
+ * performing various managerial tasks such as handling course assignments, managing news,
+ * and generating statistical reports.
+ */
 public class Manager extends Employee implements Serializable {
     private ManagerType managerType;
-
+    /**
+     * Constructs a new Manager with specified username, password, and manager type.
+     *
+     * @param username     The manager's username.
+     * @param password     The manager's password.
+     * @param managerType  The type of manager.
+     */
     public Manager(String username, String password, ManagerType managerType) {
         super(username, password, MANAGER);
         this.managerType = managerType;
@@ -39,7 +49,11 @@ public class Manager extends Employee implements Serializable {
         Rector r = Rector.getINSTANCE();
         return r.getSignedRequests();
     }
-
+    /**
+     * Creates a statistical report about students, including total count, average GPA, and faculty distribution.
+     *
+     * @return A string representing the statistical report.
+     */
     public static String createStatisticalReport() {
         List<User> users = DB.getInstance().getUsersByUserType(UserType.STUDENT);
         List<Student> students = users.stream()
@@ -75,7 +89,10 @@ public class Manager extends Employee implements Serializable {
 
         return report.toString();
     }
-
+    /**
+     * Assigns courses to a selected teacher. The method lists all teachers and courses,
+     * then prompts the user to select a teacher and assign courses to them.
+     */
     protected void assignCoursesToTeacher() {
         // Display list of teachers
         List<Teacher> teachers = DB.getInstance().getUsersByUserType(UserType.TEACHER).stream().filter(Teacher.class::isInstance)
@@ -115,6 +132,11 @@ public class Manager extends Employee implements Serializable {
 
 
     //Manage NEWS
+
+    /**
+     * Creates a new news item by taking input from the user for the title and content.
+     * The news item is then added to the system.
+     */
     public void createNews() {
         System.out.print("Enter the title of the news: ");
         String title = in.nextLine();
@@ -141,7 +163,10 @@ public class Manager extends Employee implements Serializable {
             System.out.println("Invalid index. News not deleted.");
         }
     }
-
+    /**
+     * Provides an interface for managing news. This includes options to create, view, and delete news items.
+     * The user can navigate through these options in a loop until they choose to exit.
+     */
     public void manageNews() {
         while (true) {
             System.out.println("News Management Menu:");
@@ -173,6 +198,10 @@ public class Manager extends Employee implements Serializable {
 
 
     //----------------------
+    /**
+     * Adds new courses for registration. The method prompts the user to enter course details such as code, title,
+     * description, credits, course type, semester type, and faculty. A new course is then created with these details.
+     */
     public void addCoursesForRegistration() {
         System.out.println("Enter Course Details:");
         System.out.print("Code: ");
@@ -204,6 +233,12 @@ public class Manager extends Employee implements Serializable {
 
 
     //MENU METHODS
+    /**
+     * Runs the manager interface, providing various options such as managing news,
+     * courses, and viewing information about students and teachers.
+     *
+     * @throws IOException If an I/O error occurs.
+     */
     public void run() throws IOException {
         try {
             getWelcomeMessage();
@@ -294,6 +329,14 @@ public class Manager extends Employee implements Serializable {
 
     //methods for input
     // Utility method to convert a string input to Faculty enum
+    /**
+     * Utility method to convert a string input to a Faculty enum value.
+     * If the input does not match any Faculty enum value, an IllegalArgumentException is thrown.
+     *
+     * @param input The string input to be converted.
+     * @return The corresponding Faculty enum value.
+     * @throws IllegalArgumentException If the input string does not match any Faculty enum value.
+     */
     private static Faculty getFacultyFromInput(String input) {
         try {
             return Faculty.valueOf(input.toUpperCase());
@@ -301,6 +344,15 @@ public class Manager extends Employee implements Serializable {
             throw new IllegalArgumentException("Invalid faculty: " + input);
         }
     }
+    /**
+     * Utility method to convert a string input to a SemesterType enum value.
+     * If the input does not match any SemesterType enum value, an IllegalArgumentException is thrown.
+     *
+     * @param input The string input to be converted.
+     * @return The corresponding SemesterType enum value.
+     * @throws IllegalArgumentException If the input string does not match any SemesterType enum value.
+     */
+
 
     private static SemesterType getSemesterTypeFromInput(String input) {
         switch (input.toUpperCase()) {
