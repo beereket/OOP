@@ -11,8 +11,7 @@ import Util.Enums.UserType;
 import Util.Exception.UserNotFound;
 import Util.Observer;
 
-import java.io.IOException;
-import java.io.Serializable;
+import java.io.*;
 import java.util.*;
 
 import static Util.Enums.Language.*;
@@ -24,14 +23,20 @@ public abstract class User implements Observer, Serializable, Researcher {
     protected UserType userType;
     protected Language language = ENG;
     protected static Scanner in = new Scanner(System.in);
-    private boolean isResearcher = false;
+    private boolean isResearcher;
     private List<ResearchPaper> researchPapers = new ArrayList<>();
+    private static final String FILE_PATH = "researchersDB.dat";
 
     public User(String username, String password, UserType userType) {
         this.username = username;
         this.password = password;
         this.userType = userType;
         Data.getInstance().getUsers().add(this);
+
+        if (this instanceof GraduateStudent) {
+            isResearcher = true;
+        }
+        isResearcher = false;
     }
 
     public User() {
@@ -198,6 +203,11 @@ public abstract class User implements Observer, Serializable, Researcher {
     }
 
     @Override
+    public void update() {
+
+    }
+
+    @Override
     public void update(String journalName, String paperTitle) {
         System.out.println(username + "!\nA new scientific work entitled " + paperTitle + "  was published in the journal " + journalName);
     };
@@ -205,7 +215,35 @@ public abstract class User implements Observer, Serializable, Researcher {
     public void setIsResearcher() {
         if (this instanceof Student || this instanceof Employee || this instanceof Teacher || this instanceof GraduateStudent) {
             this.isResearcher = true;
+
+            saveToFile();
         }
+    }
+
+    private void saveToFile() {
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(FILE_PATH, true))) {
+            outputStream.writeObject(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static List<User> loadAllResearchers() {
+        List<User> allResearchers = new ArrayList<>();
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(FILE_PATH))) {
+            while (true) {
+                try {
+                    User researcher = (User) inputStream.readObject();
+                    allResearchers.add(researcher);
+                } catch (EOFException e) {
+                    // End of file reached
+                    break;
+                }
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return allResearchers;
     }
     @Override
     public void printPapers(Comparator<ResearchPaper> comparator) {
@@ -271,5 +309,6 @@ public abstract class User implements Observer, Serializable, Researcher {
             graduateStudent.researchSupervisor = supervisor;
         }
     }
+
 
 }

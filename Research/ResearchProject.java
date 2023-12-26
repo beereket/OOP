@@ -21,7 +21,7 @@ public class ResearchProject implements Serializable {
         }
     }
 
-    public void addPaper(ResearchPaper paper) {
+    public void publishPaper(ResearchPaper paper) {
         if (!publishedPapers.contains(paper)) {
             publishedPapers.add(paper);
         }
