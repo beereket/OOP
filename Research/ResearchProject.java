@@ -16,7 +16,6 @@ public class ResearchProject implements Serializable {
     public void addParticipant(Researcher researcher) throws Research.ResearchProjectJoinException {
         if (!projectParticipants.contains(researcher)) {
             projectParticipants.add(researcher);
-            researcher.joinResearchProject(this); // Notify researcher about joining the project
         } else {
             throw new Research.ResearchProjectJoinException("Researcher is already a participant in the project");
         }

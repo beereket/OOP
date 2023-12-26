@@ -16,7 +16,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
 
-public class Student extends User implements Serializable, Researcher {
+public class Student extends User implements Serializable {
     
     protected Integer id;
     protected Faculty faculty;
@@ -90,29 +90,6 @@ public class Student extends User implements Serializable, Researcher {
                 '}';
     }
 
-    @Override
-    public void printPapers(Comparator<ResearchPaper> comparator) {
 
-    }
-
-    @Override
-    public int calculateHIndex() {
-        return 0;
-    }
-
-    @Override
-    public String getResearcherName() {
-        return getUsername();
-    }
-
-    @Override
-    public void setSupervisor(Researcher supervisor) throws ResearchSupervisorException {
-
-    }
-
-    @Override
-    public void joinResearchProject(ResearchProject project) throws ResearchProjectJoinException {
-
-    }
 
 }

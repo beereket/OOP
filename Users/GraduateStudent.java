@@ -13,7 +13,7 @@ import java.util.List;
 public class GraduateStudent extends Student implements Serializable {
 
     
-    private Researcher researchSupervisor;
+    protected Researcher researchSupervisor;
 
 
     public GraduateStudent(String username, String password) {

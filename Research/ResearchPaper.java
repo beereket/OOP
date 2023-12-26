@@ -38,6 +38,9 @@ public class ResearchPaper {
     public int getPages() {
         return pages;
     }
+    public List<Researcher> getAuthors() {
+        return authors;
+    }
 
 
     public String getCitation(Research.Enums.Format format) throws Research.FormatNotSupportedException {
