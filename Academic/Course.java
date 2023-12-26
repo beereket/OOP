@@ -34,7 +34,7 @@ public class Course implements Serializable {
 		lessons = new HashSet<Lesson>();
 
 	}
-	public Course(String code, String title, String description, int credits, String courseType, int semesterNum,
+	public Course(String code, String title, String description, int credits, String courseType,
 			SemesterType semesterType, Faculty faculty) {
 		this();
 		this.code = code;
@@ -42,7 +42,6 @@ public class Course implements Serializable {
 		this.description = description;
 		this.credits = credits;
 		this.courseType = courseType;
-		this.semesterNum = semesterNum;
 		this.semesterType = semesterType;
 		this.faculty = faculty;
 
@@ -150,9 +149,9 @@ public class Course implements Serializable {
 					sumMarks += curSP.getMark();
 
 					switch (curSP.getAttendace()) {
-						case 1 : sumPresent += 1;
-						case 0 : sumAbsent += 0.5;
-						case -1: sumAbsent += 1;
+						case 1 : sumPresent += 1; break;
+						case 0 : sumAbsent += 0.5; break;
+						case -1: sumAbsent += 1; break;
 					}
 				}
 			}
@@ -171,10 +170,24 @@ public class Course implements Serializable {
 				", title='" + title + '\'' +
 				", description='" + description + '\'' +
 				", credits=" + credits +
-				", courseType='" + courseType + '\'' +
-				", semesterNum=" + semesterNum +
+				", courseType='" + delimitStringWithSlash(courseType) + '\'' +
 				", semesterType=" + semesterType +
 				", faculty=" + faculty +
 				'}';
 	}
+
+	private String delimitStringWithSlash(String input){
+		String output = "";
+
+		for (int i = 0; i < input.length(); i++) {
+			output += input.charAt(i);
+			if (i < input.length() - 1) {
+				output += "/";
+			}
+		}
+
+		return output;
+	}
 }
+
+// "201".chars().mapToObj(c -> String.valueOf((char) c)).collect(Collectors.joining("/"));

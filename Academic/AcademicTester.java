@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class AcademicTester {
     public static void main(String[] args){
         Course oop = new Course("INFT2305", "OOP", "Object-Oriented Programming", 5,
-                "201", 3, SemesterType.FALL, Faculty.SITE);
+                "201", SemesterType.FALL, Faculty.SITE);
 
         Teacher pakita = new Teacher("s_pakita" , "pass3", Title.SENIOR);
 
@@ -44,7 +44,7 @@ public class AcademicTester {
         double[] temp = oop.sumStudentLectureInfo(askar);
 
         for(double value: temp){
-            System.out.println(value);
+            System.out.println(oop);
         }
     }
 }

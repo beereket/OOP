@@ -125,9 +125,6 @@ public class Manager extends Employee implements Serializable {
         String courseType = in.nextLine();
         in.nextLine();
 
-        System.out.print("Semester Number: ");
-        int semesterNum = in.nextInt();
-
         System.out.print("Semester Type: ");
         String semesterTypeInput = in.next();
 
@@ -136,7 +133,7 @@ public class Manager extends Employee implements Serializable {
         String facultyInput = in.next();
         Faculty faculty = getFacultyFromInput(facultyInput);
 
-        Course newCourse = new Course(code, title, description, credits, courseType, semesterNum, semesterType, faculty);
+        Course newCourse = new Course(code, title, description, credits, courseType, semesterType, faculty);
     }
 
 
