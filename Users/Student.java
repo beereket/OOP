@@ -14,6 +14,7 @@ import java.util.Vector;
 
 
 public class Student extends User implements Serializable {
+    
     protected Integer id;
     protected Faculty faculty;
     protected Integer yearOfStudy = 1;
@@ -44,7 +45,7 @@ public class Student extends User implements Serializable {
         }
 
         return (totalGpa / totalCredits);
-    }
+    }//null
 
     protected List<Course> getCoursesRegistered(){
         return coursesRegistered;
@@ -158,7 +159,6 @@ public class Student extends User implements Serializable {
     }
 
     protected void registerCourse(){
-        //get set of available courses by name
         Vector<Course> coursesAvailable = new Vector<Course>();
 
         for (Course ele : DB.getInstance().getCourses()){
@@ -166,12 +166,12 @@ public class Student extends User implements Serializable {
                 coursesAvailable.add(ele);
             }
         }
-        //student enters indexes of course
+
         if (!coursesAvailable.isEmpty()){
             int i = 1;
             System.out.println(i + "Enter your choice by int or 0 to go back");
             for (Course avCourse : coursesAvailable){
-                System.out.println(i + " " + avCourse.getTitle());
+                System.out.println(i +" "+ avCourse.getTitle());
             }
 
             int sumcredits = 0;
@@ -253,7 +253,7 @@ public class Student extends User implements Serializable {
 
         System.out.print("Enter your choice: ");
         int choice = in.nextInt();
-        in.nextLine(); // Consume the newline left-over
+        in.nextLine();
 
         switch (choice){
             case 1:
