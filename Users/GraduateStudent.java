@@ -7,13 +7,18 @@ import Users.Enums.Faculty;
 import Util.Enums.UserType;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class GraduateStudent extends Student implements Serializable {
 
     
     protected Researcher researchSupervisor;
+    List<ResearchPaper> diplomaProjects = getAllResearchPapers().stream()
+            .filter(paper -> paper.getAuthors().contains(this))
+            .collect(Collectors.toList());;
 
 
     public GraduateStudent(String username, String password) {
@@ -30,9 +35,10 @@ public class GraduateStudent extends Student implements Serializable {
     }
 
 
-    public List<ResearchPaper> viewPublishedPapers() {
-        return null;
+    public List<ResearchPaper> viewDiplomaProjects() {
+        return diplomaProjects;
     }
+
     
     
 }
