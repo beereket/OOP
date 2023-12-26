@@ -8,15 +8,10 @@ import java.util.List;
 import java.util.Vector;
 
 public class StudentOrganization implements Serializable {
-    
-
     private String name;
-
     private Student president;
     private  Vector<News> news;
-
     private Vector<Student> students;
-
     public void manageNews() {
 
     }

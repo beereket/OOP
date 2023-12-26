@@ -17,10 +17,8 @@ import static Util.Enums.UserType.MANAGER;
 
 
 public class Manager extends Employee implements Serializable {
-    //FIELDS
     private ManagerType managerType;
 
-    //CONSTUCTORS
     public Manager(String username, String password, ManagerType managerType) {
         super(username, password, MANAGER);
         this.managerType = managerType;

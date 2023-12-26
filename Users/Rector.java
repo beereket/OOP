@@ -10,7 +10,6 @@ import java.util.Vector;
 
 
 public class Rector extends Employee implements Serializable {
-    
     private static Rector INSTANCE;
     protected static Vector<Request> requests = new Vector<Request>();
     protected static Vector<Request> signedRequests = new Vector<Request>();
