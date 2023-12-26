@@ -5,12 +5,13 @@ import Users.Student;
 import Users.Teacher;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Collection;
 import java.util.HashMap;
 
 public class Lesson implements Serializable {
 	private LessonType type; // lab, practice, lesson
-	private LocalDate time; // 14:00
+	private LocalTime time; // 14:00
 	private int weekDay; // 0: monday 1: tuesday ....
 	private Teacher instructor;
 	private int room;
@@ -19,9 +20,9 @@ public class Lesson implements Serializable {
 	private HashMap<Student, StudentPerformance> students; // Student: Attendance(Enum) / Mark / Comment
 	
 	public Lesson() {
-		students = new HashMap<Student, StudentPerformance>();
+		students = new HashMap<>();
 	}
-	public Lesson(LessonType type, LocalDate time, int weekDay, Teacher instructor, int room, int duration, boolean isOffline, HashMap<Student, StudentPerformance> students) {
+	public Lesson(LessonType type, LocalTime time, int weekDay, Teacher instructor, int room, int duration, boolean isOffline, Collection<Student> students) {
 		this();
 		
 		this.type = type;
@@ -31,7 +32,8 @@ public class Lesson implements Serializable {
 		this.room = room;
 		this.duration = duration;
 		this.isOffline = isOffline;
-		this.students = students;
+
+		setStudents(students);
 	}
 	
 	// Getters-Setters
@@ -41,10 +43,10 @@ public class Lesson implements Serializable {
 	public void setType(LessonType type) {
 		this.type = type;
 	}
-	public LocalDate getTime() {
+	public LocalTime getTime() {
 		return time;
 	}
-	public void setTime(LocalDate time) {
+	public void setTime(LocalTime time) {
 		this.time = time;
 	}
 	public int getWeekDay() {
@@ -79,8 +81,10 @@ public class Lesson implements Serializable {
 	public HashMap<Student,StudentPerformance> getStudents() {
 		return students;
 	}
-	public void setStudents(HashMap<Student, StudentPerformance> students) {
-		this.students = students;
+	public void setStudents(Collection<Student> students) {
+		for(Student student: students){
+			this.students.put(student, new StudentPerformance());
+		}
 	}
 	public Teacher getInstructor() {
 		return instructor;

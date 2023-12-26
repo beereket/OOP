@@ -8,6 +8,7 @@ import Users.Teacher;
 import Util.Classes.Data;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -94,23 +95,28 @@ public class Course implements Serializable {
 	public HashMap<Student, Mark> getStudents() {
 		return students;
 	}
-	public void setStudents(HashMap<Student, Mark> students) {
-		this.students = students;
+	public void setStudents(Collection<Student> students) {
+		for(Student student: students){
+			this.students.put(student, new Mark());
+		}
 	}
 	public HashSet<Teacher> getInstructors() {
 		return instructors;
 	}
-	public void setInstructors(HashSet<Teacher> instructors) {
-		this.instructors = instructors;
+	public void setInstructors(Collection<Teacher> instructors) {
+		this.instructors = new HashSet<>(instructors);
 	}
 	public HashSet<Course> getPrerequisites() {
 		return prerequisites;
 	}
-	public void setPrerequisites(HashSet<Course> prerequisites) {
-		this.prerequisites = prerequisites;
+	public void setPrerequisites(Collection<Course> prerequisites) {
+		this.prerequisites = new HashSet<>(prerequisites);
 	}
-	public void setLessons(HashSet<Lesson> lessons){
-		this.lessons = lessons;
+	public void setLessons(Collection<Lesson> lessons){
+		this.lessons = new HashSet<>(lessons);
+	}
+	public void addLesson(Lesson lesson){
+		this.lessons.add(lesson);
 	}
 	
 					/* 				Operatios				*/

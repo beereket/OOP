@@ -29,7 +29,6 @@ public class Student extends User implements Serializable {
         super(username, password, userType);
     }
 
-
     public Student(String username, String password, Faculty faculty, Degree degree) {
         super(username, password, UserType.STUDENT);
         this.id = Data.getInstance().getStudents().size() + 1;
