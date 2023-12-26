@@ -48,7 +48,7 @@ public class ResearchPaper implements Serializable {
         }
     }
 
-    private List<ResearchPaper> loadAllResearchPapers() {
+    public static List<ResearchPaper> loadAllResearchPapers() {
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(FILE_PATH))) {
             return (List<ResearchPaper>) inputStream.readObject();
         } catch (IOException | ClassNotFoundException e) {
@@ -70,6 +70,7 @@ public class ResearchPaper implements Serializable {
     public List<Researcher> getAuthors() {
         return authors;
     }
+
 
 
     public String getCitation(Research.Enums.Format format) throws Research.FormatNotSupportedException {
