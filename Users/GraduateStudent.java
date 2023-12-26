@@ -4,6 +4,7 @@ import Research.ResearchPaper;
 import Research.Researcher;
 import Users.Enums.Degree;
 import Users.Enums.Faculty;
+import Util.Data.DB;
 import Util.Enums.UserType;
 
 import java.io.Serializable;
@@ -18,7 +19,7 @@ public class GraduateStudent extends Student implements Serializable {
     protected Researcher researchSupervisor;
     List<ResearchPaper> diplomaProjects = getAllResearchPapers().stream()
             .filter(paper -> paper.getAuthors().contains(this))
-            .collect(Collectors.toList());;
+            .collect(Collectors.toList());
 
 
     public GraduateStudent(String username, String password) {
@@ -28,12 +29,9 @@ public class GraduateStudent extends Student implements Serializable {
     public GraduateStudent(String username, String password, Faculty faculty, Degree degree, Researcher researchSupervisor) {
         super(username, password, faculty, degree);
         this.researchSupervisor = researchSupervisor;
-    }
 
-    public boolean registerForCourse() {
-        return false;
+        DB.getInstance().addUser(this, UserType.GS);
     }
-
 
     public List<ResearchPaper> viewDiplomaProjects() {
         return diplomaProjects;
