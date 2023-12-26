@@ -4,7 +4,10 @@ import Users.Employee;
 
 import java.io.Serializable;
 
-
+/**
+ * Represents a request message initiated by an employee.
+ * It includes information about the requester and the content of the request.
+ */
 public class Request implements Serializable {
     private Employee requester;
     private String content;

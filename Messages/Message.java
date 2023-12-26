@@ -3,7 +3,9 @@ package Messages;
 import Users.*;
 
 import java.io.Serializable;
-
+/**
+ * Represents a message exchanged between users.
+ */
 public class Message implements Serializable {
     
     private User sender;

@@ -21,6 +21,10 @@ import java.util.Vector;
 
 import static Util.Enums.Language.*;
 
+/**
+ * This abstract class represents a user in the system and implements the Observer and Serializable interfaces.
+ * Subclasses of User should provide specific implementations.
+ */
 public abstract class User implements Observer, Serializable, Researcher {
     
     private String username;

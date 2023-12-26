@@ -9,8 +9,17 @@ import java.io.Serializable;
 import java.util.Vector;
 
 
+/**
+ * This class represents a Tech Support Specialist (TSS) who can view and accept support orders.
+ */
 public class TechSupportSpecialist extends Employee implements Serializable {
     //CONSTRUCTOR
+    /**
+     * Constructs a TechSupportSpecialist with the given username and password.
+     *
+     * @param username The username of the TSS.
+     * @param password The password of the TSS.
+     */
     public TechSupportSpecialist(String username, String password) {
         super(username, password, UserType.TSS);
         DB.getInstance().addUser(this, UserType.TSS);
@@ -73,6 +82,9 @@ public class TechSupportSpecialist extends Employee implements Serializable {
         System.out.println("6. Exit");
     }
 
+    /**
+     * Allows the TSS to view and accept new support orders.
+     */
     public void viewAndAcceptNewSupportOrders() {
         Vector<Order> orders = DB.getInstance().getOrders();
         System.out.println("New Support Orders:");

@@ -3,7 +3,10 @@ package News;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Vector;
-
+/**
+ * Represents a news article.
+ * Implements the Comparable interface to allow sorting by publication date.
+ */
 public class News implements Comparable<News>, Serializable {
     
     private String title;
@@ -12,6 +15,12 @@ public class News implements Comparable<News>, Serializable {
     private Vector<String> comments = new Vector<String>();
 
     //CONSTRUCTORS
+    /**
+     * Constructs a news article with a title and content.
+     *
+     * @param title   The title of the news article.
+     * @param content The content of the news article.
+     */
     public News(String title, String content) {
         this.title = title;
         this.content = content;
@@ -35,6 +44,11 @@ public class News implements Comparable<News>, Serializable {
     public void setContent(String content) {
         this.content = content;
     }
+    /**
+     * Adds a comment to the news article.
+     *
+     * @param comment The comment to be added.
+     */
     public void addComment(String comment){
         comments.add(comment);
     }
