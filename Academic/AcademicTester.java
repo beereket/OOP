@@ -2,6 +2,7 @@ package Academic;
 
 import Academic.Enums.LessonType;
 import Academic.Enums.SemesterType;
+import Academic.Enums.typeOfAttestation;
 import Users.Enums.Degree;
 import Users.Enums.Faculty;
 import Users.Enums.Title;
@@ -44,7 +45,15 @@ public class AcademicTester {
         double[] temp = oop.sumStudentLectureInfo(askar);
 
         for(double value: temp){
-            System.out.println(oop);
+//            System.out.println(value);
         }
+        oop.addStudent(askar);
+
+        journal.putMark(askar, oop, 25, typeOfAttestation.FIRST);
+        journal.putMark(askar, oop, 25, typeOfAttestation.SECOND);
+        journal.putMark(askar, oop, 35, typeOfAttestation.FINAL);
+
+        System.out.println(oop.getStudentMark(askar));
+
     }
 }

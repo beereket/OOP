@@ -99,6 +99,9 @@ public class Course implements Serializable {
 			this.students.put(student, new Mark());
 		}
 	}
+	public void addStudent(Student student){
+		students.put(student, new Mark());
+	}
 	public HashSet<Teacher> getInstructors() {
 		return instructors;
 	}
@@ -163,6 +166,10 @@ public class Course implements Serializable {
 		return new double[]{sumMarks, sumPresent, sumAbsent};
 	}
 
+	public Mark getStudentMark(Student student){
+		return students.get(student);
+	}
+
 	@Override
 	public String toString() {
 		return "Course{" +
@@ -177,16 +184,16 @@ public class Course implements Serializable {
 	}
 
 	private String delimitStringWithSlash(String input){
-		String output = "";
+		String result = "";
 
 		for (int i = 0; i < input.length(); i++) {
-			output += input.charAt(i);
+			result += input.charAt(i);
 			if (i < input.length() - 1) {
-				output += "/";
+				result += "/";
 			}
 		}
 
-		return output;
+		return result;
 	}
 }
 
