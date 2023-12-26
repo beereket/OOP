@@ -20,7 +20,7 @@ public class DB {
 
 
     private DB() {
-        штш
+        initializeUsersMap();
     }
 
     static {
