@@ -32,6 +32,14 @@ public abstract class User implements Observer, Serializable, Researcher {
     private List<ResearchPaper> allResearchPapers = ResearchPaper.loadAllResearchPapers();
     private static final String RESEARCHER_FILE_PATH = "researchersDB.dat";
 
+    /**
+     * Constructs a User with specified username, password, and user type.
+     * Adds the user to the database and initializes the researcher status based on the user type.
+     *
+     * @param username the username for the user.
+     * @param password the password for the user.
+     * @param ut the type of the user (e.g., STUDENT, TEACHER).
+     */
     public User(String username, String password, UserType ut) {
         this.username = username;
         this.password = password;
@@ -49,6 +57,11 @@ public abstract class User implements Observer, Serializable, Researcher {
     {
 
     }
+    /**
+     * Reports an issue to the system.
+     *
+     * @param description a description of the issue to be reported.
+     */
     public void reportIssue(String description) {
         DB.getInstance().addOrder(new Order(description));
     }
@@ -87,7 +100,15 @@ public abstract class User implements Observer, Serializable, Researcher {
 
 
     //MENU METHODS
+    /**
+     * MENU methodtars
+     *
+     * @throws IOException if an I/O error occurs.
+     */
     public abstract void run() throws IOException;
+    /**
+     * Displays the menu based on the user's selected language.
+     */
     protected void displayMenu() {
         if (language == ENG) displayEnglishMenu();
         else if (language == KZ) displayKazakhMenu();
@@ -99,7 +120,12 @@ public abstract class User implements Observer, Serializable, Researcher {
     protected abstract void displayKazakhMenu();
 
     protected abstract void displayEnglishMenu();
-
+    /**
+     * Authenticates a user based on username and password.
+     *
+     * @return the authenticated User object.
+     * @throws UserNotFound if no user is found with the given credentials.
+     */
     public static User authenticate() throws UserNotFound {
         System.out.println("Enter username: ");
         String username = in.nextLine();
@@ -114,10 +140,15 @@ public abstract class User implements Observer, Serializable, Researcher {
         }
         throw new UserNotFound();
     }
-
+    /**
+     * Saves the current state of the application.
+     *
+     * @throws IOException if an I/O error occurs during saving.
+     */
     protected void save() throws IOException {
         DB.serializeAll();
     }
+
     protected void exit() {
         if(language == ENG) System.out.println("Bye bye!");
         else if(language == KZ) System.out.println("Сауболыңыз!");
@@ -128,6 +159,12 @@ public abstract class User implements Observer, Serializable, Researcher {
             e.printStackTrace();
         }
     }
+    /**
+     * Handles exceptions by printing an error message and saving the state of the application.
+     *
+     * @param e the exception to be handled.
+     * @throws IOException if an I/O error occurs during saving.
+     */
 
     protected void handleError(Exception e) throws IOException {
         if (language == KZ) System.out.println("Ойбай, қате...");
@@ -136,6 +173,9 @@ public abstract class User implements Observer, Serializable, Researcher {
         e.printStackTrace();
         save();
     }
+    /**
+     * Displays a welcome message based on the user's selected language.
+     */
 
     protected void getWelcomeMessage(){
         if(language == KZ) System.out.println("Қош келдіңіз!");
@@ -144,6 +184,11 @@ public abstract class User implements Observer, Serializable, Researcher {
     }
 
     //NEWS
+    /**
+     * Displays a list of all news articles available in the system and allows the user to view a selected article.
+     * After displaying the list, the user can select a news article by its index to view it in detail.
+     * The user also has an option to add a comment to the selected news article.
+     */
     public void viewAllNews() {
         List<News> newsList = DB.getInstance().getNews();
 
@@ -185,6 +230,11 @@ public abstract class User implements Observer, Serializable, Researcher {
     }
 
     //LANGUAGE
+    /**
+     * Provides an interface for the user to change their preferred language.
+     * The method displays language options (Kazakh, Russian, English) and sets the user's language based on their choice.
+     * The user must enter a valid choice number to change the language setting.
+     */
     protected void changeLanguage(){
         System.out.println("1. Қазақша \n 2. Руский \n 3. English");
 

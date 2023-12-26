@@ -2,19 +2,25 @@ package Users;
 
 
 import Academic.Course;
-import Academic.Mark;
 import Users.Enums.Degree;
 import Users.Enums.Faculty;
 import Util.Data.DB;
 import Util.Enums.UserType;
+import Util.Exception.UserNotFound;
+import Users.Teacher;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Vector;
 
+/**
+ * The Student class represents a user with the role of a student in the educational system.
+ * It extends the User class and includes specific attributes and methods related to students.
+ */
 
 public class Student extends User implements Serializable {
-    
+
+    // Attributes specific to the Student class
     protected Integer id;
     protected Faculty faculty;
     protected Integer yearOfStudy = 1;
@@ -22,10 +28,20 @@ public class Student extends User implements Serializable {
     protected Degree degree;
     protected StudentOrganization studentOrganization = null;
     protected Integer credits = 0;
+
+
+
     public Student(String username, String password, UserType userType) {
         super(username, password, userType);
     }
-
+    /**
+     * Constructor for creating a new Student with the specified username, password, faculty, and degree.
+     *
+     * @param username The username of the student.
+     * @param password The password of the student.
+     * @param faculty  The faculty to which the student belongs.
+     * @param degree   The degree level of the student.
+     */
     public Student(String username, String password, Faculty faculty, Degree degree) {
         super(username, password, UserType.STUDENT);
         DB.getInstance();
@@ -36,24 +52,13 @@ public class Student extends User implements Serializable {
     }
 
     public double getGPA() {
-        double totalGpa = 0;
-        double totalCredits = 0;
-
-        for(Course course: coursesRegistered){
-            totalGpa += course.getStudentMark(this).getGpa();
-            totalCredits += course.getCredits();
-        }
-
-        return (totalGpa / totalCredits);
+        return 0.0;
     }//null
 
     protected List<Course> getCoursesRegistered(){
         return coursesRegistered;
     }
 
-    private void viewInfoAboutTeacher(Teacher t){
-        System.out.println(t);
-    }
 
     // MENU METHODS
     @Override
@@ -61,46 +66,11 @@ public class Student extends User implements Serializable {
 
     }
 
-    public Vector<Teacher> getTeachers(){
-        Vector<Teacher> teachers = new Vector<Teacher>();
-
-        for(Course course: coursesRegistered){
-            teachers.addAll(course.getTeachers(this));
-        }
-
-        return teachers;
-    }
-
     public void viewTranscript(){
-        System.out.println(getTranscript());
-    }
-
-    public String getTranscript(){
-        String result = "code|name : credits, total, literalMark, gpa\n";
-
-        double totalGPA = 0;
-        double totalCredits = 0;
-
-        for(Course course: coursesRegistered){
-            Mark currMark = course.getStudentMark(this);
-
-            double currGPA = currMark.getGpa();
-            double currCredits = course.getCredits();
-
-            totalGPA += currGPA * currCredits;
-            totalCredits += currCredits;
-
-            String courseInfo = "%s|%s: %s, %s, %s, %s".formatted(course.getCode(), course.getTitle()
-                    ,currCredits, currMark.getTotal(), currMark.getLiteralMark(), currGPA);
-
-            result += courseInfo + "\n";
+        for (Course c : coursesRegistered){
+            System.out.println(c.getStudentMark(this));
         }
-
-        result += "Overall gpa: %s".formatted(totalGPA / totalCredits);
-
-        return result;
     }
-
 
     public void viewInfoAbTeacher(){
         int i = 1;
@@ -117,14 +87,13 @@ public class Student extends User implements Serializable {
     }
 
     public void viewMarks(){
-        for(Course course: coursesRegistered){
-            System.out.println(course.getTitle() + " : " + course.getStudentMark(this));
-        }
+        Course c = new Course();
+        System.out.println(c.getStudentMark(this));
     }
 
     public void viewCourses(){
-        for (Course course : this.coursesRegistered) {
-            System.out.println(course);
+        for (Course element : this.coursesRegistered) {
+            System.out.println(element.toString());
         }
     }
 
@@ -149,9 +118,26 @@ public class Student extends User implements Serializable {
         System.out.println(studentsTeachers.elementAt(choice).getRating());
     }
 
-    protected void studentOrganizations(){
-
+    public void getTranscript(){
+        for (Course c : coursesRegistered){
+            System.out.println(c.getStudentMark(this));
+        }
     }
+
+    protected void studentOrganizations(){
+        for(StudentOrganization sd: DB.getInstance().getOrganizations()){
+            System.out.println(sd.toString());
+        }
+    }
+
+    // Other methods and menu-related functionality...
+
+    /**
+     * Checks if a student is registered for a given course based on its prerequisites.
+     *
+     * @param c The course to check for registration.
+     * @return True if the student meets all prerequisites; false otherwise.
+     */
     protected boolean isIn(Course c) {
         if (c.getPrerequisites() == null) {
             return true; // No prerequisites, so it's always considered as "in"
@@ -186,6 +172,7 @@ public class Student extends User implements Serializable {
     }
 
     protected void registerCourse(){
+        //get set of available courses by name
         Vector<Course> coursesAvailable = new Vector<Course>();
 
         for (Course ele : DB.getInstance().getCourses()){
@@ -193,7 +180,7 @@ public class Student extends User implements Serializable {
                 coursesAvailable.add(ele);
             }
         }
-
+        //student enters indeces of course
         if (!coursesAvailable.isEmpty()){
             int i = 1;
             System.out.println(i + "Enter your choice by int or 0 to go back");
@@ -232,39 +219,40 @@ public class Student extends User implements Serializable {
                 displayMenu();
                 int choice = in.nextInt();
                 in.nextLine();
-        switch (choice) {
-            case 1:
-                viewCourses();
-                break;
-            case 2:
-                viewInfoAbTeacher();
-                break;
-            case 3:
-                viewAllNews();
-                break;
-            case 4:
-                viewMarks();
-                break;
-            case 5:
-                rateTeacher();
-                break;
-            case 6:
-                viewTranscript();
-                break;
-            case 7:
-                studentOrganizations();
-            case 8:
-                changeLanguage();
-                break;
-            case 9:
-                registerCourse();
-                break;
-            case 0:
-                exit();
-                break menu;
-            default:
-                throw new IllegalStateException("Unexpected value: " + choice);
-        }
+                switch (choice) {
+                    case 1:
+                        viewCourses();
+                        break;
+                    case 2:
+                        viewInfoAbTeacher();
+                        break;
+                    case 3:
+                        viewMarks();
+                        break;
+
+                    case 4:
+                        viewTranscript();
+                        break;
+                    case 5:
+                        rateTeacher();
+                        break;
+                    case 6:
+                        getTranscript();
+                        break;
+                    case 7:
+                        studentOrganizations();
+                    case 8:
+                        changeLanguage();
+                        break;
+                    case 9:
+                        registerCourse();
+                        break;
+                    case 0:
+                        exit();
+                        break menu;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + choice);
+                }
 
             }
         } catch (Exception e) {
@@ -274,13 +262,13 @@ public class Student extends User implements Serializable {
 
     protected void changeLanguage(){
         System.out.println("Choose language:\n" +
-                           "1. ENG\n" +
-                           "2. RUS\n" +
-                           "3. KAZ");
+                "1. ENG\n" +
+                "2. RUS\n" +
+                "3. KAZ");
 
         System.out.print("Enter your choice: ");
         int choice = in.nextInt();
-        in.nextLine();
+        in.nextLine(); // Consume the newline left-over
 
         switch (choice){
             case 1:
@@ -295,7 +283,11 @@ public class Student extends User implements Serializable {
         }
     }
 
+    // Other methods and menu-related functionality...
 
+    /**
+     * Displays the menu in English for the student user.
+     */
     @Override
     protected void displayEnglishMenu() {
         System.out.println("User student:\n" +
@@ -306,7 +298,7 @@ public class Student extends User implements Serializable {
                 "5. Rate teacher on scale 1-10 (first enter id)\n" +
                 "6. Get Transcript\n" +
                 "7. Student organizations\n" +
-                "8. Change laguange"+
+                "8. Change language"+
                 "9. Register for courses"+
                 "0. Back to Main Menu");
 
@@ -340,7 +332,13 @@ public class Student extends User implements Serializable {
 
     }
 
+    // Other methods and menu-related functionality...
 
+    /**
+     * Returns a string representation of the Student object.
+     *
+     * @return A string representation of the Student object.
+     */
     @Override
     public String toString() {
         return "Student{" +
