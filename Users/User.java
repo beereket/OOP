@@ -226,11 +226,19 @@ public abstract class User implements Observer, Serializable, Researcher {
      * @throws CannotBecomeResearcherException If the user cannot become a researcher.
      */
     public void setIsResearcher() throws CannotBecomeResearcherException {
-        if (this instanceof Student || this instanceof Employee || this instanceof Teacher) {
+        if (this instanceof Student || this instanceof Teacher || (this instanceof Employee && this.getClass()==Employee.class)) {
             this.isResearcher = true;
         } else {
-            throw new Research.Exceptions.CannotBecomeResearcherException("This User cannot be a Researcher!");
+            throw new CannotBecomeResearcherException("This User cannot be a Researcher!");
         }
+    }
+    /**
+     * Checks if User is Researcher.
+     *
+     * @return True if Researcher, otherwise False.
+     */
+    public boolean isUserResearcher() {
+        return isResearcher;
     }
 
     /**
