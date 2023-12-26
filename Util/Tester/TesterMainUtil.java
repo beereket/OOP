@@ -27,7 +27,6 @@ public class TesterMainUtil {
 
         Manager m = new Manager("manager", "manager", ManagerType.OR);
 
-        student6.setIsResearcher();
 
         System.out.println(student6.getResearcherName());
 

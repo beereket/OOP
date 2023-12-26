@@ -5,7 +5,7 @@ import Academic.Enums.typeOfAttestation;
 import Users.Enums.Faculty;
 import Users.Student;
 import Users.Teacher;
-import Util.Classes.Data;
+import Util.Data.DB;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -46,9 +46,10 @@ public class Course implements Serializable {
 		this.semesterType = semesterType;
 		this.faculty = faculty;
 
-		Data.getInstance().addCourse(this);
+		DB.getInstance().getCourses().add(this);
 	}
-	
+
+
 	// Getters-Setters
 	public String getCode() {
 		return code;
@@ -121,6 +122,7 @@ public class Course implements Serializable {
 	public void addLesson(Lesson lesson){
 		this.lessons.add(lesson);
 	}
+
 	
 					/* 				Operatios				*/
 

@@ -159,7 +159,6 @@ public class Student extends User implements Serializable {
     }
 
     protected void registerCourse(){
-        //get set of available courses by name
         Vector<Course> coursesAvailable = new Vector<Course>();
 
         for (Course ele : DB.getInstance().getCourses()){
@@ -167,7 +166,7 @@ public class Student extends User implements Serializable {
                 coursesAvailable.add(ele);
             }
         }
-        //student enters indeces of course
+
         if (!coursesAvailable.isEmpty()){
             int i = 1;
             System.out.println(i + "Enter your choice by int or 0 to go back");
@@ -216,7 +215,6 @@ public class Student extends User implements Serializable {
             case 3:
                 viewAllNews();
                 break;
-
             case 4:
                 viewMarks();
                 break;
@@ -255,7 +253,7 @@ public class Student extends User implements Serializable {
 
         System.out.print("Enter your choice: ");
         int choice = in.nextInt();
-        in.nextLine(); // Consume the newline left-over
+        in.nextLine();
 
         switch (choice){
             case 1:
