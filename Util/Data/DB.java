@@ -18,7 +18,9 @@ public class DB {
     static public List<News> news = new ArrayList<>();
     static public List<StudentOrganization> organizations = new ArrayList<>();
 
+
     private DB() {
+        initializeUsersMap();
     }
 
     static {
@@ -35,6 +37,12 @@ public class DB {
     public static DB getInstance(){
         if(instance == null) instance = new DB();
         return instance;
+    }
+
+    private void initializeUsersMap() {
+        for (UserType userType : UserType.values()) {
+            users.put(userType, new ArrayList<>());
+        }
     }
 
     public static void serializeAll() {
@@ -124,7 +132,12 @@ public class DB {
     }
 
     public void addNews(News e){
-        news.add(e);
+        if(e.getTitle() == "Researcher") news.add(0, e);
+        else news.add(e);
     }
+    public static List<User> getUsersByUserType(UserType userType) {
+        return users.getOrDefault(userType, new ArrayList<>());
+    }
+
 
 }

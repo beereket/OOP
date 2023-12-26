@@ -207,16 +207,23 @@ public abstract class User implements Observer, Serializable, Researcher {
         }
     }
 
-    @Override
-    public void update() {
-
-    }
-
+    /**
+     * Notifies the researcher about the publication of a new scientific work.
+     *
+     * @param journalName The name of the journal where the paper was published.
+     * @param paperTitle  The title of the published scientific work.
+     */
     @Override
     public void update(String journalName, String paperTitle) {
         System.out.println(username + "!\nA new scientific work entitled " + paperTitle + "  was published in the journal " + journalName);
     };
 
+    /**
+     * Sets the researcher status for the user.
+     * Throws CannotBecomeResearcherException if the user is not eligible to be a researcher.
+     *
+     * @throws CannotBecomeResearcherException If the user cannot become a researcher.
+     */
     public void setIsResearcher() throws CannotBecomeResearcherException {
         if (this instanceof Student || this instanceof Employee || this instanceof Teacher) {
             this.isResearcher = true;
@@ -225,7 +232,11 @@ public abstract class User implements Observer, Serializable, Researcher {
         }
     }
 
-
+    /**
+     * Prints the research papers for the researcher, sorted based on the provided comparator.
+     *
+     * @param comparator The comparator to determine the sorting order of research papers.
+     */
     @Override
     public void printPapers(Comparator<ResearchPaper> comparator) {
         allResearchPapers.sort(comparator);
@@ -236,10 +247,20 @@ public abstract class User implements Observer, Serializable, Researcher {
         }
     }
 
+    /**
+     * Gets the list of all research papers associated with the researcher.
+     *
+     * @return The list of all research papers.
+     */
     public List<ResearchPaper> getAllResearchPapers() {
         return allResearchPapers;
     }
 
+    /**
+     * Calculates the H-index of the researcher based on their authored papers and citations.
+     *
+     * @return The calculated H-index.
+     */
     @Override
     public int calculateHIndex() {
         if (!isResearcher) {
@@ -266,6 +287,11 @@ public abstract class User implements Observer, Serializable, Researcher {
         return hIndex;
     }
 
+    /**
+     * Gets the name of the researcher.
+     *
+     * @return The name of the researcher or a message indicating that the user is not a researcher.
+     */
     @Override
     public String getResearcherName() {
         if (isResearcher) {
@@ -273,7 +299,13 @@ public abstract class User implements Observer, Serializable, Researcher {
         }
         return "This User is not a Researcher";
     }
-
+    /**
+     * Sets the supervisor for the graduate student.
+     * Throws ResearchSupervisorException if the supervisor's H-index is less than 3.
+     *
+     * @param supervisor The supervisor to be set.
+     * @throws ResearchSupervisorException If the supervisor's H-index is less than 3.
+     */
     @Override
     public void setSupervisor(Researcher supervisor) throws ResearchSupervisorException {
         if (isResearcher && this instanceof GraduateStudent graduateStudent) {
