@@ -7,7 +7,11 @@ import java.io.*;
 import java.util.List;
 import java.util.Vector;
 
-
+/**
+ * Represents the Rector of an institution. This class extends Employee and is responsible for
+ * handling requests, signing documents, and viewing complaints.
+ * Implements Singleton pattern to ensure only one instance of Rector exists.
+ */
 public class Rector extends Employee implements Serializable {
     
     private static Rector INSTANCE = null;
@@ -20,6 +24,11 @@ public class Rector extends Employee implements Serializable {
     static{
 
     }
+    /**
+     * Provides access to the single instance of Rector, creating it if necessary.
+     *
+     * @return The singleton instance of Rector.
+     */
     public static Rector getINSTANCE() {
         if(INSTANCE == null) return new Rector();
         return INSTANCE;
@@ -173,7 +182,11 @@ public class Rector extends Employee implements Serializable {
         }
     }
 
-
+    /**
+     * Serializes static data related to the Rector, such as requests and complaints, to a file.
+     *
+     * @param filename The name of the file where data will be serialized.
+     */
     public static void serializeStaticData(String filename) {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
             out.writeObject(requests);
@@ -183,7 +196,11 @@ public class Rector extends Employee implements Serializable {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Deserializes static data related to the Rector from a file, restoring requests and complaints.
+     *
+     * @param filename The name of the file from which data will be deserialized.
+     */
     public static void deserializeStaticData(String filename) {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
             requests = (Vector<Request>) in.readObject();

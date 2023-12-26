@@ -10,6 +10,10 @@ import java.io.Serializable;
 import java.util.Vector;
 
 
+/**
+ * Represents an employee in the system. This class extends User and includes functionalities specific to employees,
+ * such as sending requests and messages.
+ */
 public class Employee extends User implements Serializable {
     protected Integer id;
     protected Vector<Message> messages = new Vector<Message>();
@@ -17,16 +21,33 @@ public class Employee extends User implements Serializable {
 
     public Employee() {
     }
-
+    /**
+     * Constructs an Employee with specified username, password, and user type. Automatically assigns an ID based on
+     * the number of employees already present in the system.
+     *
+     * @param username The username for the employee.
+     * @param password The password for the employee.
+     * @param ut The user type of the employee.
+     */
     public Employee(String username, String password, UserType ut) {
         super(username, password, ut);
         id = DB.getInstance().getUsersByUserType(UserType.EMPLOYEE).size() + 1;
 
     }
-
+    /**
+     * Sends a request to the Rector. The request is added to the Rector's list of pending requests.
+     *
+     * @param content The content of the request.
+     */
     public void sendRequest(String content){
         Rector.getINSTANCE().addRequest(new Request(this, content));
     }
+    /**
+     * Sends a message to another employee. The message is added to the recipient's message list.
+     *
+     * @param m The message to be sent.
+     * @param e The employee who will receive the message.
+     */
     public void sendMessage(Message m, Employee e){
         e.messages.add(m);
     }

@@ -18,22 +18,45 @@ import java.util.List;
 
 import static Util.Enums.UserType.USER;
 
+/**
+ * Represents an administrator in the system. The Admin class extends User and is responsible for
+ * administrative tasks such as managing users, viewing logs, and handling research papers.
+ */
 public class Admin extends User implements Serializable {
     private static final String FILE_PATH = "researchPapers.dat";
+    /**
+     * Constructs an Admin with specified username and password.
+     *
+     * @param username The username for the admin.
+     * @param password The password for the admin.
+     */
     public Admin(String username, String password){
         super(username, password, UserType.ADMIN);
     }
+
+    /**
+     * Views log files of all users. Displays usernames and passwords for each user.
+     */
 
     private void viewLogFiles() {
         for(User u: DB.getUsersByUserType(USER)){
             System.out.println(u.getUsername() + ' ' + u.getPassword());
         }
     }
-
+    /**
+     * Facilitates the creation of a new user through the UserFactory.
+     *
+     * @throws UserNotFound If user creation fails.
+     */
     private void createUser() throws UserNotFound {
         UserFactory.createUser(in);
     }
-
+    /**
+     * Deletes a user with the specified username from the system.
+     *
+     * @param username The username of the user to delete.
+     * @return true if the user was successfully removed; false otherwise.
+     */
     public boolean deleteUser(String username) {
         boolean isRemoved = false;
 
@@ -48,6 +71,11 @@ public class Admin extends User implements Serializable {
         return isRemoved;
     }
 
+    /**
+     * Provides an interface for managing users. Includes options to create and delete users.
+     *
+     * @throws UserNotFound If the user management process encounters an error.
+     */
     public void manageUser() throws UserNotFound {
         while (true) {
             System.out.println("User Management:");
@@ -77,6 +105,13 @@ public class Admin extends User implements Serializable {
     }
 
     //MENU METHODS
+    // Menu methods...
+
+    /**
+     * Runs the administrative interface, providing various management options.
+     *
+     * @throws IOException If an I/O error occurs.
+     */
     @Override
     public void run() throws IOException {
         try {
