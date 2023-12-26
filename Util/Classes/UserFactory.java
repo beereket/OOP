@@ -5,10 +5,12 @@ import Users.Enums.Degree;
 import Users.Enums.Faculty;
 import Users.Enums.ManagerType;
 import Users.Enums.Title;
+import Util.Data.DB;
 import Util.Enums.UserType;
 import Util.Exception.UserNotFound;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -74,7 +76,7 @@ public class UserFactory implements Serializable {
         }
     };
     public static User getUserByUsername(String username) throws UserNotFound {
-        Vector<User> users = Data.getInstance().getUsers();
+        List<User> users = DB.getUsersByUserType(UserType.USER);
         for(User user : users) {
             if(user.getUsername().equals(username)) {
                 return user;

@@ -11,18 +11,31 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * This class represents a database for managing users, courses, and news.
+ */
 public class DB {
     static public DB instance = null;
+    // Example of a field JavaDoc
+    /**
+     * A map of users categorized by user type.
+     */
     static public HashMap<UserType, List<User>> users = new HashMap<>();
     static public List<Course> courses = new ArrayList<>();
     static public List<News> news = new ArrayList<>();
     static public List<StudentOrganization> organizations = new ArrayList<>();
 
-
+    /**
+     * Private constructor to prevent instantiation.
+     */
     private DB() {
         initializeUsersMap();
     }
-
+    /**
+     * Returns the singleton instance of the DB class.
+     *
+     * @return The single instance of the DB class.
+     */
     static {
         if(new File("coursesDB.dat").exists() && new File("usersDB.dat").exists()) {
             try {
