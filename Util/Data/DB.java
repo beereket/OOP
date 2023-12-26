@@ -41,12 +41,14 @@ public class DB {
         serializeUsers();
         serializeCourses();
         serializeNews();
+        serializeOrganizations();
     }
 
     public static void deserializeAll() {
         deserializeUsers();
         deserializeCourses();
         deserializeNews();
+        deserializeOrganizations();
     }
 
     private static void serializeUsers() {
@@ -96,10 +98,22 @@ public class DB {
             e.printStackTrace();
         }
     }
-
-    public HashMap<UserType, List<User>> getUsers() {
-        return users;
+    private static void serializeOrganizations() {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("organizationsDB.dat"))) {
+            out.writeObject(organizations);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+    private static void deserializeOrganizations() {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("organizationsDB.dat"))) {
+            organizations = (List<StudentOrganization>) in.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public List<Course> getCourses() {
         return courses;
