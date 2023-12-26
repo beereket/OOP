@@ -3,23 +3,37 @@ package Users;
 import Messages.Complaint;
 import Messages.Request;
 
-import java.io.IOException;
-import java.io.Serializable;
+import java.io.*;
 import java.util.List;
 import java.util.Vector;
 
 
 public class Rector extends Employee implements Serializable {
-    private static Rector INSTANCE;
+    
+    private static Rector INSTANCE = null;
     protected static Vector<Request> requests = new Vector<Request>();
     protected static Vector<Request> signedRequests = new Vector<Request>();
     protected static Vector<Complaint> complaints = new Vector<Complaint>();
 
     private Rector(){
     }
+    static{
+
+    }
     public static Rector getINSTANCE() {
         if(INSTANCE == null) return new Rector();
         return INSTANCE;
+    }
+    static {
+        String filename = "rector.dat";
+        File file = new File(filename);
+        if (file.exists()) {
+            deserializeStaticData(filename);
+        } else {
+            requests = new Vector<>();
+            complaints = new Vector<>();
+            signedRequests = new Vector<>();
+        }
     }
 
 
@@ -66,20 +80,21 @@ public class Rector extends Employee implements Serializable {
                         viewComplaints(); // View complaints
                         break;
                     case 4:
-                        viewAllNews(); // Add news items
+                        viewAllNews();
                         break;
                     case 5:
                         changeLanguage(); // Change the menu language
                         break;
                     case 0:
-                        exit(); // Exit the menu
+                        serializeStaticData("rector.dat");
+                        exit();
                         break menu;
                     default:
                         System.out.println("Invalid option. Please try again.");
                 }
             }
         } catch (Exception e) {
-            handleError(e); // Method to handle exceptions
+            handleError(e);
         }
     }
     @Override
@@ -139,7 +154,6 @@ public class Rector extends Employee implements Serializable {
         }
     }
 
-    // Method to sign a specific request
     public void signRequest() {
         viewRequests();
         if (requests.isEmpty()) {
@@ -148,7 +162,7 @@ public class Rector extends Employee implements Serializable {
 
         System.out.println("Enter the number of the request to sign:");
         int index = in.nextInt() - 1;
-        in.nextLine(); // Consume the newline
+        in.nextLine();
 
         if (index >= 0 && index < requests.size()) {
             Request reqToSign = requests.remove(index);
@@ -160,7 +174,25 @@ public class Rector extends Employee implements Serializable {
     }
 
 
+    public static void serializeStaticData(String filename) {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
+            out.writeObject(requests);
+            out.writeObject(complaints);
+            out.writeObject(signedRequests);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public static void deserializeStaticData(String filename) {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
+            requests = (Vector<Request>) in.readObject();
+            complaints = (Vector<Complaint>) in.readObject();
+            signedRequests = (Vector<Request>) in.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 

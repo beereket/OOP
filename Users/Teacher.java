@@ -5,7 +5,6 @@ import Academic.Enums.typeOfAttestation;
 import Academic.Journal;
 import Academic.Lesson;
 import Users.Enums.Title;
-import Util.Classes.Data;
 import Util.Data.DB;
 import Util.Enums.UserType;
 
@@ -188,5 +187,9 @@ public class Teacher extends Employee implements Serializable {
     }
 
     private void viewCourses() {
+    }
+
+    public void addCourse(Course courseToAssign) {
+        coursesTaught.add(courseToAssign);
     }
 }

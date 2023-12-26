@@ -1,7 +1,7 @@
 package Users;
 
 import News.News;
-import Util.Classes.Data;
+import Util.Data.DB;
 
 import java.io.Serializable;
 import java.util.List;
@@ -22,7 +22,7 @@ public class StudentOrganization implements Serializable {
         news = new Vector<News>();
         students = new Vector<Student>();
 
-        Data.getInstance().getOrganizations().add(this);
+        DB.getInstance().getOrganizations().add(this);
     }
 
     public String getName() {

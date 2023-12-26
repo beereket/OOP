@@ -1,7 +1,7 @@
 package Users;
 
 import Messages.Order;
-import Util.Classes.Data;
+import Util.Data.DB;
 import Util.Enums.UserType;
 
 import java.io.IOException;
@@ -10,36 +10,33 @@ import java.util.Vector;
 
 
 public class TechSupportSpecialist extends Employee implements Serializable {
-    protected static Vector<Order> orders = new Vector<Order>();
-    protected static Vector<Order> accepted_orders = new Vector<Order>();
-
-
-    public void acceptOrder(Order o){
-        orders.remove(o);
-        accepted_orders.add(o);
-    }
-
     //CONSTRUCTOR
     public TechSupportSpecialist(String username, String password) {
         super(username, password, UserType.TSS);
-        Data.getInstance().getTSSs().add(this);
+        DB.getInstance().addUser(this, UserType.TSS);
     }
 
     //MENU
     @Override
     public void run() throws IOException {
         try{
-            getWelcomeMessage();
-            displayMenu();
+            while(true) {
+                getWelcomeMessage();
+                displayMenu();
 
-            int choice = in.nextInt();
-            switch (choice){
-                case 1:
-
-                case 2:
-
-                default:
-                    throw new IllegalStateException("Unexpected value: " + choice);
+                int choice = in.nextInt();
+                switch (choice) {
+                    case 1:
+                        viewAndAcceptNewSupportOrders();
+                        break;
+                    case 2:
+                        for (Order o : DB.getAcceptedOrders()) {
+                            System.out.println(o.getOrderId() + " : " + o.getDescription());
+                        }
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + choice);
+                }
             }
 
         } catch (Exception e) {
@@ -51,8 +48,7 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     protected void displayRussianMenu() {
         System.out.println("Меню:");
         System.out.println("1. Просмотр и принятие новых обращений");
-        System.out.println("2. Просмотр и обработка открытых обращений");
-        System.out.println("3. Просмотр закрытых обращений");
+        System.out.println("2. Просмотр  принятых обращений");
         System.out.println("4. Просмотр новостей");
         System.out.println("5. Изменить язык");
         System.out.println("6. Выход");
@@ -61,8 +57,7 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     protected void displayKazakhMenu() {
         System.out.println("Мәзір:");
         System.out.println("1. Жаңа сұрауларды көру және қабылдау");
-        System.out.println("2. Ашық сұрауларды көру және өңдеу");
-        System.out.println("3. Жабық сұрауларды көру");
+        System.out.println("2. Кабылданган сұрауларды көру");
         System.out.println("4. Жаңалықтарды көру");
         System.out.println("5. Тілді өзгерту");
         System.out.println("6. Шығу");
@@ -72,11 +67,26 @@ public class TechSupportSpecialist extends Employee implements Serializable {
     protected void displayEnglishMenu() {
         System.out.println("Menu:");
         System.out.println("1. View and Accept New Support Orders");
-        System.out.println("2. View and Process Open Support Orders");
-        System.out.println("3. View Closed Support Orders");
+        System.out.println("2. View Accepted Orders");
         System.out.println("4. View News");
         System.out.println("5. Change Language");
         System.out.println("6. Exit");
+    }
+
+    public void viewAndAcceptNewSupportOrders() {
+        Vector<Order> orders = DB.getInstance().getOrders();
+        System.out.println("New Support Orders:");
+        for (int i = 0; i < orders.size(); i++) {
+            System.out.println((i + 1) + ". " + orders.get(i).getDescription());
+        }
+        System.out.println("Enter the number of the order to accept or 0 to go back:");
+        int choice = in.nextInt();
+        in.nextLine();
+        if (choice > 0 && choice <= orders.size()) {
+            Order selectedOrder = orders.remove(choice - 1);
+            DB.getInstance().getAcceptedOrders().add(selectedOrder);
+            System.out.println("Order accepted.");
+        }
     }
 
 }
