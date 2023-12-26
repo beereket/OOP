@@ -103,7 +103,17 @@ public class Student extends User implements Serializable {
 
 
     public void viewInfoAbTeacher(){
+        int i = 1;
+        System.out.println("Choose course which teachers you are interested in");
+        for (Course c : DB.instance.getCourses()){
+            System.out.println(i + " " + c.getTitle());
+        }
+        int choice = in.nextInt();
+        in.nextLine();
 
+        for(Teacher t : DB.instance.getCourses().get(i-1).getInstructors()){
+            System.out.println(t.toString());
+        }
     }
 
     public void viewMarks(){
@@ -119,7 +129,24 @@ public class Student extends User implements Serializable {
     }
 
     public void rateTeacher(){
+        System.out.println("Choose teacher");
+        int i = 1;
 
+        Vector<Teacher> studentsTeachers = new Vector<>();
+        for (Course element : this.coursesRegistered) {
+            for (Teacher t:element.getTeachers(this)){
+                studentsTeachers.add(t);
+                System.out.println(i + " " + t.getUsername());
+            }
+        }
+        int choice = in.nextInt();
+        in.nextLine();
+        System.out.println(studentsTeachers.elementAt(choice) + " is chosen, give rating");
+        int rating = in.nextInt();
+        in.nextLine();
+
+        studentsTeachers.elementAt(choice).setRating(rating);
+        System.out.println(studentsTeachers.elementAt(choice).getRating());
     }
 
     protected void studentOrganizations(){
@@ -219,10 +246,10 @@ public class Student extends User implements Serializable {
                 viewMarks();
                 break;
             case 5:
-                viewTranscript();
+                rateTeacher();
                 break;
             case 6:
-                rateTeacher();
+                viewTranscript();
                 break;
             case 7:
                 studentOrganizations();
