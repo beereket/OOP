@@ -24,7 +24,7 @@ public abstract class User implements Observer, Serializable, Researcher {
     protected UserType userType;
     protected Language language = ENG;
     protected static Scanner in = new Scanner(System.in);
-    protected boolean isResearcher = false;
+    private boolean isResearcher = false;
     private List<ResearchPaper> researchPapers = new ArrayList<>();
 
     public User(String username, String password, UserType userType) {

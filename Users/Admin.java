@@ -1,16 +1,23 @@
 package Users;
 
 
+import Research.ResearchPaper;
+import Research.Comparators.*;
 import Util.Classes.Data;
 import Util.Classes.UserFactory;
 import Util.Enums.UserType;
 import Util.Exception.UserNotFound;
 
+import java.io.*;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class Admin extends User implements Serializable {
-
+    private static final String FILE_PATH = "researchPapers.dat";
 
     public Admin(String username, String password){
         super(username, password, UserType.ADMIN);
@@ -134,5 +141,46 @@ public class Admin extends User implements Serializable {
     @Override
     public void update() {
 
+    }
+
+    public void printAllResearchPapersByDatePublished() {
+        List<ResearchPaper> allResearchPapers = loadAllResearchPapers();
+        printAllResearchPapers(allResearchPapers, new DatePublishedComparator());
+    }
+
+    public void printAllResearchPapersByCitations() {
+        List<ResearchPaper> allResearchPapers = loadAllResearchPapers();
+        printAllResearchPapers(allResearchPapers, new CitationsComparator());
+    }
+
+    public void printAllResearchPapersByArticleLength() {
+        List<ResearchPaper> allResearchPapers = loadAllResearchPapers();
+        printAllResearchPapers(allResearchPapers, new ArticleLengthComparator());
+    }
+
+    private void printAllResearchPapers(List<ResearchPaper> researchPapers, Comparator<ResearchPaper> comparator) {
+        List<ResearchPaper> sortedPapers = new ArrayList<>(researchPapers);
+        Collections.sort(sortedPapers, comparator);
+
+        for (ResearchPaper paper : sortedPapers) {
+            System.out.println(paper);
+        }
+    }
+
+    private List<ResearchPaper> loadAllResearchPapers() {
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(FILE_PATH))) {
+            return (List<ResearchPaper>) inputStream.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public void saveAllResearchPapers(List<ResearchPaper> researchPapers) {
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(FILE_PATH))) {
+            outputStream.writeObject(researchPapers);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

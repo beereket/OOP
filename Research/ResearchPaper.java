@@ -1,8 +1,11 @@
 package Research;
 
+import java.io.*;
 import java.util.List;
+import java.util.ArrayList;
 
-public class ResearchPaper {
+public class ResearchPaper implements Serializable {
+    private static final String FILE_PATH = "researchDB.dat";
     private String title;
     private List<Researcher> authors;
     private List<ResearchPaper> citations;
@@ -22,6 +25,8 @@ public class ResearchPaper {
         this.publicationYear = publicationYear;
         this.publisher = publisher;
         this.accessionNumber = accessionNumber;
+
+        saveToFile();
     }
 
     public String getTitle() {
@@ -31,6 +36,30 @@ public class ResearchPaper {
     public int getPublicationYear() {
         return publicationYear;
     }
+
+    private void saveToFile() {
+        List<ResearchPaper> allResearchPapers = loadAllResearchPapers();
+        allResearchPapers.add(this);
+
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(FILE_PATH))) {
+            outputStream.writeObject(allResearchPapers);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private List<ResearchPaper> loadAllResearchPapers() {
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(FILE_PATH))) {
+            return (List<ResearchPaper>) inputStream.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+
+
+
 
     public List<ResearchPaper> getCitations() {
         return citations;
