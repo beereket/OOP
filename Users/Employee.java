@@ -27,7 +27,6 @@ public class Employee extends User implements Serializable {
         super(username, password, userType);
         id = Data.getInstance().getEmployees().size() + 1;
 
-        Data.getInstance().getEmployees().add(this);
     }
 
     public void sendRequest(String content){

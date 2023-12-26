@@ -24,7 +24,6 @@ public class Manager extends Employee implements Serializable {
         super(username, password, MANAGER);
         this.managerType = managerType;
 
-        Data.getInstance().getManagers().add(this);
     }
 
     public Manager() {

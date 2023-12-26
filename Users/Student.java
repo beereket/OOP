@@ -35,7 +35,6 @@ public class Student extends User implements Serializable {
         this.faculty = faculty;
         this.degree = degree;
 
-        Data.getInstance().getStudents().add(this);
     }
 
     public double getGPA() {

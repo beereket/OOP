@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Vector;
 
 public class Data implements Serializable {
-
+    private static final long serialVersionUID = 8338215883727460797L;
     private static Data INSTANCE = null;
     private static String filename = "DATA.bin";
     private static String logFiles = "";
@@ -29,38 +29,31 @@ public class Data implements Serializable {
     //RECTOR
     private static Rector rector = null;
 
-    private Data() {
-        // TODO: Initialize your fields or perform any other necessary setup
-
-    }
-
-    static {
-        if(new File(filename).exists()) {
-            try {
-                INSTANCE = read();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        else INSTANCE = new Data();
-    }
-
-    public void write() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
-            oos.writeObject(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static Data read() {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
-            INSTANCE = (Data) ois.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return INSTANCE;
-    }
+//    static {
+//        if(new File("data.ser").exists()) {
+//            try {
+//                INSTANCE = read();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        } else {
+//            INSTANCE = new Data();
+//        }
+//    }
+//
+//    // Method to read the serialized data
+//    public static Data read() throws IOException, ClassNotFoundException {
+//        try (ObjectInputStream oin = new ObjectInputStream(new FileInputStream("data.ser"))) {
+//            return (Data) oin.readObject();
+//        }
+//    }
+//
+//    // Method to write the current instance to a file
+//    public static void write() throws IOException {
+//        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("data.ser"))) {
+//            oos.writeObject(INSTANCE);
+//        }
+//    }
 
 
     public static Data getInstance(){
@@ -183,5 +176,9 @@ public class Data implements Serializable {
 
     public void addNews(News n) {
         news.add(n);
+    }
+
+    public void addUser(User user) {
+        users.add(user);
     }
 }

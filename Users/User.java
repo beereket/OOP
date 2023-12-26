@@ -31,7 +31,7 @@ public abstract class User implements Observer, Serializable, Researcher {
         this.username = username;
         this.password = password;
         this.userType = userType;
-        Data.getInstance().getUsers().add(this);
+        Data.getInstance().addUser(this);
 
         if (this instanceof GraduateStudent) {
             isResearcher = true;
@@ -111,7 +111,7 @@ public abstract class User implements Observer, Serializable, Researcher {
     }
 
     protected void save() throws IOException {
-        Data.getInstance().write();
+        //Data.write();
     }
     protected void exit() {
         if(language == ENG) System.out.println("Bye bye!");
