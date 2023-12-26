@@ -139,8 +139,8 @@ public class DB {
         return users.getOrDefault(userType, new ArrayList<>());
     }
 
-    public void addUser(User u){
-        users.get(u.getUserType()).add(u);
+    public void addUser(User u, UserType ut){
+        users.get(ut).add(u);
     }
 
 

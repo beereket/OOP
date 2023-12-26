@@ -7,6 +7,7 @@ import Research.ResearchPaper;
 import Research.Exceptions.ResearchSupervisorException;
 import Research.Researcher;
 import Util.Classes.Data;
+import Util.Data.DB;
 import Util.Enums.Language;
 import Util.Enums.UserType;
 import Util.Exception.UserNotFound;
@@ -32,11 +33,11 @@ public abstract class User implements Observer, Serializable, Researcher {
     private List<ResearchPaper> allResearchPapers = ResearchPaper.loadAllResearchPapers();
     private static final String RESEARCHER_FILE_PATH = "researchersDB.dat";
 
-    public User(String username, String password, UserType userType) {
+    public User(String username, String password, UserType ut) {
         this.username = username;
         this.password = password;
-        this.userType = userType;
-        Data.getInstance().addUser(this);
+        this.userType = ut;
+        DB.getInstance().addUser(this, UserType.USER);
 
         if (this instanceof GraduateStudent) {
             isResearcher = true;
@@ -116,7 +117,7 @@ public abstract class User implements Observer, Serializable, Researcher {
     }
 
     protected void save() throws IOException {
-        //Data.write();
+        DB.serializeAll();
     }
     protected void exit() {
         if(language == ENG) System.out.println("Bye bye!");

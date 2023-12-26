@@ -147,7 +147,8 @@ public class Student extends User implements Serializable {
         //check if credit <21
     }
 
-    protected void operations(){
+    public void run(){
+        displayMenu();
         System.out.print("Enter your choice: ");
         int choice = in.nextInt();
         in.nextLine();
@@ -185,6 +186,7 @@ public class Student extends User implements Serializable {
             default:
                 throw new IllegalStateException("Unexpected value: " + choice);
         }
+        run();
     }
 
     protected void changeLanguage(){
@@ -210,11 +212,6 @@ public class Student extends User implements Serializable {
         }
     }
 
-    public void run()  {
-        while (true) {
-            changeLanguage();
-        }
-    }
 
     @Override
     protected void displayEnglishMenu() {
@@ -230,7 +227,7 @@ public class Student extends User implements Serializable {
                 "9. Register for courses"+
                 "0. Back to Main Menu");
 
-        operations();
+
     }
     @Override
     protected void displayRussianMenu() {
@@ -244,7 +241,6 @@ public class Student extends User implements Serializable {
                 "7. Студенческие организации\n" +
                 "0. Вернуться в Главное Меню");
 
-        operations();
     }
 
     @Override
@@ -259,7 +255,6 @@ public class Student extends User implements Serializable {
                 "7. Студенттік организациялар\n" +
                 "0. Негізгі мәзірге қайту");
 
-        operations();
     }
 
 

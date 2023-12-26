@@ -7,6 +7,7 @@ import News.News;
 import Users.Enums.Faculty;
 import Users.Enums.ManagerType;
 import Util.Classes.Data;
+import Util.Data.DB;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -24,6 +25,7 @@ public class Manager extends Employee implements Serializable {
         super(username, password, MANAGER);
         this.managerType = managerType;
 
+        DB.getInstance().addUser(this, MANAGER);
     }
 
     public Manager() {
@@ -56,7 +58,7 @@ public class Manager extends Employee implements Serializable {
         String content = in.nextLine();
 
         News news = new News(title, content);
-        Data.getInstance().addNews(news);
+        DB.getInstance().addNews(news);
         System.out.println("News created and added to the system.");
     }
 
@@ -67,8 +69,8 @@ public class Manager extends Employee implements Serializable {
         int indexToDelete = in.nextInt();
         in.nextLine(); // Consume newline
 
-        if (indexToDelete >= 0 && indexToDelete < Data.getInstance().getNews().size()) {
-            News deletedNews = Data.getInstance().getNews().remove(indexToDelete);
+        if (indexToDelete >= 0 && indexToDelete < DB.getInstance().getNews().size()) {
+            News deletedNews = DB.getInstance().getNews().remove(indexToDelete);
             System.out.println("News deleted: " + deletedNews.getTitle());
         } else {
             System.out.println("Invalid index. News not deleted.");
