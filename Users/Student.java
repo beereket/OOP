@@ -2,12 +2,11 @@ package Users;
 
 
 import Academic.Course;
+import Academic.Mark;
 import Users.Enums.Degree;
 import Users.Enums.Faculty;
 import Util.Data.DB;
 import Util.Enums.UserType;
-import Util.Exception.UserNotFound;
-import Users.Teacher;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
@@ -19,7 +18,7 @@ public class Student extends User implements Serializable {
     protected Integer id;
     protected Faculty faculty;
     protected Integer yearOfStudy = 1;
-    protected Vector<Course> coursesRegistered = new Vector<Course>();
+    protected Vector<Course> coursesRegistered = new Vector<>();
     protected Degree degree;
     protected StudentOrganization studentOrganization = null;
     protected Integer credits = 0;
@@ -29,15 +28,23 @@ public class Student extends User implements Serializable {
 
     public Student(String username, String password, Faculty faculty, Degree degree) {
         super(username, password, UserType.STUDENT);
-        this.id = DB.getInstance().users.get(userType.STUDENT).size() +1;
+        DB.getInstance();
+        this.id = DB.users.get(UserType.STUDENT).size() +1;
         this.faculty = faculty;
         this.degree = degree;
 
-        DB.getInstance().addUser(this, UserType.STUDENT);
     }
 
     public double getGPA() {
-        return 0.0;
+        double totalGpa = 0;
+        double totalCredits = 0;
+
+        for(Course course: coursesRegistered){
+            totalGpa += course.getStudentMark(this).getGpa();
+            totalCredits += course.getCredits();
+        }
+
+        return (totalGpa / totalCredits);
     }//null
 
     protected List<Course> getCoursesRegistered(){
@@ -54,29 +61,64 @@ public class Student extends User implements Serializable {
 
     }
 
-    public void viewTranscript(){
+    public Vector<Teacher> getTeachers(){
+        Vector<Teacher> teachers = new Vector<Teacher>();
 
+        for(Course course: coursesRegistered){
+            teachers.addAll(course.getTeachers(this));
+        }
+
+        return teachers;
     }
+
+    public void viewTranscript(){
+        System.out.println(getTranscript());
+    }
+
+    public String getTranscript(){
+        String result = "code|name : credits, total, literalMark, gpa\n";
+
+        double totalGPA = 0;
+        double totalCredits = 0;
+
+        for(Course course: coursesRegistered){
+            Mark currMark = course.getStudentMark(this);
+
+            double currGPA = currMark.getGpa();
+            double currCredits = course.getCredits();
+
+            totalGPA += currGPA * currCredits;
+            totalCredits += currCredits;
+
+            String courseInfo = "%s|%s: %s, %s, %s, %s".formatted(course.getCode(), course.getTitle()
+                    ,currCredits, currMark.getTotal(), currMark.getLiteralMark(), currGPA);
+
+            result += courseInfo + "\n";
+        }
+
+        result += "Overall gpa: %s".formatted(totalGPA / totalCredits);
+
+        return result;
+    }
+
 
     public void viewInfoAbTeacher(){
 
     }
 
     public void viewMarks(){
-        Course c = new Course();
-        System.out.print(c.getStudentMark(this));
+        for(Course course: coursesRegistered){
+            System.out.println(course.getTitle() + " : " + course.getStudentMark(this));
+        }
     }
 
     public void viewCourses(){
-        for (Course element : this.coursesRegistered) {
-            System.out.println(element.toString());
+        for (Course course : this.coursesRegistered) {
+            System.out.println(course);
         }
     }
 
     public void rateTeacher(){
-    }
-
-    public void getTranscript(){
 
     }
 
@@ -106,18 +148,27 @@ public class Student extends User implements Serializable {
         return true; // All prerequisites are in coursesRegistered
     }
 
+    protected boolean isNotRegistered(Course c){
+        for(Course element : this.coursesRegistered){
+            if (element==c){
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     protected void registerCourse(){
         //get set of available courses by name
         Vector<Course> coursesAvailable = new Vector<Course>();
 
         for (Course ele : DB.getInstance().getCourses()){
-            if (isIn(ele)){
+            if (isIn(ele) && isNotRegistered(ele)){
                 coursesAvailable.add(ele);
             }
         }
         //student enters indeces of course
-        if (coursesAvailable != null){
+        if (!coursesAvailable.isEmpty()){
             int i = 1;
             System.out.println(i + "Enter your choice by int or 0 to go back");
             for (Course avCourse : coursesAvailable){
@@ -147,55 +198,60 @@ public class Student extends User implements Serializable {
         //check if credit <21
     }
 
-    @Override
-    public void run(){
-        menu: while(true) {
-            displayMenu();
-            System.out.print("Enter your choice: ");
-            int choice = in.nextInt();
-            in.nextLine();
+    public void run() throws IOException {
+        try {
+            getWelcomeMessage();
+            menu:
+            while (true) {
+                displayMenu();
+                int choice = in.nextInt();
+                in.nextLine();
+        switch (choice) {
+            case 1:
+                viewCourses();
+                break;
+            case 2:
+                viewInfoAbTeacher();
+                break;
+            case 3:
+                viewAllNews();
+                break;
 
-            switch (choice) {
-                case 1:
-                    viewCourses();
-                    break;
-                case 2:
-                    viewInfoAbTeacher();
-                    break;
-                case 3:
-                    viewAllNews();
-                    break;
-                case 4:
-                    viewMarks();
-                    break;
-                case 5:
-                    viewTranscript();
-                    break;
-                case 6:
-                    rateTeacher();
-                    break;
-                case 7:
-                    studentOrganizations();
-                case 8:
-                    changeLanguage();
-                    break;
-                case 9:
-                    registerCourse();
-                    break;
-                case 0:
-                    exit();
-                    break menu;
-                default:
-                    throw new IllegalStateException("Unexpected value: " + choice);
+            case 4:
+                viewMarks();
+                break;
+            case 5:
+                viewTranscript();
+                break;
+            case 6:
+                rateTeacher();
+                break;
+            case 7:
+                studentOrganizations();
+            case 8:
+                changeLanguage();
+                break;
+            case 9:
+                registerCourse();
+                break;
+            case 0:
+                exit();
+                break menu;
+            default:
+                throw new IllegalStateException("Unexpected value: " + choice);
+        }
+
             }
+        } catch (Exception e) {
+            handleError(e);
         }
     }
 
     protected void changeLanguage(){
         System.out.println("Choose language:\n" +
-                "1. ENG\n" +
-                "2. RUS\n" +
-                "3. KAZ");
+                           "1. ENG\n" +
+                           "2. RUS\n" +
+                           "3. KAZ");
 
         System.out.print("Enter your choice: ");
         int choice = in.nextInt();
@@ -225,7 +281,7 @@ public class Student extends User implements Serializable {
                 "5. Rate teacher on scale 1-10 (first enter id)\n" +
                 "6. Get Transcript\n" +
                 "7. Student organizations\n" +
-                "8. Change laguage"+
+                "8. Change laguange"+
                 "9. Register for courses"+
                 "0. Back to Main Menu");
 
@@ -273,4 +329,7 @@ public class Student extends User implements Serializable {
                 '}';
     }
 
+    public Faculty getFaculty() {
+        return faculty;
+    }
 }

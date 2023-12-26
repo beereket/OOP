@@ -6,12 +6,13 @@ import Messages.Request;
 import News.News;
 import Users.Enums.Faculty;
 import Users.Enums.ManagerType;
-import Util.Classes.Data;
 import Util.Data.DB;
+import Util.Enums.UserType;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static Util.Enums.UserType.MANAGER;
 
@@ -41,12 +42,78 @@ public class Manager extends Employee implements Serializable {
         return r.getSignedRequests();
     }
 
-    public Vector<Student> createStatisticalReport() {
-        return Data.getInstance().getStudents();
+    public static String createStatisticalReport() {
+        List<User> users = DB.getInstance().getUsersByUserType(UserType.STUDENT);
+        List<Student> students = users.stream()
+                .map(user -> (Student) user)
+                .collect(Collectors.toList());
+
+        int totalStudents = students.size();
+        Map<Faculty, Integer> studentsByFaculty = new HashMap<>();
+        double averageGPA = 0.0;
+
+        for (Student student : students) {
+            // Count students by faculty
+            Faculty faculty = student.getFaculty();
+            studentsByFaculty.put(faculty, studentsByFaculty.getOrDefault(faculty, 0) + 1);
+
+            // Calculate total GPA for average calculation
+            averageGPA += student.getGPA();
+        }
+
+        if (totalStudents > 0) {
+            averageGPA /= totalStudents;
+        }
+
+        // Building the report String
+        StringBuilder report = new StringBuilder();
+        report.append("Statistical Report for Students:\n");
+        report.append("Total Students: ").append(totalStudents).append("\n");
+        report.append("Average GPA: ").append(String.format("%.2f", averageGPA)).append("\n");
+        report.append("Students by Faculty:\n");
+        for (Map.Entry<Faculty, Integer> entry : studentsByFaculty.entrySet()) {
+            report.append(" - ").append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+        }
+
+        return report.toString();
     }
 
     protected void assignCoursesToTeacher() {
+        // Display list of teachers
+        List<Teacher> teachers = DB.getInstance().getUsersByUserType(UserType.TEACHER).stream().filter(Teacher.class::isInstance)
+                .map(Teacher.class::cast)
+                .collect(Collectors.toList());
+
+        for (int i = 0; i < teachers.size(); i++) {
+            System.out.println((i + 1) + ". " + teachers.get(i).getUsername());
+        }
+
+        // Ask the user to choose a teacher
+        System.out.println("Select a teacher to assign courses to:");
+        int teacherIndex = in.nextInt() - 1;
+        in.nextLine();  // Consume the remaining newline
+        Teacher selectedTeacher = teachers.get(teacherIndex);
+
+        // Display list of courses
+        List<Course> courses = DB.getInstance().getCourses();
+        for (int i = 0; i < courses.size(); i++) {
+            System.out.println((i + 1) + ". " + courses.get(i).getTitle());
+        }
+
+        // Ask the user to select courses to assign
+        System.out.println("Enter the numbers of the courses to assign (comma-separated):");
+        String[] courseIndices = in.nextLine().split(",");
+        for (String indexStr : courseIndices) {
+            int courseIndex = Integer.parseInt(indexStr.trim()) - 1;
+            Course courseToAssign = courses.get(courseIndex);
+
+            selectedTeacher.addCourse(courseToAssign);
+        }
+
+        System.out.println("Courses assigned to " + selectedTeacher.getUsername());
     }
+
+
 
 
     //Manage NEWS
@@ -261,10 +328,10 @@ public class Manager extends Employee implements Serializable {
 
         switch (userChoice) {
             case 1:
-                viewUsersInfo(Data.getInstance().getStudents(), "students");
+                viewUsersInfo(DB.getUsersByUserType(UserType.STUDENT), "students");
                 break;
             case 2:
-                viewUsersInfo(Data.getInstance().getTeachers(), "teachers");
+                viewUsersInfo(DB.getUsersByUserType(UserType.TEACHER), "teachers");
                 break;
             default:
                 System.out.println("Invalid choice.");
@@ -324,7 +391,6 @@ public class Manager extends Employee implements Serializable {
             System.out.println("------------------------------");
         }
     }
-
 
 
 }
