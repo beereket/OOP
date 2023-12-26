@@ -16,8 +16,9 @@ import java.util.List;
 public class Teacher extends Employee implements Serializable {
     private List<Course> coursesTaught;
     private Title title;
-    protected Double rating = null;
-//    protected int rated = 0;
+    protected double rating = 0;
+    protected int rates = 0;
+    protected int sumOfRatings = 0;
 
     public Teacher() {
     }
@@ -47,8 +48,10 @@ public class Teacher extends Employee implements Serializable {
         return rating;
     }
 
-    public void setRating(Double rating) {
-        this.rating = rating;
+    public void setRating(int rating) {
+        this.rates++;
+        this.sumOfRatings = this.sumOfRatings + rating;
+        this.rating = (double) (this.sumOfRatings / this.rates);
     }
 
     // MENY LOOP
@@ -70,8 +73,10 @@ public class Teacher extends Employee implements Serializable {
                         manageCourse();
                         break;
                     case 3:
+
                         break;
                     case 4:
+
                         break;
                     case 5:
                         break;
