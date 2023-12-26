@@ -7,11 +7,8 @@ import Users.Enums.Degree;
 import Users.Enums.Faculty;
 import Util.Data.DB;
 import Util.Enums.UserType;
-import Util.Exception.UserNotFound;
-import Users.Teacher;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 import java.util.Vector;
 
@@ -39,7 +36,15 @@ public class Student extends User implements Serializable {
     }
 
     public double getGPA() {
-        double totalGpa
+        double totalGpa = 0;
+        double totalCredits = 0;
+
+        for(Course course: coursesRegistered){
+            totalGpa += course.getStudentMark(this).getGpa();
+            totalCredits += course.getCredits();
+        }
+
+        return (totalGpa / totalCredits);
     }//null
 
     protected List<Course> getCoursesRegistered(){
@@ -101,7 +106,7 @@ public class Student extends User implements Serializable {
 
     public void viewMarks(){
         for(Course course: coursesRegistered){
-            System.out.println(course.getStudentMark(this));
+            System.out.println(course.getTitle() + " : " + course.getStudentMark(this));
         }
     }
 
