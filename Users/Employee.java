@@ -32,7 +32,6 @@ public class Employee extends User implements Serializable {
     public Employee(String username, String password, UserType ut) {
         super(username, password, ut);
         id = DB.getInstance().getUsersByUserType(UserType.EMPLOYEE).size() + 1;
-
     }
     /**
      * Sends a request to the Rector. The request is added to the Rector's list of pending requests.
@@ -45,11 +44,17 @@ public class Employee extends User implements Serializable {
     /**
      * Sends a message to another employee. The message is added to the recipient's message list.
      *
-     * @param m The message to be sent.
-     * @param e The employee who will receive the message.
      */
-    public void sendMessage(Message m, Employee e){
-        e.messages.add(m);
+    public void sendMessage(){
+        System.out.println("Employee username");
+        String name = in.nextLine();
+
+        System.out.println("Message:");
+        String message = in.nextLine();
+
+        Employee e = (Employee)DB.getInstance().getUserByUsername(name);
+        e.addMessage(new Message(this, e, message));
+
     }
 
     @Override
@@ -73,5 +78,8 @@ public class Employee extends User implements Serializable {
     @Override
     public void update() {
 
+    }
+    public void addMessage(Message m){
+        messages.add(m);
     }
 }

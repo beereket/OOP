@@ -4,6 +4,9 @@ import Academic.Course;
 import Academic.Enums.typeOfAttestation;
 import Academic.Journal;
 import Academic.Lesson;
+import Messages.Complaint;
+import Messages.Request;
+import Messages.enums.UrgencyLevel;
 import Users.Enums.Title;
 import Util.Data.DB;
 import Util.Enums.UserType;
@@ -95,18 +98,83 @@ public class Teacher extends Employee implements Serializable {
                         manageCourse();
                         break;
                     case 3:
+                        for (Course c : coursesTaught) {
+                            System.out.println(c);
+                            c.viewStudents();
+                        }
                         break;
                     case 4:
+                        Course selected = chooseCourseFromList();
+                        System.out.println("Student id or username:");
+                        String identifier = in.nextLine();
+
+                        int mark = in.nextInt();
+
+                        System.out.println("Choose type of attestation:");
+                        for (typeOfAttestation attestation : typeOfAttestation.values()) {
+                            System.out.println(attestation.ordinal() + 1 + ". " + attestation.toString());
+                        }
+
+                        int c = in.nextInt();
+                        in.nextLine();
+
+                        typeOfAttestation selectedAttestation = null;
+                        if (c >= 1 && choice <= typeOfAttestation.values().length) {
+                            selectedAttestation = typeOfAttestation.values()[c - 1];
+                            System.out.println("You selected: " + selectedAttestation.toString());
+                        } else {
+                            System.out.println("Invalid choice.");
+                        }
+
+                        putMarks(selected.findStudentByIdentifier(identifier), selected, mark, selectedAttestation);
                         break;
                     case 5:
+                        sendMessage();
                         break;
                     case 6:
+                        System.out.println("Print username of Student");
+                        String name = in.nextLine();
+
+                        System.out.println("Description:");
+                        String description = in.nextLine();
+
+
+                        System.out.println("Choose urgency level:");
+                        for (UrgencyLevel level : UrgencyLevel.values()) {
+                            System.out.println(level.ordinal() + 1 + ". " + level.toString());
+                        }
+
+                        // Get user input
+                        int index = in.nextInt();
+                        in.nextLine();
+
+                        if (choice >= 1 && choice <= UrgencyLevel.values().length) {
+                            UrgencyLevel selectedLevel = UrgencyLevel.values()[index - 1];
+                            System.out.println("You selected: " + selectedLevel.toString());
+                            Rector.getINSTANCE().addComplaint(new Complaint((Student) DB.getInstance().getUserByUsername(name), description, selectedLevel, this));
+                        } else {
+                            System.out.println("Invalid choice.");
+                        }
+
                         break;
                     case 7:
                         changeLanguage();
                         break;
                     case 8:
+                        viewAllNews();
                         break;
+                    case 9:
+                        System.out.println("CHOOSING COURSE:");
+                        Course COURSE = chooseCourseFromList();
+
+                        System.out.println("Student id or username:");
+                        String IDENTIFIER = in.nextLine();
+
+                        System.out.println("MARK:");
+                        int MARK = in.nextInt();
+
+                        Student selectedStudent = COURSE.findStudentByIdentifier(IDENTIFIER);
+                        putMark(selectedStudent, selectedStudent.getLesson(COURSE), MARK);
                     case 0:
                         exit();
                         break menu;
@@ -120,8 +188,84 @@ public class Teacher extends Employee implements Serializable {
     }
 
     //manage course
-    private void manageCourse() {
+    /**
+     * Manages courses for the teacher, allowing actions such as grading, adding content, etc.
+     */
+    private void manageCourse() throws IOException {
+        try {
+
+            System.out.println("Courses Taught:");
+            for (Course course : coursesTaught) {
+                System.out.println(course.getTitle());
+            }
+
+            System.out.print("Enter the course number to manage (or 0 to go back): ");
+            int courseChoice = in.nextInt();
+            in.nextLine();
+
+            if (courseChoice == 0) {
+                return;
+            }
+            if (courseChoice < 1 || courseChoice > coursesTaught.size()) {
+                System.out.println("Invalid course selection.");
+                return;
+            }
+
+
+            Course selectedCourse = coursesTaught.get(courseChoice - 1);
+
+            while (true) {
+                displayCourseManagementMenu();
+                int actionChoice = in.nextInt();
+                in.nextLine();
+
+                switch (actionChoice) {
+                    case 1:
+                        setDescription(selectedCourse);
+                        break;
+                    case 2:
+                        setTitle(selectedCourse);
+                        break;
+                    case 3:
+                        selectedCourse.viewStudents();
+                        break;
+                    case 4:
+                        return;
+                    default:
+                        System.out.println("Invalid choice. Please select a valid action.");
+                }
+            }
+        } catch (Exception e) {
+            handleError(e);
+        }
     }
+
+    /**
+     * Displays the submenu for course management options.
+     */
+    private void displayCourseManagementMenu() {
+        System.out.println("Course Management Menu:\n" +
+                "1. Set description\n" +
+                "2. Set title\n" +
+                "3. View Enrolled Students\n" +
+                "4. Go Back");
+    }
+
+    private void setDescription(Course course) {
+        System.out.print("Enter the new description for the course: ");
+        String newDescription = in.nextLine();
+        course.setDescription(newDescription);
+        DB.getInstance().updateCourseDescription(course.getCode(), newDescription);
+    }
+
+    private void setTitle(Course course) {
+        System.out.print("Enter the new title for the course: ");
+        String newTitle = in.nextLine();
+        DB.getInstance().updateCourseTitle(course.getCode(), newTitle);
+        course.setTitle(newTitle);
+        System.out.println("Title updated successfully.");
+    }
+
 
     //
     protected void putMarks(Student student , Course course , int mark , typeOfAttestation type) {
@@ -134,41 +278,6 @@ public class Teacher extends Employee implements Serializable {
         j.putMark(student, lesson, mark);
     }
 
-    private void operations() {
-        int choice = in.nextInt();
-        in.nextLine();
-        switch (choice) {
-            case 1:
-                for (Course c : coursesTaught) {
-                    System.out.println(c);
-                }
-                break;
-            case 2:
-                manageCourse();
-                break;
-            case 3:
-                viewCourses();
-                break;
-            case 4:
-
-                break;
-            case 5:
-                break;
-            case 6:
-                break;
-            case 7:
-                changeLanguage();
-                break;
-            case 8:
-                break;
-            case 0:
-                exit();
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + choice);
-        }
-
-    }
     // Other methods...
 
     /**
@@ -183,6 +292,8 @@ public class Teacher extends Employee implements Serializable {
                 "4. Put Marks\n5. Send Messages\n" +
                 "6. Send Complaints\n" +
                 "7. Change Language\n" +
+                "8. View All News\n" +
+                "9. Put mark" +
                 "0. Exit");
 
     }
@@ -222,6 +333,24 @@ public class Teacher extends Employee implements Serializable {
     private void viewCourses() {
         for (Course c: coursesTaught){
             System.out.println(c.getTitle());
+        }
+    }
+
+    private Course chooseCourseFromList() {
+        List<Course> courses = getCoursesTaught();
+        System.out.println("Courses Taught:");
+        for (int i = 0; i < courses.size(); i++) {
+            System.out.println(i + 1 + ". " + courses.get(i).getTitle());
+        }
+
+        int selectedIndex = in.nextInt();
+        in.nextLine();
+
+        if (selectedIndex >= 1 && selectedIndex <= courses.size()) {
+            return courses.get(selectedIndex - 1);
+        } else {
+            System.out.println("Invalid course index.");
+            return null;
         }
     }
 

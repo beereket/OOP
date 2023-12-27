@@ -211,6 +211,10 @@ public class Rector extends Employee implements Serializable {
         }
     }
 
+    public void addComplaint(Complaint c){
+        complaints.add(c);
+    }
+
 
 
 }

@@ -8,6 +8,8 @@ import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Lesson implements Serializable {
 	private LessonType type; // lab, practice, lesson
@@ -133,5 +135,12 @@ public class Lesson implements Serializable {
 		StudentPerformance curSP = getStudentPerformance(student);
 		curSP.addComment(comment);
 	}
+
+	public boolean contains(Student s){
+		Set<Student> students1 = students.keySet();
+		return students1.contains(s);
+
+	}
+
 
 }

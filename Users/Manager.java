@@ -65,11 +65,9 @@ public class Manager extends Employee implements Serializable {
         double averageGPA = 0.0;
 
         for (Student student : students) {
-            // Count students by faculty
             Faculty faculty = student.getFaculty();
             studentsByFaculty.put(faculty, studentsByFaculty.getOrDefault(faculty, 0) + 1);
 
-            // Calculate total GPA for average calculation
             averageGPA += student.getGPA();
         }
 

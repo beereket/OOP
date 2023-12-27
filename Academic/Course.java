@@ -8,10 +8,7 @@ import Users.Teacher;
 import Util.Data.DB;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Vector;
+import java.util.*;
 
 public class Course implements Serializable {
 	private String code;
@@ -211,6 +208,25 @@ public class Course implements Serializable {
 		}
 
 		return result.toString();
+	}
+	public void viewStudents(){
+		Set<Student> studetns = students.keySet();
+		for(Student s : studetns){
+			System.out.println(s);
+		}
+	}
+	public Student findStudentByIdentifier(String studentIdentifier) {
+		Set<Student> students = this.students.keySet();
+		for (Student student : students) {
+			if (student.getId().equals(studentIdentifier) || student.getUsername().equals(studentIdentifier)) {
+				return student;
+			}
+		}
+		return null; // Student not found
+	}
+
+	public HashSet<Lesson> getLessons() {
+		return lessons;
 	}
 }
 

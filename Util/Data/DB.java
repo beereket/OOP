@@ -203,4 +203,35 @@ public class DB {
         orders.add(order);
     }
 
+    public boolean updateCourseDescription(String courseCode, String newDescription) {
+        for (Course course : courses) {
+            if (course.getCode().equals(courseCode)) {
+                course.setDescription(newDescription);
+
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean updateCourseTitle(String courseCode, String newTitle) {
+        for (Course course : courses) {
+            if (course.getCode().equals(courseCode)) {
+                course.setTitle(newTitle);
+
+                return true;
+            }
+        }
+        return false;
+    }
+    public User getUserByUsername(String username) {
+        for (List<User> userList : users.values()) {
+            for (User user : userList) {
+                if (user.getUsername().equals(username)) {
+                    return user;
+                }
+            }
+        }
+        return null;
+    }
+
 }

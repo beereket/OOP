@@ -2,6 +2,7 @@ package Users;
 
 
 import Academic.Course;
+import Academic.Lesson;
 import Users.Enums.Degree;
 import Users.Enums.Faculty;
 import Util.Data.DB;
@@ -10,7 +11,9 @@ import Util.Exception.UserNotFound;
 import Users.Teacher;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 
 /**
@@ -24,11 +27,10 @@ public class Student extends User implements Serializable {
     protected Integer id;
     protected Faculty faculty;
     protected Integer yearOfStudy = 1;
-    protected Vector<Course> coursesRegistered = new Vector<>();
+    protected Set<Course> coursesRegistered = new HashSet<>();
     protected Degree degree;
     protected StudentOrganization studentOrganization = null;
     protected Integer credits = 0;
-
 
 
     public Student(String username, String password, UserType userType) {
@@ -42,21 +44,22 @@ public class Student extends User implements Serializable {
      * @param faculty  The faculty to which the student belongs.
      * @param degree   The degree level of the student.
      */
+
     public Student(String username, String password, Faculty faculty, Degree degree) {
         super(username, password, UserType.STUDENT);
-        DB.getInstance();
         this.id = DB.users.get(UserType.STUDENT).size() +1;
         this.faculty = faculty;
         this.degree = degree;
 
+        DB.getInstance().addUser(this, UserType.STUDENT);
     }
 
     public double getGPA() {
         return 0.0;
     }//null
 
-    protected List<Course> getCoursesRegistered(){
-        return coursesRegistered;
+    protected Set<Course> getCoursesRegistered(){
+        return this.coursesRegistered;
     }
 
 
@@ -67,7 +70,7 @@ public class Student extends User implements Serializable {
     }
 
     public void viewTranscript(){
-        for (Course c : coursesRegistered){
+        for (Course c : this.coursesRegistered){
             System.out.println(c.getStudentMark(this));
         }
     }
@@ -144,16 +147,7 @@ public class Student extends User implements Serializable {
         }
 
         for (Course prereq : c.getPrerequisites()) {
-            boolean prereqMet = false;
-
-            for (Course studC : this.coursesRegistered) {
-                if (prereq.equals(studC)) {
-                    prereqMet = true;
-                    break; // Found a match for this prerequisite, no need to continue searching
-                }
-            }
-
-            if (!prereqMet) {
+            if (!this.coursesRegistered.contains(prereq)) {
                 return false; // At least one prerequisite is not in coursesRegistered
             }
         }
@@ -161,19 +155,13 @@ public class Student extends User implements Serializable {
         return true; // All prerequisites are in coursesRegistered
     }
 
-    protected boolean isNotRegistered(Course c){
-        for(Course element : this.coursesRegistered){
-            if (element==c){
-                return false;
-            }
-        }
-
-        return true;
+    protected boolean isNotRegistered(Course c) {
+        return !this.coursesRegistered.contains(c);
     }
 
     protected void registerCourse(){
         //get set of available courses by name
-        Vector<Course> coursesAvailable = new Vector<Course>();
+        Vector<Course> coursesAvailable = new Vector<>();
 
         for (Course ele : DB.getInstance().getCourses()){
             if (isIn(ele) && isNotRegistered(ele)){
@@ -183,9 +171,10 @@ public class Student extends User implements Serializable {
         //student enters indeces of course
         if (!coursesAvailable.isEmpty()){
             int i = 1;
-            System.out.println(i + "Enter your choice by int or 0 to go back");
+            System.out.println("Enter your choice by int or 0 to go back");
             for (Course avCourse : coursesAvailable){
                 System.out.println(i +" "+ avCourse.getTitle());
+                i++;
             }
 
             int sumcredits = 0;
@@ -197,7 +186,7 @@ public class Student extends User implements Serializable {
                 }
                 if(coursesAvailable.elementAt(choice-1).getCredits() + sumcredits < 21 ){
                     sumcredits = sumcredits + coursesAvailable.elementAt(choice-1).getCredits();
-                    coursesRegistered.add(coursesAvailable.elementAt(choice-1));
+                    this.coursesRegistered.add(coursesAvailable.elementAt(choice-1));
                     System.out.println(coursesAvailable.elementAt(choice-1).getTitle()+" is added succesfully");
                 }
                 else {
@@ -342,17 +331,29 @@ public class Student extends User implements Serializable {
     @Override
     public String toString() {
         return "Student{" +
-                "id=" + id +
-                ", faculty=" + faculty +
-                ", yearOfStudy=" + yearOfStudy +
-                ", coursesRegistered=" + coursesRegistered +
-                ", degree=" + degree +
-                ", studentOrganization=" + studentOrganization +
-                ", credits=" + credits +
+                "id=" + this.id +
+                ", faculty=" + this.faculty +
+                ", yearOfStudy=" + this.yearOfStudy +
+                ", coursesRegistered=" + this.coursesRegistered +
+                ", degree=" + this.degree +
+                ", studentOrganization=" + this.studentOrganization.toString() +
+                ", credits=" + this.credits +
                 '}';
     }
 
     public Faculty getFaculty() {
         return faculty;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+    public Lesson getLesson(Course c){
+        for(Lesson l : c.getLessons()){
+            if (l.contains(this)){
+                return l;
+            }
+        }
+        return null;
     }
 }

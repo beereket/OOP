@@ -33,7 +33,6 @@ public class TesterMainUtil {
 
 //        System.out.println(student6.getResearcherName());
 
-        User.authenticate().run();
         student4.run();
         DB.serialize();
 //        System.out.println(DB.getInstance().getCourses().size());
