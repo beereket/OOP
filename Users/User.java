@@ -378,5 +378,23 @@ public abstract class User implements Observer, Serializable, Researcher {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        User user = (User) o;
+
+        if (!username.equals(user.username)) return false;
+        if (!password.equals(user.password)) return false;
+        return userType == user.userType;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = username.hashCode();
+        result = 31 * result + password.hashCode();
+        result = 31 * result + userType.hashCode();
+        return result;
+    }
 }

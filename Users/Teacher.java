@@ -14,6 +14,7 @@ import Util.Enums.UserType;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * The Teacher class represents a user with the role of a teacher in the educational system.
@@ -357,4 +358,5 @@ public class Teacher extends Employee implements Serializable {
     public void addCourse(Course courseToAssign) {
         coursesTaught.add(courseToAssign);
     }
+
 }

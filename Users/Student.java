@@ -11,10 +11,7 @@ import Util.Exception.UserNotFound;
 import Users.Teacher;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.Vector;
+import java.util.*;
 
 /**
  * The Student class represents a user with the role of a student in the educational system.
@@ -356,5 +353,18 @@ public class Student extends User implements Serializable {
             }
         }
         return null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return Objects.equals(id, student.id) && faculty == student.faculty && Objects.equals(yearOfStudy, student.yearOfStudy) && degree == student.degree && Objects.equals(credits, student.credits);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, faculty, yearOfStudy, degree, credits);
     }
 }
