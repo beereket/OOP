@@ -1,8 +1,11 @@
 package Util.Data;
 
 
+import Util.Enums.UserType;
+
 public class DBtest {
     public static void main(String[] args) {
-        System.out.println(DB.getInstance().getCourses().size());
+        DB.getInstance();
+        System.out.println(DB.getInstance().getUserByUsername("manager"));
     }
 }

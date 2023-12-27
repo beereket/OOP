@@ -34,7 +34,7 @@ public class Rector extends Employee implements Serializable {
         return INSTANCE;
     }
     static {
-        String filename = "rector.dat";
+        String filename = "staticData.dat";
         File file = new File(filename);
         if (file.exists()) {
             deserializeStaticData(filename);
@@ -95,7 +95,6 @@ public class Rector extends Employee implements Serializable {
                         changeLanguage(); // Change the menu language
                         break;
                     case 0:
-                        serializeStaticData("rector.dat");
                         exit();
                         break menu;
                     default:

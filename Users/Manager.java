@@ -4,6 +4,7 @@ import Academic.Course;
 import Academic.Enums.SemesterType;
 import Messages.Request;
 import News.News;
+import Users.Enums.Degree;
 import Users.Enums.Faculty;
 import Users.Enums.ManagerType;
 import Util.Data.DB;
@@ -42,6 +43,17 @@ public class Manager extends Employee implements Serializable {
 
     //METHODS
     public void approveRegistration() {
+        System.out.println("Enter username:");
+        String username = in.nextLine();
+
+        System.out.println("Enter password:");
+        String password = in.nextLine();
+
+        System.out.println("Enter Faculty:");
+        Faculty studentFaculty = Faculty.valueOf(in.nextLine());
+        System.out.println("Enter Degree:");
+        Degree studentDegree = Degree.valueOf(in.nextLine());
+        Student student = new Student(username, password, studentFaculty, studentDegree);
 
     }
 

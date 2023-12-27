@@ -51,6 +51,7 @@ public class Student extends User implements Serializable {
         this.faculty = faculty;
         this.degree = degree;
 
+
         DB.getInstance().addUser(this, UserType.STUDENT);
     }
 

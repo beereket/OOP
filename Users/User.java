@@ -46,7 +46,7 @@ public abstract class User implements Observer, Serializable, Researcher {
         this.password = password;
         this.userType = ut;
         DB.getInstance().addUser(this, UserType.USER);
-
+        DB.deserializeAll();
         if (this instanceof GraduateStudent) {
             isResearcher = true;
         }
@@ -133,7 +133,7 @@ public abstract class User implements Observer, Serializable, Researcher {
 
         System.out.println("Enter password: ");
         String password = in.nextLine();
-        List<User> users = DB.getInstance().getUsersByUserType(UserType.USER);
+        List<User> users = DB.getUsersByUserType(UserType.USER);
         for (User user: users){
             if(user.getUsername().equals(username) && user.getPassword().equals(password)){
                 return user;
@@ -148,6 +148,7 @@ public abstract class User implements Observer, Serializable, Researcher {
      */
     protected void save() throws IOException {
         DB.serializeAll();
+        Rector.serializeStaticData("staticData.dat");
     }
 
     protected void exit() {

@@ -45,7 +45,7 @@ public class Teacher extends Employee implements Serializable {
         super(username, password, UserType.TEACHER);
         this.title = title;
 
-        DB.getInstance().getUsersByUserType(UserType.EMPLOYEE).add(this);
+        DB.getInstance().addUser(this, UserType.TEACHER);
     }
 
 
